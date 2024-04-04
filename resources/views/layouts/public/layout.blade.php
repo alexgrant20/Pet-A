@@ -22,5 +22,7 @@
       @include('layouts.public.navbar')
 
 			@yield('content')
+
+      @include('layouts.public.footer')
     </body>
 </html>
