@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,10 +15,11 @@
 
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+        <link rel="stylesheet" href="{{ asset('assets/custom.css') }}">
     </head>
     <body style="max-width: 100vw; min-height: 100vh;">
       @include('layouts.public.navbar')
-
 
 			@yield('content')
     </body>

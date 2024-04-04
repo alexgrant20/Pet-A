@@ -18,6 +18,8 @@ export default {
                     accent: "#6d213c",
                     neutral: "#c287e8",
                     "base-100": "#fff8f0",
+                    "base-200": "#fff9f2",
+                    'primary-content': '#fff8f0',
                 },
             },
         ],
