@@ -1,34 +1,38 @@
 .hero-content {
-	max-width: 100%;
-	padding: 0 5%;
-	width: 100%;
+    max-width: 100%;
+    padding: 0 5%;
+    width: 100%;
 }
 
 .navbar {
-	padding: 0 5%;
+    padding: 0 5%;
 }
 
 .btn {
-	height: fit-content;
-	min-height: fit-content;
-	padding: 0.4rem 1.3rem;
+    height: fit-content;
+    min-height: fit-content;
+    padding: 0.4rem 1.3rem;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #e37b58;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  background-clip: content-box;
+    background-color: #e37b58;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #e37b58;
+    background-color: #e37b58;
+}
+
+.footer {
+ bottom: -240px;
 }

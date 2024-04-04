@@ -18,7 +18,7 @@
 
         <link rel="stylesheet" href="{{ asset('assets/custom.css') }}">
     </head>
-    <body style="max-width: 100vw; min-height: 100vh;">
+    <body class="relative" style="max-width: 100vw; min-height: 100vh;">
       @include('layouts.public.navbar')
 
 			@yield('content')

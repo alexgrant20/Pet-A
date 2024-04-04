@@ -1,4 +1,4 @@
-<footer class="footer footer-center p-10 bg-primary text-primary-content">
+<footer class="footer footer-center p-10 bg-primary text-primary-content absolute bottom-0">
   <aside>
     <i class="fa-solid fa-bowl-food fa-4x"></i>
     <p class="font-bold">
