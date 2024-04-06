@@ -17,6 +17,7 @@ return new class extends Migration
             $table->tinyInteger('attempt_login')->nullable();
             $table->timestamp('attempt_login_active')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('last_login')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->string('created_by')->nullable();

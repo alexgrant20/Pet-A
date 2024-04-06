@@ -21,20 +21,20 @@ class LoginController extends Controller
       $login = $this->doLogin($request);
 
       if ($login['status'] == true) {
-         Session::flash('message', 'Berhasil Masuk!');
-         Session::flash('alert-class', 'alert-success');
-         if (@Auth::user()->role == 1) {
+        // Temp Change
+         Session::flash('success-swal', 'Berhasil Masuk!');
+         if (@Auth::user()->role->id == 1) {
             return redirect()->intended(route('admin.index')); //GANTI routenya
-         } else if (@Auth::user()->role == 2) {
+         } else if (@Auth::user()->role->id == 2) {
             return redirect()->intended(route('admin.index')); //GANTI routenya
-         } else if (@Auth::user()->role == 3) {
+         } else if (@Auth::user()->role->id == 3) {
             return redirect()->intended(route('admin.index')); //GANTI routenya
-         } else if (@Auth::user()->role == 4) {
+         } else if (@Auth::user()->role->id == 4) {
             return redirect()->intended(route('admin.index'));
          }
       } else {
-         Session::flash('message', 'Gagal Masuk!');
-         Session::flash('alert-class', 'alert-danger');
+        // Temp Change
+         Session::flash('error-swal', 'Gagal Masuk!');
          return redirect()->intended(route('login'));
       };
    }

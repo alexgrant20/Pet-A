@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('welcome');
 
-Route::get('/admin', function () {
+
+Route::middleware(['web', 'auth'])->get('/admin', function () {
     return view('admin.index');
 })->name('admin.index');
 

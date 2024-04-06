@@ -110,6 +110,8 @@
       </div>
     </section>
 
+    @include('layouts.public.footer')
+
     <script>
       AOS.init({
         once: true,

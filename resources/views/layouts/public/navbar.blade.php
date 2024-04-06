@@ -10,10 +10,9 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#notification">Pawvication</a></li>
         <li><a href="#digitilize-data">PawRecord</a></li>
-        {{-- <li><a>Why Us?</a></li> --}}
       </ul>
     </div>
-    <a href="#" class="px-3">
+    <a href="{{ route('welcome') }}" class="px-3">
       <img class="w-12" src="{{ asset('assets/temp_logo.png') }}" alt="logo">
     </a>
   </div>
@@ -25,7 +24,7 @@
     </ul>
   </div>
   <div class="navbar-end">
-    <a href="#" class="btn btn-primary text-base-100 rounded-full px-5">Login</a>
+    <a href="{{ route('login') }}" class="btn btn-primary text-base-100 rounded-full px-5">Login</a>
   </div>
 </div>
 </div>
