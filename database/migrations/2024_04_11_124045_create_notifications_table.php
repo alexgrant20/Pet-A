@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pet_owners', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('city_id');
-            $table->string('name');
-            $table->string('address');
-            $table->string('phone_number');
-            $table->decimal('latitude', 12, 9);
-            $table->decimal('longitude', 12, 9);
+            $table->uuid('user_id');
+            $table->string('title');
+            $table->text('content');
+            $table->boolean('is_seen')->default(false);
 
             $table->timestamps();
             $table->string('created_by')->nullable();
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pet_owners');
+        Schema::dropIfExists('notifications');
     }
 };

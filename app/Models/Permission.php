@@ -20,4 +20,9 @@ class Permission extends SpatieModelsPermission
          get: fn ($value) => ucwords(str_replace('-', ' ', $this->name)),
       );
    }
+
+   public function menuPermission()
+   {
+       return $this->belongsTo(MenuPermission::class);
+   }
 }

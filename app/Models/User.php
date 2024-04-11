@@ -15,8 +15,8 @@ class User extends Authenticatable
     protected $guarded = [''];
     protected $hidden = ['password'];
 
-    public function role()
+    public function notification()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasMany(Notification::class);
     }
 }

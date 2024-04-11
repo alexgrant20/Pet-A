@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pet_owners', function (Blueprint $table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('city_id');
-            $table->string('name');
-            $table->string('address');
-            $table->string('phone_number');
-            $table->decimal('latitude', 12, 9);
-            $table->decimal('longitude', 12, 9);
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('label');
+            $table->string('link');
+            $table->string('order');
+            $table->boolean('is_pet_owner')->default(false);
+            $table->boolean('is_active')->default(true);
 
             $table->timestamps();
             $table->string('created_by')->nullable();
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pet_owners');
+        Schema::dropIfExists('menus');
     }
 };

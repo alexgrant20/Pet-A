@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('clinics', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('city_id');
             $table->string('name');
-            $table->string('address');
             $table->string('phone_number');
+            $table->string('zip_code');
+            $table->string('address');
+            $table->decimal('latitude', 12, 9);
+            $table->decimal('longitude', 12, 9);
 
             $table->timestamps();
             $table->string('created_by')->nullable();

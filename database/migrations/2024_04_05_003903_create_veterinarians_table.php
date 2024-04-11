@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('veterinarians', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('user_id');
-            $table->foreignId('clinic_id');
+            $table->unsignedBigInteger('clinic_id');
             $table->string('name');
+            $table->date('birth_date');
             $table->string('address');
             $table->string('phone_number');
+            $table->enum('gender', ['m', 'f']);
+            $table->smallInteger('length_of_service');
+
             $table->timestamps();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->softDeletesTz('deleted_at', precision: 0);
             $table->string('deleted_by')->nullable();
-
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
-            $table->foreign('clinic_id')->references('id')->on('clinics')->onUpdate('cascade');
         });
     }
 

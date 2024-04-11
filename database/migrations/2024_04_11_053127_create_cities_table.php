@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pet_owners', function (Blueprint $table) {
+        Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('province_id');
             $table->string('name');
-            $table->string('address');
-            $table->string('phone_number');
             $table->decimal('latitude', 12, 9);
             $table->decimal('longitude', 12, 9);
 
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pet_owners');
+        Schema::dropIfExists('cities');
     }
 };

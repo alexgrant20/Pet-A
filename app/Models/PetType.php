@@ -11,4 +11,9 @@ class PetType extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function vaccinationType()
+    {
+        return $this->hasMany(VaccinationType::class);
+    }
 }
