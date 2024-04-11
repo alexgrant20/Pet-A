@@ -17,6 +17,7 @@
 
   @include('layouts.master.script')
   @include('layouts.master.alert-swal')
+  @include('layouts.master.toast')
   @yield('js-footer')
 </body>
 

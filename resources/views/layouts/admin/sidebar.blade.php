@@ -18,9 +18,9 @@
             </span>
           </summary>
           <ul>
-            <li><a href="#">Admin</a></li>
-            <li><a href="#">Doctor</a></li>
-            <li><a href="#">Clinics</a></li>
+            <li><a href="#">Akun</a></li>
+            <li><a href="#">Role</a></li>
+            <li><a href="#">Permission</a></li>
           </ul>
         </details>
       </li>

@@ -31,7 +31,7 @@
     </script>
  @endif
 
- @if ($message = Session::get('info-swal-html'))
+ @if ($message = Session::get('info-swal'))
     <script>
        swal(generateSwalPayload("Info", `{!! $message !!}`, "info"));
     </script>

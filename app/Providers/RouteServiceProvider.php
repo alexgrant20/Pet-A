@@ -29,10 +29,6 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
-
             Route::middleware('web')
                 ->group(base_path('routes/web_public.php'));
 
@@ -45,16 +41,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('pet-owner')
                 ->name('pet-owner.')
                 ->group(base_path('routes/web_pet_owner.php'));
-
-            Route::middleware(['web', 'auth', 'role:clinic-admin'])
-                ->prefix('clinic-admin')
-                ->name('clinic-admin.')
-                ->group(base_path('routes/web_clinic_admin.php'));
-
-            Route::middleware(['web', 'auth', 'role:veterinarian'])
-                ->prefix('veterinarian')
-                ->name('veterinarian.')
-                ->group(base_path('routes/web_veterinarian.php'));
         });
     }
 }
