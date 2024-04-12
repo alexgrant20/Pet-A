@@ -4,9 +4,11 @@
 
 @section('content')
   <div>
+    @include('layouts.public.navbar')
+
     <section class="pt-20 hero min-h-screen bg-base-100" id="home">
       <div class="hero-content flex-col lg:flex-row-reverse gap-20">
-        <img data-aos="fade-left" data-aos-duration="1000" src="{{ asset('assets/hero-image.avif') }}" class="max-w-md" />
+        <img data-aos="fade-left" data-aos-duration="1000" src="{{ asset('assets/horde-of-pet.png') }}" class="max-w-xl" />
         <div data-aos="fade-right" data-aos-duration="1000" class="w-7/12">
           <h1 class="text-7xl text-gray-900 font-bold">Pet <span class="text-primary">personal</span> health care
           </h1>
@@ -46,7 +48,7 @@
       </div>
     </section>
 
-    <section class="py-20 hero min-h-screen bg-base-200 flex flex-col" id="digitilize-data">
+    {{-- <section class="py-20 hero min-h-screen bg-base-200 flex flex-col" id="digitilize-data">
       <h2 class="text-6xl text-gray-900 font-bold"><span class="text-accent">Digitilize</span> Your Pet Data</h2>
       <div class="hero-content flex-col lg:flex-row-reverse gap-20">
         <img data-aos="fade-left" data-aos-duration="1000" src="{{ asset('assets/medical-book.svg') }}" class="max-w-sm"
@@ -108,9 +110,9 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> --}}
 
-    @include('layouts.public.footer')
+    {{-- @include('layouts.public.footer') --}}
 
     <script>
       AOS.init({

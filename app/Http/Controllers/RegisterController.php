@@ -15,14 +15,15 @@ class RegisterController extends Controller
 	{
 		DB::beginTransaction();
 		try {
-			User::create([
+			$user = User::create([
 				'id' => Str::uuid(),
 				'name' => $request->name,
-				'role_id' => 2,
 				'phone_number' => $request->phone_number,
 				'email' => $request->email,
 				'password' => Hash::make($request->password)
 			]);
+
+			$user->assignRole('pet-owner');
 		} catch (\Exception $e) {
 			DB::rollBack();
 			return response()->json(['status' => false]);

@@ -3,33 +3,49 @@
 @section('title', 'Login')
 
 @section('content')
-  <div class="hero min-h-screen bg-base-200">
-    <div class="hero-content flex-col lg:flex-row-reverse">
-      <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-200">
-        <form method="POST" action="{{ route('login.attempt') }}" class="card-body">
+  <div class="min-h-screen bg-base-200 flex">
+    <div class="w-4/6">
+      <img src="{{ asset('assets/login.jpg') }}" class="h-screen w-full unselectable" alt="dog and cat image">
+    </div>
+    <div class="w-2/6 p-8 flex flex-col">
+      <a href="{{ route('welcome') }}" class="flex items-center gap-1">
+        <img src="{{ asset('assets/temp_logo.png') }}" class="w-12" alt="">
+        <span class="font-bold">Pet-A</span>
+      </a>
+      <div class="flex flex-col justify-center flex-grow">
+        <div>
+          <h1 class="text-gray-800 text-4xl font-bold mb-3">Welcome Back!</h1>
+          <h2 class="text-gray-800 text-xl font-semibold">Don't have account? <a href="#" class="text-primary font-bold hover:underline">Sign Up</a></h2>
+        </div>
+
+        <div class="divider divide-neutral-700 mb-12"></div>
+
+        <form method="POST" action="{{ route('login.attempt') }}" class="gap-5 flex flex-col">
           @csrf
 
           <div class="form-control">
-            <label class="label">
-              <span class="label-text">Email</span>
-            </label>
-            <input type="email" name="email" placeholder="email" class="input input-bordered" />
+            <input type="email" name="email" placeholder="Email" class="input input-bordered form-control" />
           </div>
+
           <div class="form-control">
-            <label class="label">
-              <span class="label-text">Password</span>
-            </label>
-            <input type="password" name="password" placeholder="password" class="input input-bordered" />
+            <input type="password" name="password" placeholder="Password" class="input input-bordered form-control" />
           </div>
-          <div class="form-control mt-6">
-            <button class="btn btn-primary">Login</button>
+
+          <div class="form-control mt-3">
+            <button class="btn btn-primary py-4">Continue</button>
           </div>
         </form>
+
+        <div class="divider divide-neutral-700 text-neutral-700 font-semibold mt-12">OR</div>
+
+        <a href="{{ route('login.social', 'google') }}" class="bg-accent text-white rounded-lg flex justify-center items-center gap-2 py-2 font-bold">
+          <i class="fa-brands fa-google"></i> Sign in with Google
+        </a>
+
       </div>
     </div>
   </div>
 
-  @include('layouts.public.footer')
 @endsection
 
 @section('js-footer')

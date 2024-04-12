@@ -7,7 +7,6 @@
 .btn {
     height: fit-content;
     min-height: fit-content;
-    padding: 0.4rem 1.3rem;
 }
 
 ::-webkit-scrollbar {
@@ -31,6 +30,13 @@
 
 .footer {
     bottom: -240px;
+}
+
+.invalid-feedback {
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #ef4444;
 }
 
 .was-validated .form-control:invalid,
@@ -101,3 +107,11 @@ table.dataTable th.dt-type-numeric {
     background-size: 30px;
     background-color: #0ea5e9;
 }
+
+.unselectable {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }

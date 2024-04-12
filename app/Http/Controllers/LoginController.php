@@ -20,23 +20,21 @@ class LoginController extends Controller
    {
       $login = $this->doLogin($request);
 
-      if ($login['status'] == true) {
-        // Temp Change
-         Session::flash('success-swal', 'Berhasil Masuk!');
-         if (@Auth::user()->role->id == 1) {
-            return redirect()->intended(route('admin.index')); //GANTI routenya
-         } else if (@Auth::user()->role->id == 2) {
-            return redirect()->intended(route('admin.index')); //GANTI routenya
-         } else if (@Auth::user()->role->id == 3) {
-            return redirect()->intended(route('admin.index')); //GANTI routenya
-         } else if (@Auth::user()->role->id == 4) {
-            return redirect()->intended(route('admin.index'));
-         }
-      } else {
-        // Temp Change
-         Session::flash('error-swal', 'Gagal Masuk!');
-         return redirect()->intended(route('login'));
-      };
+      if (!$login['status']) {
+         return redirect()->intended(route('login'))->with($login['type'], $login['msg']);
+      }
+
+      $roleId = Auth::user()->roles->first()->id;
+      $redirectRoute = null;
+
+      if ($roleId == 1) {
+         $redirectRoute = route('admin.index');
+      } else if (in_array($roleId, [2,3,4])) {
+         $redirectRoute = route('admin.index');
+      }
+
+      return redirect()->intended($redirectRoute)->with($login['type'], $login['msg']);
+
    }
 
    public function logout(Request $request)
@@ -90,7 +88,7 @@ class LoginController extends Controller
 
          $msg = [
             'status' => true,
-            'type' => 'success',
+            'type' => 'success-swal',
             'msg' => 'Selamat Datang',
          ];
       } else {

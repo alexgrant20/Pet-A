@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialAccountController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +21,14 @@ Route::get('/', function () {
 })->name('welcome');
 
 
-Route::middleware('guest')->controller(LoginController::class)->group(function () {
-    Route::get('/login', 'login')->name('login');
-    Route::post('/login', 'attemptLogin')->name('login.attempt');
-});
+Route::middleware('guest')
+    ->group(function () {
+        Route::get('/login', [LoginController::class, 'login'])->name('login');
+        Route::post('/login', [LoginController::class, 'attemptLogin'])->name('login.attempt');
+        Route::get('login/{provider}', [SocialAccountController::class, 'redirectToProvider'])->name('login.social');
+        Route::get('login/{provider}/callback', [SocialAccountController::class, 'handleProviderCallback']);
+    });
 
 Route::middleware('auth')->group(function () {
-   Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 });

@@ -125,6 +125,10 @@ return new class extends Migration
             $table->foreign('menu_id')->references('id')->on('menus')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreign('permission_id')->references('id')->on('permissions')->cascadeOnUpdate()->restrictOnDelete();
         });
+
+        Schema::table('linked_social_accounts', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
+        });
     }
 
     /**
