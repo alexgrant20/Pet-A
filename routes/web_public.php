@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\SocialAccountController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -25,6 +26,8 @@ Route::middleware('guest')
     ->group(function () {
         Route::get('/login', [LoginController::class, 'login'])->name('login');
         Route::post('/login', [LoginController::class, 'attemptLogin'])->name('login.attempt');
+        Route::get('/register', [RegisterController::class, 'create'])->name('register');
+        Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
         Route::get('login/{provider}', [SocialAccountController::class, 'redirectToProvider'])->name('login.social');
         Route::get('login/{provider}/callback', [SocialAccountController::class, 'handleProviderCallback']);
     });
@@ -32,3 +35,10 @@ Route::middleware('guest')
 Route::middleware('auth')->group(function () {
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+Route::middleware('auth')->get('/home', function () {
+    $isPetOwner = auth()->user()->roles->first()->id;
+
+    if($isPetOwner) return to_route('pet-owner.index');
+    return to_route('admin.index');
+})->name('home');

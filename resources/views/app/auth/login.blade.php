@@ -15,7 +15,7 @@
       <div class="flex flex-col justify-center flex-grow">
         <div>
           <h1 class="text-gray-800 text-4xl font-bold mb-3">Welcome Back!</h1>
-          <h2 class="text-gray-800 text-xl font-semibold">Don't have account? <a href="#" class="text-primary font-bold hover:underline">Sign Up</a></h2>
+          <h2 class="text-gray-800 text-xl font-semibold">Don't have account? <a href="{{ route('register') }}" class="text-primary font-bold hover:underline">Sign Up</a></h2>
         </div>
 
         <div class="divider divide-neutral-700 mb-12"></div>
@@ -36,12 +36,9 @@
           </div>
         </form>
 
-        <div class="divider divide-neutral-700 text-neutral-700 font-semibold mt-12">OR</div>
+        <div class="divider divide-neutral-700 text-neutral-400 mt-12">OR</div>
 
-        <a href="{{ route('login.social', 'google') }}" class="bg-accent text-white rounded-lg flex justify-center items-center gap-2 py-2 font-bold">
-          <i class="fa-brands fa-google"></i> Sign in with Google
-        </a>
-
+        @include("app.auth.components.__socialite")
       </div>
     </div>
   </div>

@@ -33,7 +33,6 @@ class SocialAccountController extends Controller
 
         auth()->login($authUser, true);
 
-        //CHANGE
-        return to_route('admin.index');
+        return to_route('home');
     }
 }

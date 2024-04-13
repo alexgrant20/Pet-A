@@ -24,17 +24,7 @@ class LoginController extends Controller
          return redirect()->intended(route('login'))->with($login['type'], $login['msg']);
       }
 
-      $roleId = Auth::user()->roles->first()->id;
-      $redirectRoute = null;
-
-      if ($roleId == 1) {
-         $redirectRoute = route('admin.index');
-      } else if (in_array($roleId, [2,3,4])) {
-         $redirectRoute = route('admin.index');
-      }
-
-      return redirect()->intended($redirectRoute)->with($login['type'], $login['msg']);
-
+      return redirect()->intended(route('home'))->with($login['type'], $login['msg']);
    }
 
    public function logout(Request $request)

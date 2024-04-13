@@ -25,6 +25,8 @@ class SocialAccountService
 					'email' => $providerUser->getEmail(),
 					'name'  => $providerUser->getName(),
 				]);
+
+				$user->assignRole('pet-owner');
 			}
 
 			$user->accounts()->create([

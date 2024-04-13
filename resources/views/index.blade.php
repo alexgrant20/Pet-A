@@ -8,7 +8,8 @@
 
     <section class="pt-20 hero min-h-screen bg-base-100" id="home">
       <div class="hero-content flex-col lg:flex-row-reverse gap-20">
-        <img data-aos="fade-left" data-aos-duration="1000" src="{{ asset('assets/horde-of-pet.png') }}" class="max-w-xl" />
+        <img data-aos="fade-left" data-aos-duration="1000" src="{{ asset('assets/horde-of-pet.png') }}"
+          class="max-w-xl unselectable" />
         <div data-aos="fade-right" data-aos-duration="1000" class="w-7/12">
           <h1 class="text-7xl text-gray-900 font-bold">Pet <span class="text-primary">personal</span> health care
           </h1>
@@ -16,7 +17,7 @@
             Keep your pet's well-being in check with just a tap, ensuring they lead a happy, healthy life by your side.
           </p>
           <div class="pt-6 flex items-center gap-2">
-            <a href="#" class="btn btn-primary rounded-full text-lg">Get Started</a>
+            <a href="#" class="btn btn-primary rounded-full text-lg px-5 py-2">Get Started</a>
           </div>
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 pt-4">
             <div class="card shadow-xl rounded-badge transition-shadow bg-base-200 cursor-pointer hover:shadow-2xl">
@@ -48,7 +49,7 @@
       </div>
     </section>
 
-    {{-- <section class="py-20 hero min-h-screen bg-base-200 flex flex-col" id="digitilize-data">
+    <section class="py-20 hero min-h-screen bg-base-200 flex flex-col" id="digitilize-data">
       <h2 class="text-6xl text-gray-900 font-bold"><span class="text-accent">Digitilize</span> Your Pet Data</h2>
       <div class="hero-content flex-col lg:flex-row-reverse gap-20">
         <img data-aos="fade-left" data-aos-duration="1000" src="{{ asset('assets/medical-book.svg') }}" class="max-w-sm"
@@ -106,13 +107,13 @@
             </label>
           </div>
           <div class="pt-6 flex items-center gap-2">
-            <a href="#" class="btn btn-primary rounded-full text-lg">Try Out Now</a>
+            <a href="#" class="btn btn-primary rounded-full text-lg px-5 py-2">Try Out Now</a>
           </div>
         </div>
       </div>
-    </section> --}}
+    </section>
 
-    {{-- @include('layouts.public.footer') --}}
+    @include('layouts.public.footer')
 
     <script>
       AOS.init({
