@@ -16,7 +16,7 @@
         {{ Breadcrumbs::render('pet-type') }}
       </div>
       <div>
-        <a href="{{ route('admin.petType.create') }}" class="btn btn-primary">Add Pet Type <i class="fa fa-solid fa-plus"></i></a>
+        <a href="{{ route('admin.petType.create') }}" class="btn btn-primary btn-padding">Add Pet Type <i class="fa fa-solid fa-plus"></i></a>
       </div>
     </div>
   </div>

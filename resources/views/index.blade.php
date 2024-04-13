@@ -17,7 +17,7 @@
             Keep your pet's well-being in check with just a tap, ensuring they lead a happy, healthy life by your side.
           </p>
           <div class="pt-6 flex items-center gap-2">
-            <a href="#" class="btn btn-primary rounded-full text-lg px-5 py-2">Get Started</a>
+            <a href="#" class="btn btn-primary rounded-full text-lg btn-padding">Get Started</a>
           </div>
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 pt-4">
             <div class="card shadow-xl rounded-badge transition-shadow bg-base-200 cursor-pointer hover:shadow-2xl">
@@ -107,7 +107,7 @@
             </label>
           </div>
           <div class="pt-6 flex items-center gap-2">
-            <a href="#" class="btn btn-primary rounded-full text-lg px-5 py-2">Try Out Now</a>
+            <a href="#" class="btn btn-primary rounded-full text-lg btn-padding">Try Out Now</a>
           </div>
         </div>
       </div>

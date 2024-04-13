@@ -24,7 +24,7 @@
     </ul>
   </div>
   <div class="navbar-end">
-    <a href="{{ route('login') }}" class="btn btn-primary text-base-100 rounded-full px-5 py-2">Login</a>
+    <a href="{{ route('login') }}" class="btn btn-primary text-base-100 rounded-full btn-padding">Login</a>
   </div>
 </div>
 </div>

@@ -8,14 +8,17 @@
     </div>
     <ul tabindex="5" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-80">
       <li>
-
-        <a href="#" class="card">
-          <div class="card-body">
-            <i class="fa-solid fa-bell text-xl text-amber-950"></i>
-            test
+        <a href="#">
+          <div class="flex flex-row gap-3 items-center">
+            <img alt="Tailwind CSS Navbar component"
+          src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" class="w-12 h-12 rounded-full" />
+            <div class="flex flex-col gap-2">
+              <span class="font-semibold">Dev</span>
+              {{-- TO-DO: Kalo textnya kepanjangan perlu di truncate --}}
+              <span>Hi Bro, Capek ya? Iya :"</span>
+            </div>
           </div>
         </a>
-
       </li>
     </ul>
   </div>

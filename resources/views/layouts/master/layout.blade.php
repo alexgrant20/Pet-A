@@ -7,12 +7,12 @@
   <div class="drawer drawer-open">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
-      @include('layouts.admin.navbar')
+      @include('layouts.master.navbar')
       <div class="py-5 px-6">
         @yield('content')
       </div>
     </div>
-    @include('layouts.admin.sidebar')
+    @include('layouts.master.sidebar')
   </div>
 
   @include('layouts.master.script')

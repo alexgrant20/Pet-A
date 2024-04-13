@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->get('/home', function () {
-    $isPetOwner = auth()->user()->roles->first()->id;
+    $isPetOwner = auth()->user()->roles->first()->id == 1;
 
     if($isPetOwner) return to_route('pet-owner.index');
     return to_route('admin.index');
