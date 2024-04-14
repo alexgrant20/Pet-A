@@ -14,7 +14,7 @@ class StorePetTypeRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'name' => 'required|unique:pet_types,name',
+			'name' => 'required|unique:pet_types,name,NULL,id,deleted_at,NULL',
 		];
 	}
 }

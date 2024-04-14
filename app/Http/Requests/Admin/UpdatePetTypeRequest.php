@@ -14,7 +14,7 @@ class UpdatePetTypeRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'name' => "required|unique:pet_types,name,{$this->petType->id}",
+			'name' => "required|unique:pet_types,name,{$this->petType->id},id,deleted_at,NULL",
 		];
 	}
 }

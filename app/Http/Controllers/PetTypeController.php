@@ -58,6 +58,9 @@ class PetTypeController extends Controller
 
     public function destroy(PetType $petType)
     {
-        //
+        // Add Validation
+        $petType->delete();
+
+        return to_route('admin.petType.index')->with('success-toast', 'Pet Type Successfully Deleted');
     }
 }
