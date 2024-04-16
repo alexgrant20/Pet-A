@@ -24,4 +24,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(LinkedSocialAccount::class);
     }
+
+    public function profile()
+    {
+        return $this->morphTo();
+    }
 }

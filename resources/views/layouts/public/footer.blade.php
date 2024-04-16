@@ -1,6 +1,8 @@
 <footer class="footer footer-center p-10 bg-primary text-primary-content absolute bottom-0">
   <aside>
-    <i class="fa-solid fa-bowl-food fa-4x"></i>
+    <div class="w-20">
+      <img src="{{ asset('assets/logo.svg') }}" alt="logo">
+    </div>
     <p class="font-bold">
       Pet-A Corp.
     </p>

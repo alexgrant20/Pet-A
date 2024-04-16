@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PetController;
+use App\Models\Pet;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    
+    
     return view('app.pet-owner.index');
 })->name('index');
+
+Route::resource('pet', PetController::class);

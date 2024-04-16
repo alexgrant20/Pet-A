@@ -4,16 +4,15 @@
 
 @section('content')
   <div class="min-h-screen bg-base-200 flex">
-    <div class="w-1/2 p-8 flex flex-col">
+    <div class="w-full lg:w-1/2 p-8 flex flex-col">
       <a href="{{ route('welcome') }}" class="flex items-center gap-1">
-        <img src="{{ asset('assets/temp_logo.png') }}" class="w-12" alt="">
-        <span class="font-bold">Pet-A</span>
+        <img src="{{ asset('assets/logo.svg') }}" class="w-20" alt="logo">
       </a>
       <div class="flex flex-col justify-center flex-grow">
         <div>
           <h1 class="text-gray-800 text-4xl font-bold mb-3">Register Now!</h1>
           <h2 class="text-gray-800 text-xl font-semibold">Already have account? <a href="{{ route('login') }}"
-              class="text-primary font-bold hover:underline">Sign In</a></h2>
+              class="link link-primary link-hover font-bold">Sign In</a></h2>
         </div>
 
         <div class="divider divide-neutral-700 mb-12"></div>
@@ -46,7 +45,7 @@
           </div>
 
           <div class="form-control mt-3">
-            <button class="btn btn-primary py-4">Continue</button>
+            <button class="btn btn-primary py-4 text-lg">Continue</button>
           </div>
         </form>
 
@@ -55,8 +54,8 @@
         @include('app.auth.components.__socialite')
       </div>
     </div>
-    <div class="w-1/2">
-      <img src="{{ asset('assets/login.jpg') }}" class="h-screen w-full unselectable" alt="dog and cat image">
+    <div class="w-1/2 hidden lg:block">
+      <img src="{{ asset('assets/pet-window.png') }}" class="h-screen w-full unselectable" alt="dog and cat image">
     </div>
   </div>
 @endsection

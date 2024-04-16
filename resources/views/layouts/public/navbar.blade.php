@@ -1,4 +1,4 @@
-<div class="navbar fixed top-0 z-10 backdrop-filter backdrop-blur-sm bg-opacity-0 bg-gray-400" id="navbar">
+<div class="navbar fixed top-0 z-10 rounded-xl" id="navbar">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -13,7 +13,7 @@
       </ul>
     </div>
     <a href="{{ route('welcome') }}" class="px-3">
-      <img class="w-12" src="{{ asset('assets/temp_logo.png') }}" alt="logo">
+      <img class="w-20" src="{{ asset('assets/logo.svg') }}" alt="logo">
     </a>
   </div>
   <div class="navbar-center hidden lg:flex">

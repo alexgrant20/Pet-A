@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Models\PetOwner;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -21,14 +22,17 @@ class RegisterController extends Controller
 	{
 		DB::beginTransaction();
 		try {
-			$user = User::create([
-				'id' => Str::uuid(),
+			$petOwner = new PetOwner([
 				'name' => $request->name,
-				'phone_number' => $request->phone_number,
+				'phone_number' => $request->phone_number
+			]);
+
+			$user = User::create([
 				'email' => $request->email,
 				'password' => Hash::make($request->password)
 			]);
 
+			$user->profile()->save($petOwner);
 			$user->assignRole('pet-owner');
 		} catch (\Exception $e) {
 			DB::rollBack();

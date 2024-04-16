@@ -18,7 +18,7 @@ use Laravel\Socialite\Facades\Socialite;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('app.index');
 })->name('welcome');
 
 
@@ -39,6 +39,6 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->get('/home', function () {
     $isPetOwner = auth()->user()->roles->first()->id == 1;
 
-    if($isPetOwner) return to_route('pet-owner.index');
+    if ($isPetOwner) return to_route('pet-owner.index');
     return to_route('admin.index');
 })->name('home');

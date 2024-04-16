@@ -35,4 +35,9 @@ class Veterinarian extends Model
     {
         return $this->hasMany(OnlineConsultation::class);
     }
+
+    public function user()
+    {
+        return $this->morphOne(User::class, 'profile');
+    }
 }

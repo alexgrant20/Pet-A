@@ -3,7 +3,7 @@
 
 @include('layouts.master.header')
 
-<body class="relative" style="max-width: 100vw; min-height: 100vh;">
+<body class="relative overflow-x-hidden" style="max-width: 100vw; min-height: 100vh;">
    @yield('content')
 
    @include('layouts.master.script')

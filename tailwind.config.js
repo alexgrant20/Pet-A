@@ -6,9 +6,22 @@ export default {
         "./resources/**/*.vue",
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
-    safelist: ["text-blue-600", "text-blue-900", "flex", "flex-wrap", "text-sm", "font-medium"],
+    safelist: [
+        "text-blue-600",
+        "text-blue-900",
+        "flex",
+        "flex-wrap",
+        "text-sm",
+        "font-medium",
+    ],
     theme: {
-        extend: {},
+        extend: {
+            spacing: {
+                100: "25rem",
+                128: "32rem",
+                144: "36rem",
+            },
+        },
     },
     plugins: [require("daisyui")],
     daisyui: {
