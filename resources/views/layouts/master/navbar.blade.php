@@ -1,7 +1,7 @@
-<div class="navbar z-10 bg-base-200 shadow-lg rounded-3xl sticky top-0">
+<div class="navbar z-10 bg-base-100 shadow-lg rounded-3xl sticky top-0">
   <div class="flex-1">
-    <a href="{{ route('home') }}" class="w-20">
-      <img src="{{ asset('assets/logo.svg') }}" alt="logo">
+    <a href="{{ route('home') }}" class="w-28">
+      <img src="{{ asset('assets/logo-square.png') }}" alt="logo">
     </a>
   </div>
   <div class="dropdown dropdown-end">

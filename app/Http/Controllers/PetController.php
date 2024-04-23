@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PetOwner\StorePetRequest;
+use App\Models\Breed;
+use App\Models\FieldAttachmentUpload;
+use App\Models\Pet;
+use App\Models\PetType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PetController extends Controller
 {
@@ -11,28 +17,40 @@ class PetController extends Controller
      */
     public function index()
     {
-        return view('app.pet-owner.pets.index');
+        $pets = auth()->user()->profile->pet;
+
+        return view('app.pet-owner.pets.index', compact('pets'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $petTypes = PetType::all();
+        $breeds = Breed::all();
+
+        return view('app.pet-owner.pets.create', compact('petTypes', 'breeds'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StorePetRequest $request)
     {
-        //
+        $payload = $request->validated();
+        $payload['pet_owner_id'] = Auth::user()->profile->id;
+
+        $pet = Pet::create($payload);
+
+        $file = $request->file('pet_image');
+        $directory = 'pet-image';
+        $fileName = 'test.' . $file->getClientOriginalExtension();
+        $file->storeAs($directory, $fileName);
+
+        $file = new FieldAttachmentUpload([
+            'path' => $directory . '/' . $fileName
+        ]);
+
+        $file->attachment()->associate($pet)->save();
+
+        return to_route('pet-owner.index')->with('success-toast', 'Pet Successfully Created');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //

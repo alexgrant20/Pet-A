@@ -40,4 +40,9 @@ class Pet extends Model
     {
         return $this->hasMany(PetAllergy::class);
     }
+
+    public function attachment()
+    {
+        return $this->morphMany(FieldAttachmentUpload::class, 'attachment');
+    }
 }

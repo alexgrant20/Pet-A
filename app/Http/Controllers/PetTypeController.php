@@ -36,7 +36,7 @@ class PetTypeController extends Controller
     {
         PetType::create($request->validated());
 
-        return to_route('admin.petType.index')->with('success-toast', 'Pet Type Successfully Created');
+        return to_route('admin.master.pet-type.index')->with('success-toast', 'Pet Type Successfully Created');
     }
 
     public function show(PetType $petType)
@@ -53,7 +53,7 @@ class PetTypeController extends Controller
     {
         $petType->update($request->validated());
 
-        return to_route('admin.petType.index')->with('success-toast', 'Pet Type Successfully Updated');
+        return to_route('admin.master.pet-type.index')->with('success-toast', 'Pet Type Successfully Updated');
     }
 
     public function destroy(PetType $petType)
@@ -61,6 +61,6 @@ class PetTypeController extends Controller
         // Add Validation
         $petType->delete();
 
-        return to_route('admin.petType.index')->with('success-toast', 'Pet Type Successfully Deleted');
+        return to_route('admin.master.pet-type.index')->with('success-toast', 'Pet Type Successfully Deleted');
     }
 }

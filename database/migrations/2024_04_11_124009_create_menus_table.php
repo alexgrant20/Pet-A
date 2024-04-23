@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('icon')->nullable();
             $table->string('label');
-            $table->string('link');
+            $table->string('route_names')->nullable();
             $table->string('order');
             $table->boolean('is_pet_owner')->default(false);
             $table->boolean('is_active')->default(true);

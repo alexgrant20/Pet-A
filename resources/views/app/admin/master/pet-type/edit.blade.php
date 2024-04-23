@@ -1,26 +1,20 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Pet Types')
-
-@section('css-extra')
-  <style>
-
-  </style>
-@endsection
+@section('title', 'Edit Pet Types')
 
 @section('content')
-  <div class="card bg-base-200 shadow-xl w-full mb-5">
+  <div class="card bg-base-100 shadow-xl w-full mb-5">
     <div class="card-body flex-row items-center justify-between">
       <div class="section-left">
-        <h1 class="font-bold text-2xl">Add Pet Types</h1>
+        <h1 class="font-bold text-2xl">Edit Pet Types</h1>
         {{ Breadcrumbs::render('pet-type-edit') }}
       </div>
     </div>
   </div>
 
-  <div class="card bg-base-200 shadow-xl w-full">
+  <div class="card bg-base-100 shadow-xl w-full">
     <div class="card-body">
-			<form action="{{ route('admin.petType.update', $petType->id) }}" method="POST">
+			<form action="{{ route('admin.master.pet-type.update', $petType->id) }}" method="POST">
 				@csrf
 				@method('PUT')
 

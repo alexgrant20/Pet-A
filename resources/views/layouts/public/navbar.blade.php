@@ -13,7 +13,7 @@
       </ul>
     </div>
     <a href="{{ route('welcome') }}" class="px-3">
-      <img class="w-20" src="{{ asset('assets/logo.svg') }}" alt="logo">
+      <img class="w-28" src="{{ asset('assets/logo-square.png') }}" alt="logo">
     </a>
   </div>
   <div class="navbar-center hidden lg:flex">

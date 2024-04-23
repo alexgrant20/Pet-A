@@ -1,7 +1,7 @@
 <footer class="footer footer-center p-10 bg-primary text-primary-content absolute bottom-0">
   <aside>
-    <div class="w-20">
-      <img src="{{ asset('assets/logo.svg') }}" alt="logo">
+    <div class="w-24">
+      <img class="" src="{{ asset('assets/logo-square-white.png') }}" alt="logo">
     </div>
     <p class="font-bold">
       Pet-A Corp.

@@ -1,6 +1,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>@yield('title')</title>
 
@@ -30,12 +31,19 @@
   <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"
     integrity="sha384-psIDNx7Y/ho1o7wMAeoqcHKy9mBMGLJhAkHTD8sMtuhrola/NRoTQyFDKLmAN4v1" crossorigin="anonymous"></script>
 
+  <!-- Select2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+    integrity="sha384-OXVF05DQEe311p6ohU11NwlnX08FzMCsyoXzGOaL+83dKAb3qS17yZJxESl8YrJQ" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"
+    integrity="sha384-d3UHjPdzJkZuk5H3qKYMLRyWLAQBJbby2yr2Q58hXXtAGF8RSNO9jpLDlKKPv5v3" crossorigin="anonymous"></script>
+
+
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script src="
-        https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js
-        "></script>
+          https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js
+          "></script>
   <link href="
     https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css
     " rel="stylesheet">

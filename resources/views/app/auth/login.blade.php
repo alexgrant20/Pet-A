@@ -9,7 +9,7 @@
     </div>
     <div class="w-full p-8 flex flex-col justify-center lg:w-1/2">
       <a href="{{ route('welcome') }}" class="flex items-center gap-1">
-        <img src="{{ asset('assets/logo.svg') }}" class="w-20" alt="logo">
+        <img src="{{ asset('assets/logo-square.png') }}" class="w-28" alt="logo">
       </a>
       <div class="flex flex-col justify-center flex-grow mx-auto w-full max-w-screen-md">
         <div>

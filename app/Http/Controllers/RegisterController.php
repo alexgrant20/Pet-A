@@ -22,17 +22,17 @@ class RegisterController extends Controller
 	{
 		DB::beginTransaction();
 		try {
-			$petOwner = new PetOwner([
+			$petOwner = PetOwner::create([
 				'name' => $request->name,
 				'phone_number' => $request->phone_number
 			]);
 
-			$user = User::create([
+			$user = new User ([
 				'email' => $request->email,
 				'password' => Hash::make($request->password)
 			]);
 
-			$user->profile()->save($petOwner);
+			$user->profile()->associate($petOwner)->save();
 			$user->assignRole('pet-owner');
 		} catch (\Exception $e) {
 			DB::rollBack();

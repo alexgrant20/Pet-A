@@ -1,15 +1,9 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Pet Types')
-
-@section('css-extra')
-  <style>
-
-  </style>
-@endsection
+@section('title', 'Add Pet Types')
 
 @section('content')
-  <div class="card bg-base-200 shadow-xl w-full mb-5">
+  <div class="card bg-base-100 shadow-xl w-full mb-5">
     <div class="card-body flex-row items-center justify-between">
       <div class="section-left">
         <h1 class="font-bold text-2xl">Add Pet Types</h1>
@@ -18,9 +12,9 @@
     </div>
   </div>
 
-  <div class="card bg-base-200 shadow-xl w-full">
+  <div class="card bg-base-100 shadow-xl w-full">
     <div class="card-body">
-			<form action="{{ route('admin.petType.store') }}" method="POST">
+			<form action="{{ route('admin.master.pet-type.store') }}" method="POST">
 				@csrf
 
 				<label class="form-control w-full mb-3">

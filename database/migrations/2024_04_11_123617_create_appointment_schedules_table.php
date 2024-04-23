@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('appoinments', function (Blueprint $table) {
+        Schema::create('appointment_schedules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pet_owner_id');
-            $table->unsignedBigInteger('clinic_id');
-            $table->unsignedBigInteger('appoinment_type_id');
             $table->unsignedBigInteger('veterinarian_id');
-            $table->text('appoinment_note')->nullable();
-            $table->dateTime ('reserved_at');
-            $table->text('summary')->nullable();
-            $table->dateTime ('finished_at');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->enum('day', ['monday', 'tuesday', 'wednesday', 'thrusday', 'friday', 'saturday', 'sunday']);
 
             $table->timestamps();
             $table->string('created_by')->nullable();
@@ -35,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appoinments');
+        Schema::dropIfExists('appointment_schedules');
     }
 };

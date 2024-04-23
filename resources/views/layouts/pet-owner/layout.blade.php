@@ -3,9 +3,14 @@
 
 @include('layouts.master.header')
 
-<body class="bg-base-100" style="max-width: 100vw; min-height: 100vh;">
+<body class="bg-base-100 relative" style="max-width: 100vw; min-height: 100vh;">
 	@include('layouts.master.navbar')
-	@yield('content')
+
+  <div class="pb-32 pt-10 px-5 ">
+    @yield('content')
+
+  </div>
+  @include('layouts.public.footer')
 
   @include('layouts.master.script')
   @include('layouts.master.alert-swal')

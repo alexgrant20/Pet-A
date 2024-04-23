@@ -6,7 +6,7 @@
   <div class="min-h-screen bg-base-200 flex">
     <div class="w-full lg:w-1/2 p-8 flex flex-col">
       <a href="{{ route('welcome') }}" class="flex items-center gap-1">
-        <img src="{{ asset('assets/logo.svg') }}" class="w-20" alt="logo">
+        <img src="{{ asset('assets/logo-square.png') }}" class="w-28" alt="logo">
       </a>
       <div class="flex flex-col justify-center flex-grow">
         <div>

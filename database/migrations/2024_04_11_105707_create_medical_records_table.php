@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('medical_records', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pet_id');
-            $table->unsignedBigInteger('appoinment_id');
+            $table->unsignedBigInteger('appointment_id');
             $table->string('name');
             $table->text('description');
             $table->dateTime('diagnosed_at');

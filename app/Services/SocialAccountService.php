@@ -30,7 +30,7 @@ class SocialAccountService
 					'email' => $providerUser->getEmail(),
 				]);
 
-				$user->profile()->save($petOwner);
+				$user->profile()->associate($petOwner)->save();
 				$user->assignRole('pet-owner');
 			}
 
@@ -38,7 +38,6 @@ class SocialAccountService
 				'provider_id'   => $providerUser->getId(),
 				'provider_name' => $provider,
 			]);
-
 
 			return $user;
 		}
