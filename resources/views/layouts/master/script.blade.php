@@ -21,7 +21,9 @@
       }
     });
 
-    $('.select-2').select2();
+    $('.select-2').select2({
+        placeholder: ''
+    });
   })
 </script>
 
