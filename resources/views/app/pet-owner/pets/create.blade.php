@@ -111,12 +111,12 @@
           url: "{{ route('master.breed') }}",
           data: {
             pet_type_id: $(this).val()
-          }
-          before: function () {
-            $('#breed_id').empty();
           },
-          success: function () {
-
+          before: function () {
+            $("#breed_id").select2("val", "");
+          },
+          success: function (data) {
+            $('#breed_id').select2({data});
           }
         })
       })

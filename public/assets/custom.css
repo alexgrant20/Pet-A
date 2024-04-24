@@ -114,4 +114,53 @@ table.dataTable th.dt-type-numeric {
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-  }
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: transparent;
+    border-radius: var(--rounded-btn, 0.5rem);
+    border-color: var(--fallback-bc, oklch(var(--bc) / 0.2));
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow {
+    top: auto;
+}
+
+.select2-selection__choice__remove {
+    color: var(--red) !important;
+}
+
+.select2-selection__choice__display {
+    color: var(--dark) !important;
+}
+
+.select2.select2-container.select2-container--default {
+    width: 100% !important;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+}
+
+select[readonly].select2-hidden-accessible
+    + .select2-container
+    .select2-selection {
+    background: #eee;
+    box-shadow: none;
+}
+
+select[readonly].select2-hidden-accessible
+    + .select2-container
+    .select2-selection__arrow,
+select[readonly].select2-hidden-accessible
+    + .select2-container
+    .select2-selection__clear {
+    display: none;
+}

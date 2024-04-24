@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class MasterController extends Controller
 {
-	public function cek(Request $request)
+	public function getBreed(Request $request)
 	{
-		if(!$request->ajax()) return;
+		if (!$request->ajax()) return;
 
-		$breeds = Breed::where('pet_type_id', $request->pet_type_id)->pluck('name', 'id');
-
-		return $breeds;
+		return Breed::where('pet_type_id', $request->pet_type_id)
+			->get()
+			->map(fn ($breed) => ['id' => $breed->id, 'text' => $breed->name]);
 	}
 }

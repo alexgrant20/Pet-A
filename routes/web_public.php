@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('master')
         ->name('master.')
         ->group(function () {
-            Route::post('/breed', [MasterController::class, 'cek'])->name('breed');
+            Route::post('/breed', [MasterController::class, 'getBreed'])->name('breed');
         });
 });
 

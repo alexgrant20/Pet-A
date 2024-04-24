@@ -4,11 +4,11 @@
 
 @section('content')
   <section>
-    <div class="flex justify-between">
+    <div class="flex justify-between mb-4">
       <h2 class="text-primary text-2xl font-bold">Pet Family</h2>
       <a href="{{ route('pet-owner.pet.create') }}" class="btn btn-primary btn-padding">Add Pet <i class="fa fa-solid fa-plus"></i></a>
     </div>
-    <div class="grid grid-cols-5 gap-4 overflow-auto w-full bg-base-200 rounded-2xl mb-3 p-3 shadow-xl no-scrollbar">
+    <div class="grid grid-cols-5 max-h-128 gap-4 overflow-auto w-full bg-base-200 rounded-2xl mb-3 p-3 shadow-xl no-scrollbar">
       @forelse ($pets as $pet)
         <div class="card card-compact bg-white shadow-xl">
           <figure class="w-full h-32">
