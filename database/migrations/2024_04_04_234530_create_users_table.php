@@ -17,7 +17,7 @@ return new class extends Migration
             $table->timestamp('attempt_login_active')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_login')->nullable();
-            $table->nullableUlidMorphs('profile');
+            $table->nullableMorphs('profile');
             $table->rememberToken();
 
             $table->timestamps();
