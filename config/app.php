@@ -1,5 +1,6 @@
 <?php
 
+use App\Interfaces\RoleInterface;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -185,7 +186,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'RoleInterface' => App\Interfaces\RoleInterface::class,
     ])->toArray(),
 
 ];
