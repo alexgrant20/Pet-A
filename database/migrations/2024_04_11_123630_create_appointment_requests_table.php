@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('clinic_id');
             $table->unsignedBigInteger('appointment_type_id');
             $table->unsignedBigInteger('veterinarian_id');
-            $table->boolean('is_accepted')->default(false);
+            $table->boolean('is_accepted')->nullable();
 
             $table->timestamps();
             $table->string('created_by')->nullable();

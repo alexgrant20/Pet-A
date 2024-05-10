@@ -20,7 +20,7 @@ class StorePetRequest extends FormRequest
 			'age' => 'nullable|numeric',
 			'weight' => 'nullable|decimal:0,2',
 			'gender' => 'nullable|in:m,f',
-			'pet_image' => 'nullable|file|image|mimes:png,jpg,jpeg'
+			'pet_image' => 'required|file|image|mimes:png,jpg,jpeg'
 		];
 	}
 }

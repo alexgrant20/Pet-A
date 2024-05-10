@@ -16,9 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('pet_owner_id');
             $table->unsignedBigInteger('breed_id');
             $table->string('name');
-            $table->smallInteger('age');
-            $table->mediumInteger('weight');
-            $table->enum('gender', ['m', 'f']);
+            $table->tinyInteger('age')->nullable();
+            $table->smallInteger('weight')->nullable();
+            $table->enum('gender', ['m', 'f'])->nullable();
 
             $table->timestamps();
             $table->string('created_by')->nullable();

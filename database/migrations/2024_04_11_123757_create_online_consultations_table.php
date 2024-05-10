@@ -18,7 +18,7 @@ return new class extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
             $table->decimal('rating')->nullable();
-            $table->boolean('is_finished')->default(false);
+            $table->boolean('is_finished')->nullable()->default(false);
 
             $table->timestamps();
         });

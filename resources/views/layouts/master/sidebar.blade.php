@@ -23,7 +23,7 @@
               <ul>
                 @foreach (@$menu['child'] as $child)
                   <li>
-                    <a href="{{ $child['link'] }}">{{ $child['label'] }}</a>
+                    <a href="{{ route($child['route_name']) }}">{{ $child['label'] }}</a>
                   </li>
                 @endforeach
               </ul>
@@ -31,7 +31,7 @@
           </li>
         @else
           <li>
-            <a class="nav-link" href="{{ $menu['link'] }}">
+            <a class="nav-link" href="{{ $menu['route_name'] }}">
               <i class="fa {{ @$menu['icon'] }}"></i>
               <span class="hidden md:block">
                 {{ @$menu['label'] }}

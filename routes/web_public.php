@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
         ->name('master.')
         ->group(function () {
             Route::post('/breed', [MasterController::class, 'getBreed'])->name('breed');
+            Route::post('/city', [MasterController::class, 'getCity'])->name('city');
         });
 });
 

@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('field_attachment_uploads', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('field_id');
             $table->string('path');
             $table->morphs('attachment');
+
             $table->timestamps();
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->softDeletesTz('deleted_at', precision: 0);
+            $table->string('deleted_by')->nullable();
         });
     }
 

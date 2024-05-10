@@ -12,7 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
-            $table->tinyInteger('is_active')->default(1);
+            $table->boolean('is_active')->nullable()->default(1);
             $table->tinyInteger('attempt_login')->nullable();
             $table->timestamp('attempt_login_active')->nullable();
             $table->timestamp('email_verified_at')->nullable();

@@ -17,6 +17,7 @@ return new class extends Migration
 
         Schema::table('pet_owners', function (Blueprint $table) {
             $table->foreign('city_id')->references('id')->on('cities')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreign('province_id')->references('id')->on('provinces')->cascadeOnUpdate()->restrictOnDelete();
         });
 
         Schema::table('clinics', function (Blueprint $table) {
@@ -128,6 +129,10 @@ return new class extends Migration
 
         Schema::table('linked_social_accounts', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
+        });
+
+        Schema::table('field_attachment_uploads', function (Blueprint $table) {
+            $table->foreign('field_id')->references('id')->on('fields')->cascadeOnUpdate()->restrictOnDelete();
         });
     }
 

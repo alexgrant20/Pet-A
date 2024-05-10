@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('province_id');
             $table->string('name');
+            $table->string('alt_name');
             $table->decimal('latitude', 12, 9);
             $table->decimal('longitude', 12, 9);
 

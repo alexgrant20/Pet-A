@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone_number');
             $table->enum('gender', ['m', 'f']);
-            $table->smallInteger('length_of_service');
+            $table->tinyInteger('length_of_service');
 
             $table->timestamps();
             $table->string('created_by')->nullable();

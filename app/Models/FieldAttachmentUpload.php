@@ -11,7 +11,13 @@ class FieldAttachmentUpload extends Model
 
     protected $guarded = ['id'];
 
-    public function attachment() {
+    public function attachment()
+    {
         return $this->morphTo();
+    }
+
+    public function field()
+    {
+        return $this->belongsTo(Field::class);
     }
 }

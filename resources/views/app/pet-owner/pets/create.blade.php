@@ -10,7 +10,7 @@
 
       <div class="flex items-center flex-row-reverse gap-10">
          <div class="hidden w-1/2 xl:block">
-            <img class="unselectable" src="{{ asset('assets/circel-pets.svg') }}" alt="">
+            <img class="unselectable" src="{{ asset('assets/circel-pets.svg') }}" alt="pet image">
          </div>
          <form action="{{ route('pet-owner.pet.store') }}" enctype="multipart/form-data" method="POST"
             class="bg-base-100 shadow-2xl w-full xl:w-1/2 p-9">
@@ -27,7 +27,7 @@
                   <div class="label">
                      <span class="label-text font-semibold">Pet Name</span>
                   </div>
-                  <input type="text" name="name" placeholder="Type here"
+                  <input type="text" name="name"
                      class="input input-bordered w-full form-control" />
                </label>
 
@@ -59,7 +59,7 @@
                   <div class="label">
                      <span class="label-text font-semibold">Age</span>
                   </div>
-                  <input type="text" placeholder="Type here" class="input input-bordered w-full form-control"
+                  <input type="text" class="input input-bordered w-full form-control"
                      name="age" />
                </label>
 
@@ -67,7 +67,7 @@
                   <div class="label">
                      <span class="label-text font-semibold">Weight</span>
                   </div>
-                  <input type="text" placeholder="Type here" class="input input-bordered w-full form-control"
+                  <input type="text" class="input input-bordered w-full form-control"
                      name="weight" />
                </label>
 
@@ -92,20 +92,10 @@
    <script>
       $(function() {
          $('#pet_image').change(function() {
-            const input = this;
-            const url = $(this).val();
-            const ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-            if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext ==
-                  "jpg")) {
-               const reader = new FileReader();
-
-               reader.onload = function(e) {
-                  $('#pet_image_preview').attr('src', e.target.result);
-               }
-               reader.readAsDataURL(input.files[0]);
-            } else {
-               $('#pet_image_preview').attr('src', "{{ asset('assets/default-pet.jpg') }}");
-            }
+            previewImageWithSelector(
+              this,
+              '#pet_image_preview',
+              "{{ asset('assets/default-pet.jpg') }}")
          });
 
          $('#pet_type_id').change(function() {

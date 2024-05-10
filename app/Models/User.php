@@ -10,23 +10,23 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, SoftDeletes, HasRoles, HasUuids;
+  use HasFactory, SoftDeletes, HasRoles, HasUuids;
 
-    protected $guarded = [''];
-    protected $hidden = ['password'];
+  protected $guarded = [''];
+  protected $hidden = ['password'];
 
-    public function notification()
-    {
-        return $this->hasMany(Notification::class);
-    }
+  public function notification()
+  {
+    return $this->hasMany(Notification::class);
+  }
 
-    public function accounts()
-    {
-        return $this->hasMany(LinkedSocialAccount::class);
-    }
+  public function accounts()
+  {
+    return $this->hasMany(LinkedSocialAccount::class);
+  }
 
-    public function profile()
-    {
-        return $this->morphTo();
-    }
+  public function profile()
+  {
+    return $this->morphTo();
+  }
 }

@@ -12,7 +12,6 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         PetOwner::create([
-            'id' => 1,
             'name' => 'Pet Owner Dummy'
         ])
             ->user()

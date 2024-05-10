@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\LinkedSocialAccount;
 use App\Models\PetOwner;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Laravel\Socialite\Contracts\User as ProviderUser;
 
 class SocialAccountService
@@ -18,27 +19,33 @@ class SocialAccountService
 		if ($account) {
 			return $account->user;
 		} else {
-
 			$user = User::firstWhere('email', $providerUser->getEmail());
 
-			if (!$user) {
-				$petOwner = PetOwner::create([
-					'name'  => $providerUser->getName(),
-				]);
+      try{
+        DB::beginTransaction();
+        if (!$user) {
+          $petOwner = PetOwner::create([
+            'name'  => $providerUser->getName(),
+          ]);
 
-				$user = new User([
-					'email' => $providerUser->getEmail(),
-				]);
+          $user = new User([
+            'email' => $providerUser->getEmail(),
+          ]);
 
-				$user->profile()->associate($petOwner)->save();
-				$user->assignRole('pet-owner');
-			}
+          $user->profile()->associate($petOwner)->save();
+          $user->assignRole('pet-owner');
+        }
 
-			$user->accounts()->create([
-				'provider_id'   => $providerUser->getId(),
-				'provider_name' => $provider,
-			]);
+        $user->accounts()->create([
+          'provider_id'   => $providerUser->getId(),
+          'provider_name' => $provider,
+        ]);
+      } catch (\Exception $e) {
+        DB::rollBack();
+        abort(500);
+      }
 
+      DB::commit();
 			return $user;
 		}
 	}

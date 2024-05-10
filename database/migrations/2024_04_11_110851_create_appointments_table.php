@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('appointment_note')->nullable();
             $table->dateTime ('reserved_at');
             $table->text('summary')->nullable();
-            $table->dateTime ('finished_at');
+            $table->dateTime('finished_at')->nullable();
 
             $table->timestamps();
             $table->string('created_by')->nullable();

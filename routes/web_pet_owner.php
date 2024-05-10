@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\PetOwner\AppoinmentController;
+use App\Http\Controllers\PetOwner\MedicalRecordController;
+use App\Http\Controllers\PetOwner\OnlineConsultationController;
+use App\Http\Controllers\PetOwner\ProfileController;
+use App\Http\Controllers\PetOwner\VaccinationController;
 use App\Models\Pet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +28,11 @@ Route::get('/', function () {
 })->name('index');
 
 Route::resource('pet', PetController::class);
+Route::get('/vaccination', [VaccinationController::class, 'index'])->name('vaccination.index');
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+Route::put('/profile/{petOwner}', [ProfileController::class, 'update'])->name('profile.update');
+
+Route::resource('/online-consultation', OnlineConsultationController::class);
+Route::resource('/appoinment', AppoinmentController::class);
+Route::get('/medical-record',[MedicalRecordController::class, 'index'])->name('medical-record.index');

@@ -86,10 +86,16 @@ class MenuServiceProvider extends ServiceProvider
       view()->composer(
          'layouts.master.sidebar',
          function ($view) {
-            $iePetOwner = Auth::user()->roles[0]->id == 1;
-            $parentMenu = $iePetOwner ?  $this->petOwnerMenu() : $this->adminMenu();
+            $isPetOwner = Auth::user()->roles[0]->id == 1;
+            $parentMenu = $isPetOwner ?  $this->petOwnerMenu() : $this->adminMenu();
 
             View::share('menus', $parentMenu);
+         }
+      );
+      view()->composer(
+         'layouts.pet-owner.navbar',
+         function ($view) {
+            View::share('menus', $this->petOwnerMenu());
          }
       );
    }

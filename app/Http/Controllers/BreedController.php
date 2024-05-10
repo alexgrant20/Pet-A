@@ -11,9 +11,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class BreedController extends Controller
 {
-    public function getList()
+    public function getList(Request $request)
     {
-        $breeds = Breed::with('petType')->get();
+        $breeds = Breed::with('petType')
+        ->when($request->pet_type_id, fn($q) => $q->where('pet_type_id', $request->pet_type_id))
+        ->get();
 
         return DataTables::of($breeds)
             ->addIndexColumn()
@@ -25,7 +27,7 @@ class BreedController extends Controller
 
     public function index(Request $request)
     {
-        $petTypeId = $request->petTypeId;
+        $petTypeId = $request->pet_type_id;
 
         return view('app.admin.master.breed.index', compact('petTypeId'));
     }

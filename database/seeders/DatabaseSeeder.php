@@ -12,6 +12,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             MenuSeeder::class,
+            FieldSeeder::class,
+            PetMasterSeeder::class,
+            Locationseeder::class,
         ]);
     }
 }

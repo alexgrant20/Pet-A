@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pet_owners', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('province_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->string('name');
             $table->string('address')->nullable();

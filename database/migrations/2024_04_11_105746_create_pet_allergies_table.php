@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pet_id');
             $table->string('name');
-            $table->text('note');
+            $table->text('note')->nullable();
 
             $table->timestamps();
             $table->string('created_by')->nullable();

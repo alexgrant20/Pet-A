@@ -4,7 +4,7 @@
 @include('layouts.master.header')
 
 <body class="bg-base-100 relative" style="max-width: 100vw; min-height: 100vh;">
-	@include('layouts.master.navbar')
+	@include('layouts.pet-owner.navbar')
 
   <div class="pb-32 pt-10 px-5 ">
     @yield('content')

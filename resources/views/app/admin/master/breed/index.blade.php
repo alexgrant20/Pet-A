@@ -44,7 +44,7 @@
         processing: true,
         serverSide: true,
         autoWidth: false,
-        ajax: "{{ route('admin.master.list.breed') }}",
+        ajax: "{{ route('admin.master.list.breed', ['pet_type_id' => $petTypeId]) }}",
         columns: [{
             data: 'DT_RowIndex',
             name: 'DT_RowIndex',
