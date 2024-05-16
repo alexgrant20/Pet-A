@@ -12,6 +12,11 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
+            $table->string('name');
+            $table->string('address')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->enum('gender', ['m', 'f'])->nullable();
+            $table->string('phone_number')->nullable();
             $table->boolean('is_active')->nullable()->default(1);
             $table->tinyInteger('attempt_login')->nullable();
             $table->timestamp('attempt_login_active')->nullable();

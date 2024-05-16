@@ -14,11 +14,6 @@ return new class extends Migration
         Schema::create('veterinarians', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('clinic_id');
-            $table->string('name');
-            $table->date('birth_date');
-            $table->string('address');
-            $table->string('phone_number');
-            $table->enum('gender', ['m', 'f']);
             $table->tinyInteger('length_of_service');
 
             $table->timestamps();
