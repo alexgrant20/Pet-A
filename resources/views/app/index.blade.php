@@ -6,7 +6,7 @@
   <div>
     @include('layouts.public.navbar')
 
-    <section class="pt-20 hero min-h-screen bg-base-100" id="home">
+    <section class="pt-20 hero min-h-screen bg-base-200" id="home">
       <div class="hero-content h-full flex-col lg:flex-row-reverse gap-20 justify-end relative">
         <img src="{{ asset('assets/hero-page-image.png') }}"
           class="w-screen h-screen absolute right-0 bottom-0" />
@@ -19,67 +19,32 @@
           <div class="pt-6 flex items-center gap-2">
             <a href="#" class="btn btn-primary rounded-full text-lg btn-padding">Get Started</a>
           </div>
-          {{-- <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 pt-4">
-            <div class="card shadow-xl rounded-badge transition-shadow bg-base-200 cursor-pointer hover:shadow-2xl">
-              <div class="card-body items-center text-center">
-                <i class="fa-solid fa-paw fa-2x p-4 bg-primary text-primary-content rounded-full"></i>
-                <p class="text-3xl font-bold text-gray-900">30k+</p>
-                <h2 class="text-xl font-semibold text-gray-900">Pet</h2>
-                <p class="text-sm text-gray-500">spread arround indonesia</p>
-              </div>
-            </div>
-            <div class="card shadow-xl rounded-badge transition-shadow bg-base-200 cursor-pointer hover:shadow-2xl">
-              <div class="card-body items-center text-center">
-                <i class="fa-solid fa-hospital text-3xl p-4 bg-primary text-primary-content rounded-full"></i>
-                <p class="text-3xl font-bold text-gray-900">100+</p>
-                <h2 class="text-xl font-semibold text-gray-900">Clinic</h2>
-                <p class="text-sm text-gray-500">spread arround indonesia</p>
-              </div>
-            </div>
-            <div class="card shadow-xl rounded-badge transition-shadow bg-base-200 cursor-pointer hover:shadow-2xl">
-              <div class="card-body items-center text-center">
-                <i class="fa-solid fa-user-doctor fa-2x p-4 bg-primary text-primary-content rounded-full"></i>
-                <p class="text-3xl font-bold text-gray-900">500+</p>
-                <h2 class="text-xl font-semibold text-gray-900">Veterinary</h2>
-                <p class="text-sm text-gray-500">spread arround indonesia</p>
-              </div>
-            </div>
-          </div> --}}
         </div>
       </div>
     </section>
 
-    <section class="py-20 hero min-h-screen bg-base-200 flex flex-col" id="digitilize-data">
-      <h2 class="text-6xl text-gray-900 font-bold"><span class="text-accent">Digitilize</span> Your Pet Data</h2>
-      <div class="hero-content flex-col lg:flex-row-reverse gap-20">
-        <img data-aos="fade-left" data-aos-duration="1000" src="{{ asset('assets/medical-book.svg') }}" class="max-w-sm"
-          style="transform: rotate3d(1, 1, 1, 15deg);" />
-        <div data-aos="fade-right" data-aos-duration="1000" class="w-7/12">
-          <h3 class="text-5xl text-gray-900 font-bold">Good Bye to <span class="text-primary">Vaccination Books</span>
-          </h3>
-          <p class="pt-9 text-xl text-gray-500">
-            No more concerns about losing your vaccination book!
-          </p>
-        </div>
-      </div>
-      <div class="hero-content flex-col lg:flex-row gap-20">
-        <img data-aos="fade-left" data-aos-duration="1000" src="{{ asset('assets/medical-record.webp') }}"
-          class="max-w-sm" style="transform: rotate3d(1, 1, 1, 15deg);" />
-        <div data-aos="fade-right" data-aos-duration="1000" class="w-7/12">
+    <section class="pt-20 hero min-h-screen bg-base-200" id="digitilize-data">
+      <div class="hero-content h-full flex-col lg:flex-row-reverse gap-20 justify-end relative">
+        <img src="{{ asset('assets/pet-ktp.png') }}"
+          class="w-screen h-screen absolute right-0 bottom-0" />
+        <div data-aos="fade-right" data-aos-duration="1000" class="w-1/2">
           <h3 class="text-5xl text-gray-900 font-bold">Track your pet <span class="text-primary">medical record</span>
             easiliy</h3>
           <p class="pt-9 text-xl text-gray-500">
             No more concerns about losing track about your medical record!
           </p>
+          <div class="pt-6 flex items-center gap-2">
+            <a href="#" class="btn btn-primary rounded-full text-lg btn-padding">Get Started</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="pb-20 hero min-h-screen bg-base-200" id="notification">
-      <div class="hero-content flex-col lg:flex-row gap-20">
-        <img data-aos="fade-left" data-aos-duration="1000" src="{{ asset('assets/calendar-2.svg') }}" class="max-w-md"
-          style="transform: rotate3d(1, 1, 1, 15deg);" />
-        <div data-aos="fade-right" data-aos-duration="1000" class="w-7/12">
+    <section class="pt-20 hero min-h-screen bg-base-200" id="notification">
+      <div class="hero-content h-full flex-col lg:flex-row-reverse gap-20 justify-end relative">
+        <img src="{{ asset('assets/high-five-pet.png') }}"
+          class="w-screen h-screen absolute right-0 bottom-0" />
+        <div data-aos="fade-right" data-aos-duration="1000" class="w-1/2">
           <h2 class="text-6xl text-gray-900 font-bold">
             Never Miss a <span class="text-secondary">Health</span> Beat
           </h2>
