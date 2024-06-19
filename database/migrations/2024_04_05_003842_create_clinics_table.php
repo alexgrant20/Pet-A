@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('zip_code');
             $table->string('address');
-            $table->decimal('latitude', 12, 9);
-            $table->decimal('longitude', 12, 9);
+            $table->decimal('latitude', 12, 9)->nullable();
+            $table->decimal('longitude', 12, 9)->nullable();
 
             $table->timestamps();
             $table->string('created_by')->nullable();
