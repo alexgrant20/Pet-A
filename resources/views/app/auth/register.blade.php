@@ -22,25 +22,25 @@
 
           <div class="grid grid-cols-2 gap-3">
             <div class="form-control">
-              <input type="text" name="name" placeholder="Name" class="input input-bordered form-control" />
+              <input type="text" name="name" placeholder="Name" class="input input-bordered form-validation" />
             </div>
 
             <div class="form-control">
-              <input type="email" name="email" placeholder="Email" class="input input-bordered form-control" />
+              <input type="email" name="email" placeholder="Email" class="input input-bordered form-validation" />
             </div>
 
             <div class="form-control">
-              <input type="password" name="password" placeholder="Password" class="input input-bordered form-control" />
+              <input type="password" name="password" placeholder="Password" class="input input-bordered form-validation" />
             </div>
 
             <div class="form-control">
               <input type="password" name="password_confirmation" placeholder="Confirm Password"
-              class="input input-bordered form-control" />
+              class="input input-bordered form-validation" />
             </div>
 
             <div class="form-control col-span-full">
               <input type="text" name="phone_number" placeholder="Phone Number"
-              class="input input-bordered form-control" />
+              class="input input-bordered form-validation" />
             </div>
           </div>
 

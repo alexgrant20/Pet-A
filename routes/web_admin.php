@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\VeterinarianController;
 use App\Http\Controllers\AppointmentTypeController;
 use App\Http\Controllers\BreedController;
 use App\Http\Controllers\CityController;
@@ -11,6 +12,9 @@ use App\Http\Controllers\VaccinationTypeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('app.admin.index'))->name('index');
+
+Route::resource('veterinarian', VeterinarianController::class);
+Route::get('/list/veterinarian', [VeterinarianController::class, 'getList'])->name('veterinarian.list');
 
 Route::prefix('/master')->name('master.')->group(function () {
 	Route::resource('pet-type', PetTypeController::class, ['parameters' => ['pet-type' => 'petType']]);

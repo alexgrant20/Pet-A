@@ -22,21 +22,21 @@
 					<div class="label">
 						<span class="label-text font-semibold">Province</span>
 					</div>
-					<input type="text" value="{{ $province->name }}" name="name" class="input input-sm input-bordered w-full form-control" />
+					<input type="text" value="{{ $province->name }}" name="name" class="input input-bordered w-full form-validation" />
 				</label>
 
 				<label class="form-control w-full mb-3">
 					<div class="label">
 						<span class="label-text font-semibold">Latitude</span>
 					</div>
-					<input type="text" value="{{ $province->latitude }}" name="latitude" class="input input-sm input-bordered w-full form-control" />
+					<input type="text" value="{{ $province->latitude }}" name="latitude" class="input input-bordered w-full form-validation" />
 				</label>
 
 				<label class="form-control w-full mb-3">
 					<div class="label">
 						<span class="label-text font-semibold">Longitude</span>
 					</div>
-					<input type="text" value="{{ $province->longitude }}" name="longitude" class="input input-sm input-bordered w-full form-control" />
+					<input type="text" value="{{ $province->longitude }}" name="longitude" class="input input-bordered w-full form-validation" />
 				</label>
 
 				<div class="text-right">

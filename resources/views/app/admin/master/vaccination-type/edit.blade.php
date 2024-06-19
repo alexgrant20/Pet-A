@@ -22,7 +22,7 @@
 					<div class="label">
 						<span class="label-text font-semibold">Pet Type</span>
 					</div>
-					<select name="pet_type_id" class="input input-sm input-bordered">
+					<select name="pet_type_id" class="input input-bordered">
 						<option value=""></option>
 						@foreach ($petTypes as $petType)
 							<option value="{{ $petType->id }}" @selected($petType->id == $vaccinationType->pet_type_id)>{{ $petType->name }}</option>
@@ -34,7 +34,7 @@
 					<div class="label">
 						<span class="label-text font-semibold">Vaccination Types</span>
 					</div>
-					<input type="text" value="{{ $vaccinationType->name }}" name="name" class="input input-sm input-bordered w-full form-control" />
+					<input type="text" value="{{ $vaccinationType->name }}" name="name" class="input input-bordered w-full form-validation" />
 				</label>
 
 				<div class="text-right">

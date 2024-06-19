@@ -21,7 +21,7 @@
 					<div class="label">
 						<span class="label-text font-semibold">Medication Type</span>
 					</div>
-					<input type="text" name="name" class="input input-sm input-bordered w-full form-control" />
+					<input type="text" name="name" class="input input-bordered w-full form-validation" />
 				</label>
 
 				<div class="text-right">

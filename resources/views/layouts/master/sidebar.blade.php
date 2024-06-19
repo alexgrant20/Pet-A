@@ -31,7 +31,7 @@
           </li>
         @else
           <li>
-            <a class="nav-link" href="{{ $menu['route_name'] }}">
+            <a class="nav-link" href="{{ route($menu['route_name']) }}">
               <i class="fa {{ @$menu['icon'] }}"></i>
               <span class="hidden md:block">
                 {{ @$menu['label'] }}

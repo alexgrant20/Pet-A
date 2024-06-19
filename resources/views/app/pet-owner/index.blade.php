@@ -32,17 +32,31 @@
    </section>
 
    <section class="mb-9">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div class="col-span-2 grid grid-cols-2 gap-3 md:grid-cols-5">
-
-        </div>
-        <div id="calendar" class="h-100"></div>
-    </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+         <div class="card col-span-2">
+            <div class="card-body shadow-2xl">
+               <h1>Last Appoinment</h1>
+               <table>
+                  <thead>
+                     <th>test</th>
+                  </thead>
+                  <tbody>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <div id="calendar" class="h-100"></div>
+      </div>
    </section>
 @endsection
 
 @section('js-footer')
    <script>
+      $('table').DataTable({
+         bLengthChange: false,
+         autoWidth: false,
+      });
+
       document.addEventListener('DOMContentLoaded', function() {
          var calendarEl = document.getElementById('calendar');
          var calendar = new FullCalendar.Calendar(calendarEl, {

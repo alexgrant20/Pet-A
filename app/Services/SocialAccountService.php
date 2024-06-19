@@ -24,12 +24,11 @@ class SocialAccountService
       try{
         DB::beginTransaction();
         if (!$user) {
-          $petOwner = PetOwner::create([
-            'name'  => $providerUser->getName(),
-          ]);
+          $petOwner = PetOwner::create();
 
           $user = new User([
             'email' => $providerUser->getEmail(),
+            'name'  => $providerUser->getName()
           ]);
 
           $user->profile()->associate($petOwner)->save();
@@ -41,6 +40,7 @@ class SocialAccountService
           'provider_name' => $provider,
         ]);
       } catch (\Exception $e) {
+        dd($e->getMessage());
         DB::rollBack();
         abort(500);
       }

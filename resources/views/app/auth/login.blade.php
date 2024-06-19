@@ -26,11 +26,11 @@
           @csrf
 
           <div class="form-control">
-            <input type="email" name="email" placeholder="Email" class="input input-bordered form-control" />
+            <input type="email" name="email" placeholder="Email" class="input input-bordered form-validation" />
           </div>
 
           <div class="form-control">
-            <input type="password" name="password" placeholder="Password" class="input input-bordered form-control" />
+            <input type="password" name="password" placeholder="Password" class="input input-bordered form-validation" />
           </div>
 
           <div class="form-control mt-3">
