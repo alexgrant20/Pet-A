@@ -1,12 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\SocialAccountController;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,9 +47,4 @@ Route::middleware('auth')->group(function () {
       Route::post('/breed', [MasterController::class, 'getBreed'])->name('breed');
       Route::post('/city', [MasterController::class, 'getCity'])->name('city');
     });
-
-  Route::get('/messages', [ChatController::class, 'messages'])
-    ->name('messages');
-  Route::post('/message', [ChatController::class, 'message'])
-    ->name('message');
 });
