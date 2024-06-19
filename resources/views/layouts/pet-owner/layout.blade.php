@@ -3,13 +3,13 @@
 
 @include('layouts.master.header')
 
-<body class="bg-base-100 relative" style="max-width: 100vw; min-height: 100vh;">
+<body class="bg-base-100 relative min-h-screen max-w-[100vw]">
 	@include('layouts.pet-owner.navbar')
 
-  <div class="pb-32 pt-10 px-5 ">
+  <div class="pb-32 pt-10 px-5 min-h-screen">
     @yield('content')
-
   </div>
+
   @include('layouts.public.footer')
 
   @include('layouts.master.script')

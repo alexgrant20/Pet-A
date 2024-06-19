@@ -32,8 +32,23 @@ class UserSeeder extends Seeder
          ->assignRole('admin');
 
       Clinic::create([
-         'name' => 'Klinik Dummy'
-      ]);
+         'city_id' => 1106,
+         'name' => 'Clinic TEMPLATE',
+         'phone_number' => '0000000',
+         'zip_code' => '161666',
+         'address' => 'Jonggol, sebelahnya indomaret point',
+         'latitude' => 10,
+         'longitude' => 10,
+      ])
+         ->user()
+         ->create([
+            'id' => 'c3cea9b3-1bae-45fb-bda2-69e9c91addc6',
+            'name' => 'Clinic User-1',
+            'email' => 'clinicadmin@dev.io',
+            'password' => Hash::make('clinic_admin_test123')
+         ])
+         ->assignRole('clinic-admin');
+
       Veterinarian::create([
          'clinic_id' => 1,
          'length_of_service' => 1

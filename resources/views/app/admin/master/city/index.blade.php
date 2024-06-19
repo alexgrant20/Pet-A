@@ -21,6 +21,7 @@
         <thead>
           <tr>
             <th class="w-1/12">No</th>
+            <th>Province</th>
             <th>Name</th>
             <th class="w-2/12"></th>
           </tr>
@@ -51,6 +52,10 @@
           {
             data: 'name',
             name: 'name'
+          },
+          {
+            data: 'province.name',
+            name: 'province.name'
           },
           {
             data: 'action',

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('field_id');
             $table->string('path');
             $table->morphs('attachment');
-
             $table->timestamps();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();

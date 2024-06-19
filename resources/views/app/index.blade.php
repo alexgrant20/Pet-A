@@ -24,7 +24,7 @@
     </section>
 
     <section class="pt-20 hero min-h-screen bg-base-200" id="digitilize-data">
-      <div class="hero-content h-full flex-col lg:flex-row-reverse gap-20 justify-end relative">
+      <div class="hero-content h-full flex-row-reverse gap-20 justify-end relative">
         <img src="{{ asset('assets/pet-ktp.png') }}"
           class="w-screen h-screen absolute right-0 bottom-0" />
         <div data-aos="fade-right" data-aos-duration="1000" class="w-1/2">

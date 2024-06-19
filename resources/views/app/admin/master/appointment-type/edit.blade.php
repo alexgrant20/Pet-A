@@ -22,7 +22,7 @@
 					<div class="label">
 						<span class="label-text font-semibold">Appointment Type</span>
 					</div>
-					<input type="text" value="{{ $appointmentType->name }}" name="name" class="input input-sm input-bordered w-full form-control" />
+					<input type="text" value="{{ $appointmentType->name }}" name="name" class="input input-bordered w-full form-validation" />
 				</label>
 
 				<div class="text-right">

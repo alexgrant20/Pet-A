@@ -22,7 +22,7 @@
 					<div class="label">
 						<span class="label-text font-semibold">Province</span>
 					</div>
-					<select name="province_id" class="input input-sm input-bordered">
+					<select name="province_id" class="input input-bordered">
 						<option value=""></option>
 						@foreach ($provinces as $province)
 							<option value="{{ $province->id }}" @selected($city->province_id == $province->id)>{{ $province->name }}</option>
@@ -34,21 +34,21 @@
 					<div class="label">
 						<span class="label-text font-semibold">City</span>
 					</div>
-					<input type="text" value="{{ $city->name }}" name="name" class="input input-sm input-bordered w-full form-control" />
+					<input type="text" value="{{ $city->name }}" name="name" class="input input-bordered w-full form-validation" />
 				</label>
 
 				<label class="form-control w-full mb-3">
 					<div class="label">
 						<span class="label-text font-semibold">Latitude</span>
 					</div>
-					<input type="text" value="{{ $city->latitude }}" name="latitude" class="input input-sm input-bordered w-full form-control" />
+					<input type="text" value="{{ $city->latitude }}" name="latitude" class="input input-bordered w-full form-validation" />
 				</label>
 
 				<label class="form-control w-full mb-3">
 					<div class="label">
 						<span class="label-text font-semibold">Longitude</span>
 					</div>
-					<input type="text" value="{{ $city->longitude }}" name="longitude" class="input input-sm input-bordered w-full form-control" />
+					<input type="text" value="{{ $city->longitude }}" name="longitude" class="input input-bordered w-full form-validation" />
 				</label>
 
 

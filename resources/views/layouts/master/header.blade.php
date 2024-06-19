@@ -7,15 +7,21 @@
 
    @vite('resources/css/app.css')
 
+   <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+   <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+   <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+
    <script src="https://kit.fontawesome.com/1ddbafe114.js" crossorigin="anonymous"></script>
+
+   <!-- Fonts -->
+   <link rel="preconnect" href="https://fonts.bunny.net">
+   <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
    {{-- JQUERY --}}
    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-   <!-- Fonts -->
-   <link rel="preconnect" href="https://fonts.bunny.net">
-   <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
    {{-- Select2 --}}
    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"
@@ -45,7 +51,9 @@
    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
    <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
 
-   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js" integrity="sha256-i4vDW9EgtaJmeauDDymtNF2omPZ1fCKpf4w1gBlU1IE=" crossorigin="anonymous"></script>
+   {{-- Fill Calendar --}}
+   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"
+      integrity="sha256-i4vDW9EgtaJmeauDDymtNF2omPZ1fCKpf4w1gBlU1IE=" crossorigin="anonymous"></script>
 
    <link rel="stylesheet" href="{{ asset('assets/custom.css') }}">
 

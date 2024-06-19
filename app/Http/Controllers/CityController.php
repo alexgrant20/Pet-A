@@ -12,7 +12,7 @@ class CityController extends Controller
 {
     public function getList()
     {
-        $cities = City::all();
+        $cities = City::with('province')->get();
 
         return DataTables::of($cities)
             ->addIndexColumn()

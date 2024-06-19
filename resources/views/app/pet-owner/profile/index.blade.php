@@ -18,7 +18,7 @@
                   src="{{ asset($profilePicture ? $profilePicture->path : 'assets/user.svg') }}"
                   alt="profile image">
                <input name="profile_image" id="profile_image" type="file"
-                  class="file-input file-input-primary file-input-bordered file-input-sm w-full max-w-xs" />
+                  class="file-input file-input-primary file-input-bordered file- w-full max-w-xs" />
             </div>
             <div class="grid grid-cols-2 gap-3">
                <label class="form-control w-full">
@@ -26,7 +26,7 @@
                      <span class="label-text font-semibold">Name</span>
                   </div>
                   <input type="text" name="name" value="{{ $user->profile->name }}"
-                     class="input input-bordered w-full form-control" />
+                     class="input input-bordered w-full form-validation" />
                </label>
 
                <label class="form-control w-full">
@@ -34,14 +34,14 @@
                      <span class="label-text font-semibold">Address</span>
                   </div>
                   <input type="text" name="address" value="{{ $user->profile->address }}"
-                     class="input input-bordered w-full form-control" />
+                     class="input input-bordered w-full form-validation" />
                </label>
                <label class="form-control w-full">
                   <div class="label">
                      <span class="label-text font-semibold">Phone Number</span>
                   </div>
                   <input type="text" name="phone_number" value="{{ $user->profile->phone_number }}"
-                     class="input input-bordered w-full form-control" />
+                     class="input input-bordered w-full form-validation" />
                </label>
                <label class="form-control w-full">
                   <div class="label">

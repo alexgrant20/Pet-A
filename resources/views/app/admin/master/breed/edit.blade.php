@@ -22,14 +22,14 @@
 					<div class="label">
 						<span class="label-text font-semibold">Breed</span>
 					</div>
-					<input value="{{ $breed->name }}" type="text" name="name" class="input input-sm input-bordered w-full form-control" />
+					<input value="{{ $breed->name }}" type="text" name="name" class="input input-bordered w-full form-validation" />
 				</label>
 
 				<label class="form-control w-full mb-3">
 					<div class="label">
 						<span class="label-text font-semibold">Pet Type</span>
 					</div>
-					<select name="pet_type_id" class="input input-sm input-bordered">
+					<select name="pet_type_id" class="input input-bordered">
 						<option value=""></option>
 						@foreach ($petTypes as $petType)
 							<option value="{{ $petType->id }}" @selected($petType->id == $breed->pet_type_id)>{{ $petType->name }}</option>

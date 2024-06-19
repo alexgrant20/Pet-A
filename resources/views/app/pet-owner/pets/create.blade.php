@@ -20,7 +20,7 @@
                <img id="pet_image_preview" class="w-full max-w-36 max-h-36" src="{{ asset('assets/default-pet.jpg') }}"
                   alt="">
                <input name="pet_image" id="pet_image" type="file"
-                  class="file-input file-input-primary file-input-bordered file-input-sm w-full max-w-xs" />
+                  class="file-input file-input-primary file-input-bordered file- w-full max-w-xs" />
             </div>
             <div class="grid grid-cols-2 gap-3 mb-5">
                <label class="form-control w-full">
@@ -28,7 +28,7 @@
                      <span class="label-text font-semibold">Pet Name</span>
                   </div>
                   <input type="text" name="name"
-                     class="input input-bordered w-full form-control" />
+                     class="input input-bordered w-full form-validation" />
                </label>
 
                <label class="form-control w-full">
@@ -59,7 +59,7 @@
                   <div class="label">
                      <span class="label-text font-semibold">Age</span>
                   </div>
-                  <input type="text" class="input input-bordered w-full form-control"
+                  <input type="text" class="input input-bordered w-full form-validation"
                      name="age" />
                </label>
 
@@ -67,7 +67,7 @@
                   <div class="label">
                      <span class="label-text font-semibold">Weight</span>
                   </div>
-                  <input type="text" class="input input-bordered w-full form-control"
+                  <input type="text" class="input input-bordered w-full form-validation"
                      name="weight" />
                </label>
 
