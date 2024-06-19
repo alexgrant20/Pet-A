@@ -19,7 +19,7 @@ class UpdateProfileRequest extends FormRequest
 			'address' => 'nullable',
 			'province_id' => 'nullable',
 			'city_id' => 'nullable',
-      'profile_image' => 'nullable|file'
+			'profile_image' => 'nullable|file'
 		];
 	}
 }

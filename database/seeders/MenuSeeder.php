@@ -112,5 +112,12 @@ class MenuSeeder extends Seeder
       'is_pet_owner' => true,
       'route_name' => 'pet-owner.medical-record.index',
     ]);
+
+    Menu::create([
+      'icon' => 'fa-users',
+      'label' => 'User Management',
+      'order' => 2,
+      'route_name' => 'admin.user-management.index'
+   ]);
   }
 }
