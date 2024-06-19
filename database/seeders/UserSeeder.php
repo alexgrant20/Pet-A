@@ -49,17 +49,6 @@ class UserSeeder extends Seeder
          ])
          ->assignRole('clinic-admin');
 
-      User::create([
-         'id' => '91550447-13c6-4b55-8644-452a261350c0',
-         'name' => 'pet-a god',
-         'email' => 'admin@dev.io',
-         'password' => Hash::make('admin_test123')
-      ])
-         ->assignRole('admin');
-
-      Clinic::create([
-         'name' => 'Klinik Dummy'
-      ]);
       Veterinarian::create([
          'clinic_id' => 1,
          'length_of_service' => 1
