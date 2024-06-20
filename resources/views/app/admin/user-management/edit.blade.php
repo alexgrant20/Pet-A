@@ -99,7 +99,7 @@
                      <select name="city" id="city" class="select select-bordered select-sm w-full max-w-xs">
                         <option value="" hidden></option>
                         @foreach ($cities as $city)
-                           <option value="{{ $city->id }}" @selected($user->clinic->city_id == $city->id)>{{ $city->name }}</option>
+                           <option value="{{ $city->id }}" @selected($user->profile->clinic->city_id == $city->id)>{{ $city->name }}</option>
                         @endforeach
                      </select>
                   </div>
