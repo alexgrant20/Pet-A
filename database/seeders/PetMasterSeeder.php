@@ -13,7 +13,7 @@ class PetMasterSeeder extends Seeder
   {
     PetType::insert([['name' => 'anjing'], ['name' => 'kucing']]);
 
-    $file_path = asset('sql/breeds.sql');
+    $file_path = public_path('sql/breeds.sql');
 
     DB::unprepared(
       file_get_contents($file_path)

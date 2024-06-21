@@ -11,7 +11,7 @@ class Locationseeder extends Seeder
 {
   public function run(): void
   {
-    $json = file_get_contents(asset('sql/provinces.json'));
+    $json = file_get_contents(public_path('sql/provinces.json'));
     $provinces = json_decode($json);
 
     foreach($provinces as $province)
@@ -25,7 +25,7 @@ class Locationseeder extends Seeder
       ]);
     }
 
-    $json = file_get_contents(asset('sql/regencies.json'));
+    $json = file_get_contents(public_path('sql/regencies.json'));
     $cities = json_decode($json);
 
     foreach($cities as $city)
