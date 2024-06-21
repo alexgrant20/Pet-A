@@ -25,7 +25,7 @@ class Veterinarian extends Model
 
    public function appointmentSchedule()
    {
-      return $this->hasMany(AppoinmentSchedule::class);
+      return $this->hasMany(AppointmentSchedule::class);
    }
 
    public function appointment()
