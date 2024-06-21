@@ -93,10 +93,10 @@ class MenuSeeder extends Seeder
     ]);
 
     Menu::create([
-      'label' => 'Appoinment',
+      'label' => 'Appointment',
       'order' => 3,
       'is_pet_owner' => true,
-      'route_name' => 'pet-owner.appoinment.index',
+      'route_name' => 'pet-owner.appointment.index',
     ]);
 
     Menu::create([
