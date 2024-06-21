@@ -16,9 +16,9 @@ class MedicalRecord extends Model
         return $this->hasManyThrough(PetMedication::class, MedicalRecordTreatment::class);
     }
 
-    public function appoinment()
+    public function appointment()
     {
-        return $this->belongsTo(Appoinment::class);
+        return $this->belongsTo(Appointment::class);
     }
 
     public function pet()

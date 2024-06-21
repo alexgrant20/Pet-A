@@ -30,7 +30,7 @@ class Veterinarian extends Model
 
    public function appointment()
    {
-      return $this->hasMany(Appoinment::class);
+      return $this->hasMany(Appointment::class);
    }
 
    public function onlineConsultation()

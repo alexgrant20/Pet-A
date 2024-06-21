@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Clinic extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRoles;
 
     protected $guarded = ['id'];
 
@@ -21,14 +22,14 @@ class Clinic extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function appoinment()
+    public function appointment()
     {
-        return $this->hasMany(Appoinment::class);
+        return $this->hasMany(Appointment::class);
     }
 
-    public function appoinmentRequest()
+    public function appointmentRequest()
     {
-        return $this->hasMany(AppoinmentRequest::class);
+        return $this->hasMany(AppointmentRequest::class);
     }
 
     public function user()
