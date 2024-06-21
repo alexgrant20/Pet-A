@@ -34,5 +34,5 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index
 Route::put('/profile/{petOwner}', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::resource('/online-consultation', OnlineConsultationController::class);
-Route::resource('/appoinment', AppoinmentController::class);
+Route::resource('/appointment', AppoinmentController::class);
 Route::get('/medical-record',[MedicalRecordController::class, 'index'])->name('medical-record.index');

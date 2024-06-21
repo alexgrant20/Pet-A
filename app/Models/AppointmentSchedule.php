@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AppoinmentSchedule extends Model
+class AppointmentSchedule extends Model
 {
     use HasFactory;
 
@@ -18,6 +18,6 @@ class AppoinmentSchedule extends Model
 
     public function appoinmentRequest()
     {
-        return $this->hasMany(AppoinmentRequest::class);
+        return $this->hasMany(AppointmentRequest::class);
     }
 }

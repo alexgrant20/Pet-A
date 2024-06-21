@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\PetOwner;
 
 use App\Http\Controllers\Controller;
-use App\Models\Appoinment;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 
 class AppoinmentController extends Controller
@@ -13,7 +13,7 @@ class AppoinmentController extends Controller
      */
     public function index()
     {
-        return view('app.pet-owner.appoinment.index');
+        return view('app.pet-owner.appointment.index');
     }
 
     /**
@@ -35,7 +35,7 @@ class AppoinmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Appoinment $medicalRecord)
+    public function show(Appointment $medicalRecord)
     {
         //
     }
@@ -43,7 +43,7 @@ class AppoinmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Appoinment $medicalRecord)
+    public function edit(Appointment $medicalRecord)
     {
         //
     }
@@ -51,7 +51,7 @@ class AppoinmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Appoinment $medicalRecord)
+    public function update(Request $request, Appointment $medicalRecord)
     {
         //
     }
@@ -59,7 +59,7 @@ class AppoinmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Appoinment $medicalRecord)
+    public function destroy(Appointment $medicalRecord)
     {
         //
     }

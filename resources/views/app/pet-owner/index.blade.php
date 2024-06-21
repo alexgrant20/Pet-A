@@ -35,7 +35,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
          <div class="card col-span-2">
             <div class="card-body shadow-2xl">
-               <h1>Last Appoinment</h1>
+               <h1>Last Appointment</h1>
                <table>
                   <thead>
                      <th>test</th>

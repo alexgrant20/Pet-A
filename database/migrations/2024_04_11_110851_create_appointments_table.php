@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('clinic_id');
             $table->unsignedBigInteger('appointment_type_id');
             $table->unsignedBigInteger('veterinarian_id');
+            $table->unsignedBigInteger('appointment_schedule_id');
             $table->text('appointment_note')->nullable();
             $table->dateTime ('reserved_at');
             $table->text('summary')->nullable();

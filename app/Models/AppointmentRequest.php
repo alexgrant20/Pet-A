@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Appoinment extends Model
+class AppointmentRequest extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function medicalRecord()
-    {
-        return $this->hasMany(MedicalRecord::class);
-    }
-
     public function petOwner()
     {
         return $this->belongsTo(PetOwner::class);
+    }
+
+    public function appoinmentSchedule()
+    {
+        return $this->belongsTo(AppointmentSchedule::class);
     }
 
     public function clinic()
@@ -28,7 +28,7 @@ class Appoinment extends Model
 
     public function appoinmentType()
     {
-        return $this->belongsTo(AppoinmentType::class);
+        return $this->belongsTo(AppointmentType::class);
     }
 
     public function veterinarian()
