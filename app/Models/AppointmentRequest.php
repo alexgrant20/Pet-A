@@ -16,7 +16,7 @@ class AppointmentRequest extends Model
         return $this->belongsTo(PetOwner::class);
     }
 
-    public function appoinmentSchedule()
+    public function appointmentSchedule()
     {
         return $this->belongsTo(AppointmentSchedule::class);
     }
@@ -26,7 +26,7 @@ class AppointmentRequest extends Model
         return $this->belongsTo(Clinic::class);
     }
 
-    public function appoinmentType()
+    public function appointmentType()
     {
         return $this->belongsTo(AppointmentType::class);
     }

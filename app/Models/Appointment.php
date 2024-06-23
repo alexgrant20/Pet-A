@@ -26,7 +26,7 @@ class Appointment extends Model
         return $this->belongsTo(Clinic::class);
     }
 
-    public function appoinmentType()
+    public function appointmentType()
     {
         return $this->belongsTo(AppointmentType::class);
     }

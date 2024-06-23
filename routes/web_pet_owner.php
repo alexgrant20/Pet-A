@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\PetController;
-use App\Http\Controllers\PetOwner\AppoinmentController;
+use App\Http\Controllers\PetOwner\AppointmentController;
 use App\Http\Controllers\PetOwner\MedicalRecordController;
 use App\Http\Controllers\PetOwner\OnlineConsultationController;
 use App\Http\Controllers\PetOwner\ProfileController;
@@ -34,5 +34,5 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index
 Route::put('/profile/{petOwner}', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::resource('/online-consultation', OnlineConsultationController::class);
-Route::resource('/appointment', AppoinmentController::class);
+Route::resource('/appointment', AppointmentController::class);
 Route::get('/medical-record',[MedicalRecordController::class, 'index'])->name('medical-record.index');

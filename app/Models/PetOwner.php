@@ -28,9 +28,9 @@ class PetOwner extends Model
     return $this->hasMany(Appointment::class);
   }
 
-  public function appoinmentRequest()
+  public function appointmentRequest()
   {
-    return $this->hasMany(AppoinmentRequest::class);
+    return $this->hasMany(AppointmentRequest::class);
   }
 
   public function onlineConsultationRequest()
