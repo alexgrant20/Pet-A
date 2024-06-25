@@ -81,7 +81,7 @@ class UserManagementController extends Controller implements RoleInterface
             ->assignRole(self::ROLE_VETERINARIAN);
       } catch (\Exception $e) {
          DB::rollback();
-         return back()->with('error-toast', 'Berhasil Mengubah Data Pengguna');
+         return back()->with('error-toast', 'Dokter Hewan Gagal Ditambahkan');
       }
 
       DB::commit();
@@ -121,7 +121,7 @@ class UserManagementController extends Controller implements RoleInterface
          ]);
       } catch (\Exception $e) {
          DB::rollBack();
-         return back()->with('error-toast', 'Berhasil Mengubah Data Pengguna');
+         return back()->with('error-toast', 'Gagal Mengubah Data Pengguna');
       }
 
       DB::commit();
