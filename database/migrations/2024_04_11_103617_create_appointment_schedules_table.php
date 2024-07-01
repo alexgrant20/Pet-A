@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('veterinarian_id');
             $table->time('start_time', precision: 0);
-            $table->time('end_time', precision: 0);
-            $table->enum('day', ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu']);
+            $table->enum('day', ['1', '2', '3', '4', '5', '6', '7']);
 
             $table->timestamps();
             $table->string('created_by')->nullable();

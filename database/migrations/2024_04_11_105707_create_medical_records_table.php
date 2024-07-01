@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pet_id');
             $table->unsignedBigInteger('appointment_id');
-            $table->string('name');
+            $table->string('clinic_name');
+            $table->string('veterinarian_name');
+            $table->string('disease_name');
+            $table->string('medicine_name');
             $table->text('description');
             $table->dateTime('diagnosed_at');
 

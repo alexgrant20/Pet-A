@@ -6,6 +6,7 @@ use App\Models\Clinic;
 use App\Models\PetOwner;
 use App\Models\User;
 use App\Models\Veterinarian;
+use App\Models\VeterinarianPetType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,8 +19,9 @@ class UserSeeder extends Seeder
          ->create([
             'id' => 'e2d8f99f-7f8c-438d-a041-939ccbc35f1a',
             'name' => 'Pet Owner Dummy',
+            'phone_number' => '08123122342',
             'email' => 'pet_owner@dev.io',
-            'password' => 'petOwner123'
+            'password' => Hash::make('petOwner123')
          ])
          ->assignRole('pet-owner');
 
@@ -49,17 +51,33 @@ class UserSeeder extends Seeder
          ])
          ->assignRole('clinic-admin');
 
-      Veterinarian::create([
+      $veterinarian = Veterinarian::create([
          'clinic_id' => 1,
          'length_of_service' => 1
-      ])
-         ->user()
+      ]);
+
+      $veterinarian->user()
          ->create([
             'id' => '083a924c-3e20-4a3c-9479-336cb85ab5a5',
             'name' => 'Veterinarian Dummy',
+            'phone_number' => '081232847218',
             'email' => 'veterinarian@dev.io',
             'password' => Hash::make('veterinarian123')
          ])
          ->assignRole('veterinarian');
+
+      $veterinarian
+         ->attachment()
+         ->create([
+            'field_id' => 2,
+            'path' => 'storage/profile_image/veterinarian_dummy.jpg',
+            'attachment_type' => 'veterinarians',
+            'attachment_id' => 1
+         ]);
+
+      VeterinarianPetType::create([
+         'veterinarian_id' => $veterinarian->id,
+         'pet_type_id' => 1
+      ]);
    }
 }

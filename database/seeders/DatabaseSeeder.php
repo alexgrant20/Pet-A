@@ -15,6 +15,12 @@ class DatabaseSeeder extends Seeder
             PetMasterSeeder::class,
             Locationseeder::class,
             UserSeeder::class,
+            PetSeeder::class,
+            MedicationTypeSeeder::class,
+            VaccinationSeeder::class,
+            ServiceTypeSeeder::class,
+            AppointmentScheduleSeeder::class,
+            AppointmentSeeder::class,
         ]);
     }
 }

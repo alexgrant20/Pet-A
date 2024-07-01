@@ -112,18 +112,18 @@ Breadcrumbs::for('payment-type-edit', function (BreadcrumbTrail $trail) {
 	$trail->push('Update');
 });
 
-Breadcrumbs::for('vaccination-type', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('vaccination', function (BreadcrumbTrail $trail) {
 	$trail->parent('home-admin');
-	$trail->push('Vaccination Type', route('admin.master.vaccination-type.index'));
+	$trail->push('Vaccination', route('admin.master.vaccination.index'));
 });
 
-Breadcrumbs::for('vaccination-type-create', function (BreadcrumbTrail $trail) {
-	$trail->parent('vaccination-type');
-	$trail->push('Create', route('admin.master.vaccination-type.create'));
+Breadcrumbs::for('vaccination-create', function (BreadcrumbTrail $trail) {
+	$trail->parent('vaccination');
+	$trail->push('Create', route('admin.master.vaccination.create'));
 });
 
-Breadcrumbs::for('vaccination-type-edit', function (BreadcrumbTrail $trail) {
-	$trail->parent('vaccination-type');
+Breadcrumbs::for('vaccination-edit', function (BreadcrumbTrail $trail) {
+	$trail->parent('vaccination');
 	$trail->push('Update');
 });
 

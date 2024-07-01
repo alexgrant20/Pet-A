@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pet_owner_id');
+            $table->unsignedBigInteger('pet_id')->nullable();
             $table->unsignedBigInteger('clinic_id');
-            $table->unsignedBigInteger('appointment_type_id');
+            $table->unsignedBigInteger('service_type_id');
             $table->unsignedBigInteger('veterinarian_id');
             $table->unsignedBigInteger('appointment_schedule_id');
             $table->text('appointment_note')->nullable();
-            $table->dateTime ('reserved_at');
+            $table->date('appointment_date');
             $table->text('summary')->nullable();
             $table->dateTime('finished_at')->nullable();
 

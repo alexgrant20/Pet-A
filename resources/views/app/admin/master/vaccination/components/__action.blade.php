@@ -1,8 +1,8 @@
 <div class="join">
-  <a class="join-item btn btn-primary btn-padding" href="{{ route('admin.master.vaccination-type.edit', $vaccinationType->id) }}">
+  <a class="join-item btn btn-primary btn-padding" href="{{ route('admin.master.vaccination-type.edit', $vaccination->id) }}">
    <i class="fa fa-pencil"></i>
   </a>
-  <form action="{{ route('admin.master.vaccination-type.destroy', $vaccinationType->id) }}" method="POST">
+  <form action="{{ route('admin.master.vaccination-type.destroy', $vaccination->id) }}" method="POST">
     @csrf
     @method('DELETE')
 

@@ -14,6 +14,6 @@ class PetType extends Model
 
     public function vaccinationType()
     {
-        return $this->hasMany(VaccinationType::class);
+        return $this->hasMany(Vaccination::class);
     }
 }

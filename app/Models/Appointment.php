@@ -21,6 +21,11 @@ class Appointment extends Model
         return $this->belongsTo(PetOwner::class);
     }
 
+    public function pet()
+    {
+        return $this->belongsTo(Pet::class);
+    }
+
     public function clinic()
     {
         return $this->belongsTo(Clinic::class);
@@ -34,5 +39,10 @@ class Appointment extends Model
     public function veterinarian()
     {
         return $this->belongsTo(Veterinarian::class);
+    }
+
+    public function appointmentSchedule()
+    {
+        return $this->belongsTo(AppointmentSchedule::class);
     }
 }

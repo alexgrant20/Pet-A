@@ -9,7 +9,7 @@ use App\Http\Controllers\MedicationTypeController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\PetTypeController;
 use App\Http\Controllers\ProvinceController;
-use App\Http\Controllers\VaccinationTypeController;
+use App\Http\Controllers\VaccinationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('app.admin.index'))->name('index');
@@ -41,8 +41,8 @@ Route::prefix('/master')
       Route::resource('payment-type', PaymentTypeController::class, ['parameters' => ['payment-type' => 'paymentType']]);
       Route::get('/list/payment-type', [PaymentTypeController::class, 'getList'])->name('list.payment-type');
 
-      Route::resource('vaccination-type', VaccinationTypeController::class, ['parameters' => ['vaccination-type' => 'vaccinationType']]);
-      Route::get('/list/vaccination-type', [VaccinationTypeController::class, 'getList'])->name('list.vaccination-type');
+      Route::resource('vaccination', VaccinationController::class, ['parameters' => ['vaccination' => 'vaccination']]);
+      Route::get('/list/vaccination', [VaccinationController::class, 'getList'])->name('list.vaccination');
    });
 
 Route::resource('user-management', UserManagementController::class, ['parameters' => ['user-management' => 'user']]);

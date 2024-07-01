@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pet_vaccinations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pet_id');
-            $table->unsignedBigInteger('vaccination_type_id');
+            $table->unsignedBigInteger('vaccination_id');
             $table->dateTime('given_at');
             $table->uuid('given_by');
             $table->dateTime('verify_at');

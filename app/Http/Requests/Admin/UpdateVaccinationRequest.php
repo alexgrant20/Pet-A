@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreVaccinationTypeRequest extends FormRequest
+class UpdateVaccinationRequest extends FormRequest
 {
 	public function authorize()
 	{
@@ -14,7 +14,7 @@ class StoreVaccinationTypeRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'name' => 'required|unique:vaccination_types,name,NULL,id,deleted_at,NULL',
+			'name' => "required|unique:vaccinations,name,{$this->vaccination->id},id,deleted_at,NULL",
 			'pet_type_id' => 'required',
 		];
 	}

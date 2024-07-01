@@ -1,16 +1,16 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Vaccination Types')
+@section('title', 'Vaccination')
 
 @section('content')
   <div class="card bg-base-100 shadow-xl w-full mb-5">
     <div class="card-body flex-row items-center justify-between">
       <div>
-        <h1 class="font-bold text-2xl">Master Vaccination Type</h1>
-        {{ Breadcrumbs::render('vaccination-type') }}
+        <h1 class="font-bold text-2xl">Master Vaccination</h1>
+        {{ Breadcrumbs::render('vaccination') }}
       </div>
       <div>
-        <a href="{{ route('admin.master.vaccination-type.create') }}" class="btn btn-primary btn-padding">Add Vaccination Type <i class="fa fa-solid fa-plus"></i></a>
+        <a href="{{ route('admin.master.vaccination.create') }}" class="btn btn-primary btn-padding">Add Vaccination <i class="fa fa-solid fa-plus"></i></a>
       </div>
     </div>
   </div>
@@ -44,7 +44,7 @@
         processing: true,
         serverSide: true,
         autoWidth: false,
-        ajax: "{{ route('admin.master.list.vaccination-type') }}",
+        ajax: "{{ route('admin.master.list.vaccination') }}",
         columns: [{
             data: 'DT_RowIndex',
             name: 'DT_RowIndex',
