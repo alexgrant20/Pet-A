@@ -16,7 +16,7 @@ class PetVaccination extends Model
         return $this->belongsTo(Pet::class);
     }
 
-    public function vaccinaionType()
+    public function vaccination()
     {
         return $this->belongsTo(Vaccination::class);
     }

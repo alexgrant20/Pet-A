@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetOwner\AppointmentController;
+use App\Http\Controllers\PetOwner\AppointmentRequestController;
 use App\Http\Controllers\PetOwner\MedicalRecordController;
 use App\Http\Controllers\PetOwner\OnlineConsultationController;
 use App\Http\Controllers\PetOwner\ProfileController;
 use App\Http\Controllers\PetOwner\VaccinationController;
 use App\Models\Pet;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $pets = Auth::user()->profile->pet;
+
+    $pets->load('breed.petType', 'attachment');
+
+    $pets->map(function ($pet) {
+      $pet->thumbnail_image = $pet->attachment->first()->path;
+      $pet->gender = $pet->gender == 'm' ? 'Laki' : 'Perempuan';
+      $pet->birth_date = Carbon::parse($pet->birth_date)->format('d M Y');
+
+      return $pet;
+    });
+
 
     return view('app.pet-owner.index', compact('pets'));
 })->name('index');

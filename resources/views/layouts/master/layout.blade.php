@@ -3,7 +3,7 @@
 
 @include('layouts.master.header')
 
-<body class="bg-base-300" style="max-width: 100vw; min-height: 100vh;">
+<body class="bg-base-300 min-h-screen max-w-[100vw]">
   <div class="drawer drawer-open">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">

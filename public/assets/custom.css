@@ -165,3 +165,11 @@ select[readonly].select2-hidden-accessible
     .select2-selection__clear {
     display: none;
 }
+
+.active .bs-stepper-circle{
+   background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
+}
+
+.bs-stepper .step-trigger:focus{
+   color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
+}

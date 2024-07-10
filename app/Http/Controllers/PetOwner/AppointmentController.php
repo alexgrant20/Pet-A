@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PetOwner;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\Veterinarian;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -13,7 +14,9 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return view('app.pet-owner.appointment.index');
+      $veterinarians = Veterinarian::with('user', 'petType', 'attachment')->get();
+
+      return view('app.pet-owner.appointment.index', compact('veterinarians'));
     }
 
     /**
@@ -21,7 +24,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        //
+      return view('app.pet-owner.appointment.create');
     }
 
     /**
