@@ -161,3 +161,18 @@ Breadcrumbs::for('service-price-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('service-price');
 	$trail->push('Edit Service');
 });
+
+Breadcrumbs::for('appointment-schedule', function (BreadcrumbTrail $trail) {
+	$trail->parent('home-admin');
+	$trail->push('Jadwal Dokter Hewan', route('admin.appointment-schedule.index'));
+});
+
+Breadcrumbs::for('appointment-schedule-create', function (BreadcrumbTrail $trail) {
+	$trail->parent('appointment-schedule');
+	$trail->push('Tambah Jadwal Dokter Hewan', route('admin.appointment-schedule.create'));
+});
+
+Breadcrumbs::for('appointment-schedule-edit', function (BreadcrumbTrail $trail) {
+	$trail->parent('appointment-schedule');
+	$trail->push('Ubah Jadwal Dokter Hewan');
+});

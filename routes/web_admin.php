@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AppointmentScheduleController;
 use App\Http\Controllers\Admin\ServicePriceController;
 use App\Http\Controllers\Admin\VeterinarianController;
 use App\Http\Controllers\Admin\UserManagementController;
@@ -58,3 +59,13 @@ Route::prefix('/user-management')
 
 Route::resource('service-price', ServicePriceController::class, ['parameters' => ['service-price' => 'servicePrice']]);
 Route::get('/list/service-price', [ServicePriceController::class, 'getList'])->name('service-price.list');
+
+Route::resource('appointment-schedule', AppointmentScheduleController::class, ['parameters' => ['appointment-schedule' => 'appointmentSchedule']])->except(['edit', 'update', 'show']);
+Route::get('/list/appointment-schedule', [AppointmentScheduleController::class, 'getList'])->name('appointment-schedule.list');
+Route::prefix('/appointment-schedule')
+->controller(AppointmentScheduleController::class)
+->name('appointment-schedule.')
+->group(function() {
+   Route::get('/{day}/edit', 'edit')->name('edit');
+   Route::put('/{day}', 'update')->name('update');
+});
