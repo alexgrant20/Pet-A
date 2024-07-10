@@ -44,7 +44,8 @@ Route::middleware('auth')->group(function () {
   Route::prefix('master')
     ->name('master.')
     ->group(function () {
-      Route::post('/breed', [MasterController::class, 'getBreed'])->name('breed');
+      Route::get('/breed/{pet_type_id}', [MasterController::class, 'getBreed'])->name('breed');
+      Route::get('/vaccination/{pet_type_id}', [MasterController::class, 'getVaccination'])->name('vaccination');
       Route::post('/city', [MasterController::class, 'getCity'])->name('city');
     });
 });

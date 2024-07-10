@@ -16,9 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('pet_id');
             $table->unsignedBigInteger('vaccination_id');
             $table->dateTime('given_at');
-            $table->uuid('given_by');
-            $table->dateTime('verify_at');
-            $table->uuid('verify_by');
+            $table->string('given_by');
+            $table->dateTime('verify_at')->nullable();
+            $table->uuid('verify_by')->nullable();
 
             $table->timestamps();
             $table->string('created_by')->nullable();

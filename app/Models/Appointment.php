@@ -45,4 +45,9 @@ class Appointment extends Model
     {
         return $this->belongsTo(AppointmentSchedule::class);
     }
+
+    public function serviceType()
+    {
+        return $this->belongsTo(ServiceType::class);
+    }
 }

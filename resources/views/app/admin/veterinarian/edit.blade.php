@@ -29,7 +29,7 @@
                 </div>
               </label>
               <img id="profile_image_preview" class="w-36 h-36 rounded-md unselectable"
-                src="{{ asset($veterinarian->attachment->first()->path) }}" alt="profile image">
+                src="{{ asset($veterinarian->attachment->first()?->path) }}" alt="profile image">
             </div>
             <input name="profile_image" id="profile_image" type="file" class="hidden" accept=".png, .jpg, .jpeg" />
           </div>

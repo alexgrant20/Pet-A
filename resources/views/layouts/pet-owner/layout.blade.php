@@ -4,18 +4,23 @@
 @include('layouts.master.header')
 
 <body class="bg-base-100 relative min-h-screen max-w-[100vw]">
-	@include('layouts.pet-owner.navbar')
 
-  <div class="pb-32 pt-10 px-5 min-h-screen">
-    @yield('content')
-  </div>
+   <div class="drawer drawer-open">
+      <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+         @include('layouts.pet-owner.navbar')
+         <div class="pt-5 pb-20 px-6">
+            @yield('content')
+         </div>
+      </div>
+      @include('layouts.master.sidebar')
+   </div>
+   @include('layouts.public.footer')
 
-  @include('layouts.public.footer')
-
-  @include('layouts.master.script')
-  @include('layouts.master.alert-swal')
-  @include('layouts.master.toast')
-  @yield('js-footer')
+   @include('layouts.master.script')
+   @include('layouts.master.alert-swal')
+   @include('layouts.master.toast')
+   @yield('js-footer')
 </body>
 
 </html>

@@ -4,34 +4,6 @@
          <img src="{{ asset('assets/logo-square.png') }}" alt="logo">
       </a>
    </div>
-   <div class="navbar-center hidden lg:flex">
-      <ul class="menu menu-horizontal px-1">
-         @foreach (@$menus as $menu)
-            @if (count(@$menu['child']) > 0)
-               <li>
-                  <details>
-                     <summary>
-                        {{ @$menu['label'] }}
-                     </summary>
-                     <ul>
-                        @foreach (@$menu['child'] as $child)
-                           <li>
-                              <a href="{{ route($child['route_name']) }}">{{ $child['label'] }}</a>
-                           </li>
-                        @endforeach
-                     </ul>
-                  </details>
-               </li>
-            @else
-               <li>
-                  <a href="{{ route($menu['route_name']) }}">
-                     {{ @$menu['label'] }}
-                  </a>
-               </li>
-            @endif
-         @endforeach
-      </ul>
-   </div>
 
    <div class="navbar-end">
       <div class="dropdown dropdown-end">
