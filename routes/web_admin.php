@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ServicePriceController;
 use App\Http\Controllers\Admin\VeterinarianController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\AppointmentTypeController;
@@ -54,3 +55,6 @@ Route::prefix('/user-management')
       Route::get('/reset-password/{user}', 'resetPassword')->name('reset-password');
       Route::post('/reset-password/{user}/change', 'resetPasswordStore')->name('reset-password.change');
    });
+
+Route::resource('service-price', ServicePriceController::class, ['parameters' => ['service-price' => 'servicePrice']]);
+Route::get('/list/service-price', [ServicePriceController::class, 'getList'])->name('service-price.list');

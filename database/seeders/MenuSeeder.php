@@ -68,7 +68,7 @@ class MenuSeeder extends Seeder
       'label' => 'Vaccination Type',
       'order' => 8,
       'parent_id' => $masterMenu->id,
-      'route_name' => 'admin.master.vaccination-type.index'
+      'route_name' => 'admin.master.vaccination.index'
     ]);
 
     Menu::create([

@@ -146,3 +146,18 @@ Breadcrumbs::for('user-management-change-password', function (BreadcrumbTrail $t
 	$trail->parent('user-management');
 	$trail->push('Ubah Kata Sandi');
 });
+
+Breadcrumbs::for('service-price', function (BreadcrumbTrail $trail) {
+	$trail->parent('home-admin');
+	$trail->push('Service', route('admin.service-price.index'));
+});
+
+Breadcrumbs::for('service-price-create', function (BreadcrumbTrail $trail) {
+	$trail->parent('service-price');
+	$trail->push('Add Service', route('admin.service-price.create'));
+});
+
+Breadcrumbs::for('service-price-edit', function (BreadcrumbTrail $trail) {
+	$trail->parent('service-price');
+	$trail->push('Edit Service');
+});

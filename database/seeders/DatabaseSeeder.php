@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             MedicationTypeSeeder::class,
             VaccinationSeeder::class,
             ServiceTypeSeeder::class,
+            ServicePriceSeeder::class,
             AppointmentScheduleSeeder::class,
             AppointmentSeeder::class,
         ]);
