@@ -76,10 +76,14 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
          <div class="card col-span-2">
             <div class="card-body shadow-2xl">
-               <h1>Last Appointment</h1>
-               <table>
+               <h1>Janji Temu</h1>
+               <table class="last_appointment_datatables">
                   <thead>
-                     <th>test</th>
+                     <th>Nama Peliharaan</th>
+                     <th>Klinik</th>
+                     <th>Dokter</th>
+                     <th>Tujuan</th>
+                     <th>Tanggal</th>
                   </thead>
                   <tbody>
                   </tbody>
@@ -95,19 +99,44 @@
    <script>
       const pets = @json($pets);
 
-      $('table').DataTable({
-         bLengthChange: false,
-         autoWidth: false,
-      });
-
       $(document).ready(function() {
          initPetDetailView(pets);
 
-         var calendarEl = document.getElementById('calendar');
-         var calendar = new FullCalendar.Calendar(calendarEl, {
+         const calendarEl = document.getElementById('calendar');
+         const calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth'
          });
-         calendar.render();
+
+
+         $('.last_appointment_datatables').DataTable({
+            bLengthChange: false,
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            ajax: "{{ route('pet-owner.list.appointment') }}",
+            columns: [
+               {
+                  data: 'pet.name',
+                  name: 'pet.name'
+               },
+               {
+                  data: 'clinic.name',
+                  name: 'clinic.name'
+               },
+               {
+                  data: 'veterinarian.user.name',
+                  name: 'veterinarian.user.name'
+               },
+               {
+                  data: 'service_type.name',
+                  name: 'service_type.name'
+               },
+               {
+                  data: 'appointment_date',
+                  name: 'appointment_date'
+               },
+            ]
+         });
       });
 
       $('.pet_select_item').click(function() {

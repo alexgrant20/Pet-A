@@ -51,7 +51,7 @@
                               </div>
                            </label>
                            <img id="pet_image_preview" class="w-36 h-36 rounded-full unselectable"
-                              src="{{ asset($pet->attachment->first()->path) }}" alt="pet image">
+                              src="{{ asset($pet->attachment->first()?->path) }}" alt="pet image">
                         </div>
                         <input name="pet_image" id="pet_image" type="file" class="hidden" accept=".png, .jpg, .jpeg" />
                      </div>

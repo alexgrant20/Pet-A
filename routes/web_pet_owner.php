@@ -7,10 +7,12 @@ use App\Http\Controllers\PetOwner\MedicalRecordController;
 use App\Http\Controllers\PetOwner\OnlineConsultationController;
 use App\Http\Controllers\PetOwner\ProfileController;
 use App\Http\Controllers\PetOwner\VaccinationController;
+use App\Models\Appointment;
 use App\Models\Pet;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Yajra\DataTables\Facades\DataTables;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,13 +31,12 @@ Route::get('/', function () {
     $pets->load('breed.petType', 'attachment');
 
     $pets->map(function ($pet) {
-      $pet->thumbnail_image = $pet->attachment->first()->path;
+      $pet->thumbnail_image = $pet->attachment->first()?->path;
       $pet->gender = $pet->gender == 'm' ? 'Laki' : 'Perempuan';
       $pet->birth_date = Carbon::parse($pet->birth_date)->format('d M Y');
 
       return $pet;
     });
-
 
     return view('app.pet-owner.index', compact('pets'));
 })->name('index');
@@ -48,4 +49,5 @@ Route::put('/profile/{petOwner}', [ProfileController::class, 'update'])->name('p
 
 Route::resource('/online-consultation', OnlineConsultationController::class);
 Route::resource('/appointment', AppointmentController::class);
+Route::get('/list/appointment', [AppointmentController::class, 'getList'])->name('list.appointment');
 Route::get('/medical-record',[MedicalRecordController::class, 'index'])->name('medical-record.index');
