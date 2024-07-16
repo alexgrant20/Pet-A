@@ -63,6 +63,8 @@ return new class extends Migration
 
         Schema::table('pet_allergies', function (Blueprint $table) {
             $table->foreign('pet_id')->references('id')->on('pets')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreign('icon_id')->references('id')->on('icons')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreign('allergy_category_id')->references('id')->on('allergy_categories')->cascadeOnUpdate()->restrictOnDelete();
         });
 
         Schema::table('appointments', function (Blueprint $table) {
@@ -135,6 +137,14 @@ return new class extends Migration
 
         Schema::table('field_attachment_uploads', function (Blueprint $table) {
             $table->foreign('field_id')->references('id')->on('fields')->cascadeOnUpdate()->restrictOnDelete();
+        });
+
+        Schema::table('pet_weights', function (Blueprint $table) {
+            $table->foreign('pet_id')->references('id')->on('pets')->cascadeOnUpdate()->restrictOnDelete();
+        });
+
+        Schema::table('pet_types', function (Blueprint $table) {
+            $table->foreign('icon_id')->references('id')->on('icons')->cascadeOnUpdate()->restrictOnDelete();
         });
     }
 

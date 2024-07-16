@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->date('birth_date')->nullable();
             $table->string('chip_number')->nullable();
-            $table->smallInteger('weight')->nullable();
             $table->enum('gender', ['m', 'f'])->nullable();
 
             $table->timestamps();

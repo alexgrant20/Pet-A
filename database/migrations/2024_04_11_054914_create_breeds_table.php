@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pet_type_id');
             $table->string('name');
+            $table->float('minimum_weight')->nullable();
+            $table->float('maximum_weight')->nullable();
 
             $table->timestamps();
             $table->string('created_by')->nullable();

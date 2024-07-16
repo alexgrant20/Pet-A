@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             MenuSeeder::class,
             FieldSeeder::class,
+            IconSeeder::class,
             PetMasterSeeder::class,
             Locationseeder::class,
             UserSeeder::class,
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ServicePriceSeeder::class,
             AppointmentScheduleSeeder::class,
             AppointmentSeeder::class,
+            AllergyCategorySeeder::class
         ]);
     }
 }

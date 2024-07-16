@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('pet_allergies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pet_id');
+            $table->unsignedBigInteger('icon_id');
+            $table->unsignedBigInteger('allergy_category_id');
             $table->string('name');
             $table->text('note')->nullable();
 

@@ -2,22 +2,32 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PetVaccination extends Model
 {
-    use HasFactory;
+   use HasFactory;
 
-    protected $guarded = ['id'];
+   protected $guarded = ['id'];
 
-    public function pet()
-    {
-        return $this->belongsTo(Pet::class);
-    }
+   protected $dates = [
+      'given_at'
+   ];
 
-    public function vaccination()
-    {
-        return $this->belongsTo(Vaccination::class);
-    }
+   public function pet()
+   {
+      return $this->belongsTo(Pet::class);
+   }
+
+   public function vaccination()
+   {
+      return $this->belongsTo(Vaccination::class);
+   }
+
+   public function getGivenAtAttribute($value)
+   {
+       return Carbon::parse($value)->format('m/d/y');
+   }
 }

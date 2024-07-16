@@ -11,6 +11,7 @@ use App\Models\PetAllergy;
 use App\Models\PetType;
 use App\Models\PetVaccination;
 use App\Models\Vaccination;
+use App\Services\PetService;
 use App\Utilities\FieldAttachmentUploadUtility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,10 +20,12 @@ use Illuminate\Support\Facades\DB;
 class PetController extends Controller
 {
    private $fieldAttachmentUploadUtility;
+   private $petService;
 
-   public function __construct(FieldAttachmentUploadUtility $fieldAttachmentUploadUtility)
+   public function __construct(FieldAttachmentUploadUtility $fieldAttachmentUploadUtility, PetService $petService)
    {
       $this->fieldAttachmentUploadUtility = $fieldAttachmentUploadUtility;
+      $this->petService = $petService;
    }
 
    public function index()
@@ -63,8 +66,8 @@ class PetController extends Controller
             'gender' => $payload['gender']
          ]);
 
-         if($petAllergy->isNotEmpty()) {
-            $petAllergy->transform(function ($allergy) use($pet) {
+         if ($petAllergy->isNotEmpty()) {
+            $petAllergy->transform(function ($allergy) use ($pet) {
                $tempAllergy['name'] = $allergy[0];
                $tempAllergy['note'] = $allergy[1];
                $tempAllergy['pet_id'] = $pet->id;
@@ -74,12 +77,12 @@ class PetController extends Controller
             PetAllergy::insert($petAllergy->toArray());
          }
 
-         if($petVaccination->isNotEmpty()) {
+         if ($petVaccination->isNotEmpty()) {
 
             $petVaccinationNameList = $petVaccination->pluck(0)->all();
             $petVaccinationDict = Vaccination::whereIn('name', $petVaccinationNameList)->pluck('id', 'name');
 
-            $petVaccination->transform(function ($vaccination) use($pet, $petVaccinationDict) {
+            $petVaccination->transform(function ($vaccination) use ($pet, $petVaccinationDict) {
                $tempVaccination['given_at'] = $vaccination[2];
                $tempVaccination['given_by'] = $vaccination[1];
                $tempVaccination['pet_id'] = $pet->id;
@@ -96,7 +99,6 @@ class PetController extends Controller
             ->setFolder('pet_image')
             ->setFieldName('pet_image')
             ->uploadFile($request);
-
       } catch (\Exception $e) {
          dd($e->getMessage());
          DB::rollBack();
@@ -148,5 +150,14 @@ class PetController extends Controller
    public function destroy(string $id)
    {
       //
+   }
+
+   public function switchPetProfile(Pet $pet)
+   {
+      $pet = $this->petService->transformData($pet);
+
+      session(['session_pet' => $pet]);
+
+      return back();
    }
 }

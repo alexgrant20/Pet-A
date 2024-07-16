@@ -14,7 +14,6 @@ class PetSeeder extends Seeder
          'breed_id' => 187,
          'name' => 'Dash',
          'birth_date' => '2022-08-15',
-         'weight' => '12',
          'gender' => 'm'
       ]);
    }

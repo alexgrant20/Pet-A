@@ -38,7 +38,7 @@
                         <div class="badge badge-primary rounded-md font-semibold">8 Tahun</div>
                         <div class="flex items-center justify-center mt-3">
                            <p class="font-semibold text-gray-800">Rp. 50.000</p>
-                           <a href="{{ route('pet-owner.appointment.create') }}" class="btn btn-primary btn-square px-9 py-2">Order</a>
+                           <a href="{{ route('pet-owner.appointment.create', $veterinarian->id) }}" class="btn btn-primary btn-square px-9 py-2">Order</a>
                         </div>
                      </div>
                   </div>

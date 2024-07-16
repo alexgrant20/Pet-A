@@ -16,4 +16,9 @@ class PetType extends Model
     {
         return $this->hasMany(Vaccination::class);
     }
+
+    public function icon()
+    {
+      return $this->belongsTo(Icon::class);
+    }
 }

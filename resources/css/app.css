@@ -28,4 +28,33 @@
     margin: 0;
     -moz-appearance: textfield !important;
   }
+
+  body::-webkit-scrollbar {
+   display: none;
+  }
+
+  * {
+   box-sizing: border-box;
+  }
+}
+
+@font-face {
+   font-family: SFPro;
+   src: url('../../public/assets/sfpro/SFPRODISPLAYREGULAR.OTF');
+   font-style: normal;
+   font-weight: 500;
+}
+
+@font-face {
+   font-family: SFPro;
+   src: url('../../public/assets/sfpro/SFPRODISPLAYMEDIUM.OTF');
+   font-style: normal;
+   font-weight: 600;
+}
+
+@font-face {
+   font-family: SFPro;
+   src: url('../../public/assets/sfpro/SFPRODISPLAYBOLD.OTF');
+   font-style: normal;
+   font-weight: bold;
 }

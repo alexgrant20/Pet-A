@@ -3,12 +3,25 @@
 @section('title', 'Pet')
 
 @section('content')
-   <section>
+   <section class="p-4 w-full h-full">
       <div class="flex justify-between">
          <h2 class="text-primary text-2xl font-bold">Tambahkan Hewan Peliharaan</h2>
       </div>
 
-      <div class="flex items-center gap-10 bg-base-100 shadow-2xl p-9">
+      <div class="w-full h-full flex items-center justify-center">
+         <div class="w-1/2"></div>
+         <div class="w-1/2">
+            <div class="grid grid-cols-2 gap-4">
+               @foreach ($petTypes as $petType)
+                   <div class=" bg-primary text-white bg-opacity-85 flex flex-col items-center justify-center gap-5 h-32">
+                     <i class="{{ $petType->icon->name }} fa-3x"></i>
+                   </div>
+               @endforeach
+            </div>
+         </div>
+      </div>
+
+      <div class="items-center gap-10 hidden">
          <div class="bs-stepper w-full">
             <div class="bs-stepper-header" role="tablist">
                <!-- your steps here -->
@@ -24,7 +37,7 @@
                   <button type="button" class="step-trigger" role="tab" aria-controls="pet-allergy-part"
                      id="pet-allergy-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i></span>
-                     <span class="bs-stepper-label">Alergi</span>
+                     <span class="bs-stepper-label">Informasi Alergi</span>
                   </button>
                </div>
                <div class="line"></div>

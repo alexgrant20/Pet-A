@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pet_types', function (Blueprint $table) {
+        Schema::create('allergy_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('icon_id');
+            $table->string('color_class');
 
             $table->timestamps();
             $table->string('created_by')->nullable();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pet_types');
+        Schema::dropIfExists('allergy_categories');
     }
 };

@@ -3,6 +3,7 @@
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetOwner\AppointmentController;
 use App\Http\Controllers\PetOwner\AppointmentRequestController;
+use App\Http\Controllers\PetOwner\HomeController;
 use App\Http\Controllers\PetOwner\MedicalRecordController;
 use App\Http\Controllers\PetOwner\OnlineConsultationController;
 use App\Http\Controllers\PetOwner\ProfileController;
@@ -25,23 +26,10 @@ use Yajra\DataTables\Facades\DataTables;
 |
 */
 
-Route::get('/', function () {
-    $pets = Auth::user()->profile->pet;
-
-    $pets->load('breed.petType', 'attachment');
-
-    $pets->map(function ($pet) {
-      $pet->thumbnail_image = $pet->attachment->first()?->path;
-      $pet->gender = $pet->gender == 'm' ? 'Laki' : 'Perempuan';
-      $pet->birth_date = Carbon::parse($pet->birth_date)->format('d M Y');
-
-      return $pet;
-    });
-
-    return view('app.pet-owner.index', compact('pets'));
-})->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::resource('pet', PetController::class);
+Route::get('/switch-pet-profile/{pet}', [PetController::class, 'switchPetProfile'])->name('pet.switch-pet-profile');
 Route::get('/vaccination', [VaccinationController::class, 'index'])->name('vaccination.index');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');

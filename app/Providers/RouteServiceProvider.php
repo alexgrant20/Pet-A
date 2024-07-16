@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->name('admin.')
                 ->group(base_path('routes/web_admin.php'));
 
-            Route::middleware(['web', 'auth', 'role:pet-owner'])
+            Route::middleware(['web', 'auth', 'ensure.pet', 'role:pet-owner'])
                 ->prefix('pet-owner')
                 ->name('pet-owner.')
                 ->group(base_path('routes/web_pet_owner.php'));

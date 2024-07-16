@@ -172,6 +172,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         App\Providers\MenuServiceProvider::class,
+        App\Providers\ViewPetOwnerServiceProvider::class,
     ])->toArray(),
 
     /*
