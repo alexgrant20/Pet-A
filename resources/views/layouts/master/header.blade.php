@@ -12,7 +12,8 @@
    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
 
-   <script src="https://kit.fontawesome.com/1ddbafe114.js" crossorigin="anonymous"></script>
+   {{-- <script src="https://kit.fontawesome.com/1ddbafe114.js" crossorigin="anonymous"></script> --}}
+   <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
 
    <!-- Fonts -->
    <link rel="preconnect" href="https://fonts.bunny.net">
