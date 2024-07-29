@@ -13,9 +13,29 @@ class MasterController extends Controller
    {
       if (!$request->ajax()) return;
 
-      return Breed::where('pet_type_id', $petTypeId)
+      $result = [
+         'status' => 404,
+         'message' => 'Data tidak ditemukan',
+         'result' => [],
+      ];
+
+      $limit = $request->limit ?? 10;
+      $page = $request->page ?? 1;
+
+      $breeds = Breed::where([
+         ['pet_type_id', $petTypeId],
+         ['name', 'LIKE', "%$request->q%"]
+      ])
+         ->skip($limit * ($page - 1))
+         ->limit($limit)
          ->get()
          ->map(fn ($breed) => ['id' => $breed->id, 'text' => $breed->name]);
+
+      return [
+         'status' => 200,
+         'message' => 'Sukses',
+         'result' => $breeds,
+      ];
    }
 
    public function getCity(Request $request)

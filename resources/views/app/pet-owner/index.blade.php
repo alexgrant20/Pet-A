@@ -4,20 +4,16 @@
 
 @section('content')
    <div class="h-full">
-      <div class="flex h-full gap-5 justify-start items-start">
-         <section class="flex justify-stretch mb-9 bg-white h-full">
-            <div class="card">
-               <div class="card-body rounded shadow-2xl pet_detail_container">
-                  {{-- <div class="hidden container_pet_not_found">
-                     <div class="flex flex-col items-center justify-center w-full">
-                        <img class="text-primary" src="{{ asset('assets/crying-dog-icon.svg') }}" alt="">
-                        <span class="mb-2 text-lg">Tidak terdapat data hewan</span>
-                        <a href="{{ route('pet-owner.pet.create') }}" class="btn btn-primary btn-padding"><i
-                              class="fa fa-solid fa-plus"></i> Tambahkan Hewan</a>
+      <div class="flex flex-col h-full gap-5 justify-start items-start xl:flex-row">
+         <section class="flex justify-stretch bg-white bg-opacity-25 h-fit w-full xl:w-fit xl:h-full">
+            <div class="card flex-1">
+               <div class="card-body rounded shadow-2xl pet_detail_container w-full">
+                  <div class="container_pet_detail w-full flex flex-col items-center relative">
+                     <div class="absolute right-0">
+                        <a href="{{ route('pet-owner.pet.edit', $pet?->id) }}" class="cursor-pointer">
+                           <i class="fa-solid fa-pen-circle fa-2x text-primary"></i>
+                        </a>
                      </div>
-                  </div> --}}
-
-                  <div class="container_pet_detail w-full flex flex-col items-center">
                      <img class="rounded-full w-36 h-36 pet_image border border-gray-400 mb-5"
                         src="{{ asset($pet?->thumbnail_image) }}" alt="">
                      <div>
@@ -27,16 +23,16 @@
 
                      <div class="mt-8 flex flex-row justify-center gap-3 text-lg">
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
-                           <span class="text-gray-900 font-bold">{{ $pet?->age }}</span>
                            <span class="text-primary font-bold">Umur</span>
+                           <span class="text-gray-900 font-bold">{{ $pet?->age }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
-                           <span class="text-gray-900 font-bold pet_weight">{{ $pet?->weight }}</span>
                            <span class="text-primary font-bold">Berat</span>
+                           <span class="text-gray-900 font-bold pet_weight">{{ $pet?->weight }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
-                           <span class="text-gray-900 font-bold pet_gender">{{ $pet?->gender }}</span>
                            <span class="text-primary font-bold">Sex</span>
+                           <span class="text-gray-900 font-bold pet_gender">{{ $pet?->gender }}</span>
                         </div>
                      </div>
 
@@ -50,9 +46,9 @@
                            </a>
                         </div>
 
-                        <div class="grid grid-rows-3">
-                           @forelse ($pet?->appointment->take(3) ?? [] as $appointment)
-                              <div class="border-b-2 flex py-4 px-2 gap-6 items-center justify-evenly">
+                        <div class="grid grid-rows-{{ $pet?->history_appointment->count() }}">
+                           @forelse ($pet->history_appointment->toArray() as $appointment)
+                              <div class="border-b-2 flex py-4 px-2 gap-6 items-center justify-evenly hover:border-secondary transition-colors duration-300">
                                  <div>
                                     <i
                                        class="fa-solid fa-syringe p-3 bg-secondary rounded-full text-white text-opacity-95"></i>
@@ -65,7 +61,7 @@
                                        class="text-gray-400 uppercase">{{ $appointment->veterinarian->user->name }}</span>
                                  </div>
                                  <div class="text-gray-400 text-sm">
-                                    {{ $appointment->created_at }}
+                                    {{ $appointment->appointment_date->format('d-m-Y') }}
                                  </div>
                               </div>
                            @empty
@@ -77,138 +73,114 @@
             </div>
          </section>
 
-         <div class="w-full pe-10 pt-5">
+         <div class="w-full px-5 pt-10 xl:ps-0">
             <div>
                <div class="mb-5 w-full">
-                  <span class="font-bold text-xl">Kondisi Kesehatan</span>
+                  <span class="font-bold text-2xl">Kondisi Kesehatan</span>
                </div>
-               <div class="grid grid-cols-2 grid-rows-2 gap-5">
+               <div class="grid grid-cols-1 xl:grid-cols-2 xl:grid-rows-2 gap-5">
                   <section>
-                     <div class="card h-full">
-                        <div class="card-body p-4 bg-white bg-opacity-85 shadow rounded-xl">
-                           <div class="flex justify-between items-center mb-2 w-full">
-                              <div class="text-gray-400 border-gray-400 hover:border-b">
-                                 <span class="text-sm me-1 font-semibold">Alergi</span>
-                                 <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
-                              </div>
-                              <div>
-                                 <span class="font-bold text-xl">{{ $pet?->petAllergy->count() ?? 0 }}</span>
-                              </div>
-                           </div>
-                           <div class="grid grid-rows-3 gap-2">
-                              @forelse ($pet?->petAllergy->take(3) ?? [] as $petAllergy)
-                                 <div class="card">
-                                    <div class="card-body flex-row p-0 gap-4 items-center justify-start">
-                                       <div
-                                          class="bg-gray-200 rounded-full text-gray-400 flex items-center justify-center w-10 h-10">
-                                          <i class="fa-solid fa-egg"></i>
-                                       </div>
-
-                                       <div class="flex flex-col gap-2">
-                                          <div class="text-gray-900 font-bold">
-                                             {{ $petAllergy->name }}
-                                          </div>
-                                          <div class="flex items-center gap-2">
-                                             <span class="text-gray-400">{{ $petAllergy->note }}</span>
-                                          </div>
-                                       </div>
-                                       <div class="ms-auto {{ $petAllergy->allergyType->color_class }}">
-                                          {{ $pettAllergy->allergyType->name }}
-                                       </div>
-                                    </div>
-                                 </div>
-                              @empty
-                              @endforelse
-                           </div>
-                        </div>
-                     </div>
-                  </section>
-
-                  <section>
-                     <div class="card h-full">
-                        <div class="card-body p-4 bg-white bg-opacity-85 shadow rounded-xl">
-                           <div class="flex justify-between items-center mb-2 w-full">
-                              <div class="text-gray-400 border-gray-400 hover:border-b">
-                                 <span class="text-sm me-1 font-semibold">Riwayat Penyakit</span>
-                                 <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
-                              </div>
-                              <div>
-                                 <span class="font-bold text-xl">{{ $pet?->medicalRecord->count() ?? 0 }}</span>
-                              </div>
-                           </div>
-                           <div class="grid grid-rows-3 gap-2 h-full">
-                              @forelse ($pet?->medicalRecord->take(3) ?? [] as $medicalRecord)
-                                 <div class="card">
+                     <x-pet-owner.card titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id, 'step' => 2]) }}" title='Informasi Alergi' :totalAllergy="$pet?->petAllergy->count()">
+                        <div class="grid grid-rows-3 gap-2 h-full">
+                           @forelse ($pet?->petAllergy->take(3) as $petAllergy)
+                              <div class="card">
+                                 <div class="card-body flex-row p-0 gap-4 items-center justify-start">
                                     <div
-                                       class="card-body flex-row p-0 gap-4 items-center justify-start border-l-4 border-primary ps-2">
-                                       <div class="flex flex-col">
-                                          <div class="text-gray-900 font-bold">
-                                             {{ $medicalRecord->disease_name }}
-                                          </div>
-                                          <div class="flex items-center gap-2">
-                                             <span
-                                                class="text-gray-400 uppercase">{{ $medicalRecord->veterinarian_name }}</span>
-                                          </div>
-                                       </div>
-                                       <div class="ms-auto text-gray-400">
-                                          {{ $medicalRecord->created_at }}
+                                       class="bg-secondary rounded-full text-white flex items-center justify-center w-10 h-10">
+                                       <i class="{{ $petAllergy->icon->name }}"></i>
+                                    </div>
+
+                                    <div class="flex flex-col gap-2">
+                                       <div class="text-gray-900 font-bold">
+                                          {{ $petAllergy->name }}
                                        </div>
                                     </div>
+                                    <div class="ms-auto text-{{ $petAllergy->allergyCategory->color_class }}">
+                                       {{ $petAllergy->allergyCategory->name }}
+                                    </div>
                                  </div>
-                              @empty
-                              @endforelse
-                           </div>
+                              </div>
+                           @empty
+                              <div class="row-span-3 flex flex-col items-center justify-end gap-2">
+                                 <img class="max-h-40" src="{{ asset('assets/no-disease.svg') }}" alt="healthy">
+                                 <div class="font-semibold">{{ $pet?->name }} tidak ada alergi</div>
+                              </div>
+                           @endforelse
                         </div>
-                     </div>
+                     </x-pet-owner.card>
+                  </section>
+
+                  <section>
+                     <x-pet-owner.card  titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id, 'step' => 3]) }}" title='Riwayat Penyakit' :totalAllergy="$pet?->medicalRecord->count()">
+                        <div class="grid grid-rows-3 gap-2 h-full">
+                           @forelse ($pet?->medicalRecord->take(3) ?? [] as $medicalRecord)
+                              <div class="card">
+                                 <div
+                                    class="card-body flex-row p-0 gap-4 items-center justify-start border-l-4 border-primary ps-2">
+                                    <div class="flex flex-col">
+                                       <div class="text-gray-900 font-bold">
+                                          {{ $medicalRecord->disease_name }}
+                                       </div>
+                                       <div class="flex items-center gap-2">
+                                          <span
+                                             class="text-gray-400 uppercase">{{ $medicalRecord->veterinarian_name }}</span>
+                                       </div>
+                                    </div>
+                                    <div class="ms-auto text-gray-400">
+                                       {{ $medicalRecord->created_at }}
+                                    </div>
+                                 </div>
+                              </div>
+                           @empty
+                              <div class="row-span-3 flex flex-col items-center justify-end gap-2">
+                                 <img class="max-h-40" src="{{ asset('assets/no-disease.svg') }}" alt="healthy">
+                                 <div class="font-semibold">{{ $pet?->name }} tidak ada riwayat penyakit</div>
+                              </div>
+                           @endforelse
+                        </div>
+                     </x-pet-owner.card>
+
+                  </section>
+
+                  <section>
+                     <x-pet-owner.card title='Vaksinasi'  titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id, 'step' => 3]) }}" :totalAllergy="$pet?->petVaccination->count()">
+                        <div class="grid grid-rows-3 gap-2 h-full">
+                           @forelse ($pet?->petVaccination->take(3) ?? [] as $petVaccination)
+                              <div class="card">
+                                 <div
+                                    class="card-body flex-row p-0 gap-4 items-center justify-start border-l-4 border-primary ps-2">
+                                    <div class="flex flex-col">
+                                       <div class="text-gray-900 font-bold">
+                                          {{ $petVaccination->vaccination->name }}
+                                       </div>
+                                       <div class="flex items-center gap-2">
+                                          <span class="text-gray-400">{{ $petVaccination?->given_by }}</span>
+                                       </div>
+                                    </div>
+                                    <div class="ms-auto text-gray-400">
+                                       {{ $petVaccination?->given_at }}
+                                    </div>
+                                 </div>
+                              </div>
+                           @empty
+                              <div class="row-span-3 flex flex-col items-center justify-end gap-2">
+                                 <img class="max-h-40" src="{{ asset('assets/no-vaccination.svg') }}" alt="healthy">
+                                 <div class="font-semibold">{{ $pet?->name }} belum vaksin nih</div>
+                              </div>
+                           @endforelse
+                        </div>
+                     </x-pet-owner.card>
                   </section>
 
                   <section>
                      <div class="card h-full">
-                        <div class="card-body p-4 bg-white bg-opacity-85 shadow rounded-xl">
+                        <div class="card-body p-4 bg-white/35 shadow-xl rounded-xl">
                            <div class="flex justify-between items-center mb-2 w-full">
-                              <div class="text-gray-400 border-gray-400 hover:border-b">
-                                 <span class="text-sm me-1 font-semibold">Vaksinasi</span>
-                                 <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
-                              </div>
-                              <div>
-                                 <span class="font-bold text-xl">{{ $pet?->petVaccination->count() ?? 0 }}</span>
+                              <div class="text-gray-600">
+                                 <span class="me-1 font-bold">Pertumbuhan Berat</span>
                               </div>
                            </div>
-                           <div class="grid grid-rows-3 gap-2 h-full">
-                              @forelse ($pet?->petVaccination->take(3) ?? [] as $petVaccination)
-                                 <div class="card">
-                                    <div
-                                       class="card-body flex-row p-0 gap-4 items-center justify-start border-l-4 border-primary ps-2">
-                                       <div class="flex flex-col">
-                                          <div class="text-gray-900 font-bold">
-                                             {{ $petVaccination->vaccination->name }}
-                                          </div>
-                                          <div class="flex items-center gap-2">
-                                             <span class="text-gray-400">{{ $petVaccination?->given_by }}</span>
-                                          </div>
-                                       </div>
-                                       <div class="ms-auto text-gray-400">
-                                          {{ $petVaccination?->given_at }}
-                                       </div>
-                                    </div>
-                                 </div>
-                              @empty
-                              @endforelse
-                           </div>
-                        </div>
-                     </div>
-                  </section>
-
-                  <section>
-                     <div class="card h-full">
-                        <div class="card-body p-4 bg-white bg-opacity-85 shadow rounded-xl">
-                           <div class="flex justify-between items-center mb-2 w-full">
-                              <div class="text-gray-400">
-                                 <span class="text-sm me-1 font-semibold">Pertumbuhan Berat</span>
-                              </div>
-                           </div>
-
-                           <div style="width: 100%;"><canvas id="acquisitions"></canvas></div>
+                           <div class="w-full h-full"><canvas id="acquisitions"></canvas></div>
                         </div>
                      </div>
 
@@ -226,48 +198,38 @@
                </div>
 
                <div class="grid grid-rows-3 gap-5">
-                  <div class="card">
-                     <div
-                        class="card-body bg-white bg-opacity-85 shadow rounded-xl flex-row p-0 gap-5 items-center justify-start border-2 border-transparent hover:border-primary group transition-all duration-75">
-                        <div class="px-8 py-4 flex flex-col font-bold items-center justify-center border-r-2 h-full">
-                           <span class="text-primary">Jan</span>
-                           <span>27</span>
-                        </div>
-                        <div class="py-4 flex flex-col gap-2">
-                           <div class="text-gray-900 font-semibold">
-                              Joergen
+                  @forelse ($pet->future_appointment->toArray() as $appointment)
+                     <div class="card">
+                        <div
+                           class="card-body bg-white/65 shadow-xl rounded-xl flex-row p-0 gap-5 items-center justify-start border-2 border-transparent hover:border-primary group transition-all duration-300">
+                           <div class="px-8 py-4 flex flex-col font-bold items-center justify-center border-r-2 h-full">
+                              <span class="text-primary">{{ $appointment->appointment_date->format('M') }}</span>
+                              <span>{{ $appointment->appointment_date->format('d') }}</span>
                            </div>
-                           <div class="flex items-center gap-2">
-                              <i class="fa-solid fa-clock text-gray-400"></i>
-                              <span class="text-gray-900">Jan, 20, 09.00 - 10.00</span>
+                           <div class="py-4 flex flex-col gap-2">
+                              <div class="text-gray-900 font-semibold">
+                                 {{ $appointment->veterinarian->user->name }}
+                              </div>
+                              <div class="flex items-center gap-2">
+                                 <i class="fa-solid fa-clock text-gray-400"></i>
+                                 <span
+                                    class="text-gray-900">{{ $appointment->appointmentSchedule->start_time->format('H:i') }}</span>
+                              </div>
                            </div>
-                        </div>
-                        <div class="ms-auto pe-4 hidden group-hover:block">
-                           <i class="fa-solid fa-arrow-right text-primary text-lg"></i>
+                           <div class="ms-auto pe-4 text-transparent group-hover:text-primary duration-500">
+                              <i class="fa-solid fa-arrow-right text-lg"></i>
+                           </div>
                         </div>
                      </div>
-                  </div>
-                  <div class="card">
-                     <div
-                        class="card-body bg-white bg-opacity-85 shadow rounded-xl flex-row p-0 gap-5 items-center justify-start border-2 border-transparent hover:border-primary group transition-all duration-75">
-                        <div class="px-8 py-4 flex flex-col font-bold items-center justify-center border-r-2 h-full">
-                           <span class="text-primary">Jan</span>
-                           <span>27</span>
-                        </div>
-                        <div class="py-4 flex flex-col gap-2">
-                           <div class="text-gray-900 font-semibold">
-                              Joergen
-                           </div>
-                           <div class="flex items-center gap-2">
-                              <i class="fa-solid fa-clock text-gray-400"></i>
-                              <span class="text-gray-900">Jan, 20, 09.00 - 10.00</span>
-                           </div>
-                        </div>
-                        <div class="ms-auto pe-4 hidden group-hover:block">
-                           <i class="fa-solid fa-arrow-right text-primary text-lg"></i>
+                  @empty
+                     <div class="card">
+                        <div
+                           class="card-body border-2 border-primary border-dashed shadow rounded-xl gap-5 items-center justify-center p-5">
+                           <i class="fa-solid fa-plus bg-primary bg-opacity-70 p-4 rounded-full text-white"></i>
+                           <span class="font-bold text-gray-700">Adakan Pertemuan Dengan Dokter Kami</span>
                         </div>
                      </div>
-                  </div>
+                  @endforelse
                </div>
             </section>
          </div>
@@ -278,85 +240,66 @@
 @section('js-footer')
    <script>
       (async function() {
+         const petWeight = @json(@$pet->petWeight);
+         const labels = [];
+         const weight = [];
+         const upperBoundValue = 15;
+         const lowerBoundValue = 0.5
+
+         petWeight.forEach(function(data) {
+            labels.push(new Date(data.created_at).toLocaleDateString("en-US"));
+            weight.push(data.weight);
+         });
+
+         var ctx = document.getElementById('acquisitions').getContext('2d');
+
          new Chart(
-            document.getElementById('acquisitions'), {
+            ctx, {
                type: 'line',
                data: {
-                  labels: [1,2,3,4,5,6],
+                  labels,
                   datasets: [{
-                        data: [6, 6, 6, 6.5, 7, 8],
-                        label: "Atas",
-                        borderColor: "#eee",
-                        fill: false
+                        data: Array(labels.length).fill(upperBoundValue),
+                        label: "Batas Atas",
+                        borderColor: "#7D7D7D",
+                        backgroundColor: '#7D7D7D',
+                        fill: false,
+                        pointRadius: 0
                      },
                      {
-                        data: [2, 2, 4, 5, 6, 7],
+                        data: weight,
                         label: "Berat",
-                        borderColor: "#3cba9f",
-                        fill: false
+                        borderColor: "#2ECC71",
+                        backgroundColor: '#2ECC71',
+                        fill: false,
+                        pointRadius: 3
                      },
                      {
-                        data: [0.5, 1, 1.5, 2, 2, 3],
-                        label: "bawah",
-                        borderColor: "#eee",
-                        fill: false
+                        data: Array(labels.length).fill(lowerBoundValue),
+                        label: "Batas Bawah",
+                        borderColor: "#C0C0C0",
+                        backgroundColor: '#C0C0C0',
+                        fill: false,
+                        pointRadius: 0
                      }
                   ]
                },
                options: {
-                  title: {
-                     display: true,
-                     text: 'Pertumbuhan Berat'
-                  }
+                  maintainAspectRatio: false,
+                  responsive: true,
+                  plugins: {
+                     legend: {
+                        position: 'bottom', // Position legend at the bottom
+                        labels: {
+                           usePointStyle: true,
+
+                        }
+                    },
+                  },
                }
             }
          );
       })();
-
-      $(document).ready(function() {
-
-
-
-      });
-
-      // $('.pet_select_item').click(function() {
-      //    const petId = $(this).attr('pet-id');
-
-      //    updatePetViewData(pets, petId);
-      // });
-
-      // function initPetDetailView(pets) {
-      //    if (pets.length === 0) {
-      //       $('.container_pet_detail').hide();
-      //       $('.container_pet_not_found').show();
-      //       return;
-      //    }
-
-      //    updatePetViewData(pets, pets[0].id);
-      // }
-
-      // function updatePetViewData(pets, selectedPetId) {
-      //    const pet = pets.find(pet => pet.id == selectedPetId);
-      //    const petEditTemplateRoute = "{{ route('pet-owner.pet.edit', ':ID:') }}";
-
-      //    $('.pet_select_list li img').removeClass('border-4 border-primary');
-      //    $(`[pet-id=${selectedPetId}] img`).addClass('border-4 border-primary');
-
-      //    const petTextPayloadWithClassName = {
-      //       'pet_name': pet.name,
-      //       'pet_weight': pet.weight,
-      //       'pet_breed': pet.breed.name,
-      //       'pet_birth_date': pet.birth_date,
-      //       'pet_gender': pet.gender
-      //    };
-
-      //    $.each(petTextPayloadWithClassName, function(className, value) {
-      //       $('.' + className).text(value);
-      //    });
-
-      //    $('.pet_image').attr('src', pet.thumbnail_image);
-      //    $('.pet_edit_button').attr('href', petEditTemplateRoute.replace(':ID:', pet.id))
-      // }
    </script>
 
 @endsection

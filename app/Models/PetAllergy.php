@@ -16,8 +16,13 @@ class PetAllergy extends Model
       return $this->belongsTo(Pet::class);
    }
 
-   public function allergyType()
+   public function allergyCategory()
    {
-      return $this->belongsTo(allergyType::class);
+      return $this->belongsTo(AllergyCategory::class);
+   }
+
+   public function icon()
+   {
+      return $this->belongsTo(Icon::class);
    }
 }

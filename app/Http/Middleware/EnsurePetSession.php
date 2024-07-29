@@ -24,16 +24,19 @@ class EnsurePetSession
 
    private function checkPetSession()
    {
-      $pet = session('session_pet');
-
-      $petService = new PetService();
       $pets = Auth::user()->profile->pet;
 
       if($pets->count() == 0) {
+         session()->delete('session_pet');
          return null;
       }
 
-      $pet = $petService->transformData($pets->first());
+      $petService = new PetService();
+      $pet = session('session_pet');
+
+      $pet = $pet ? $pets->where('id', $pet->id)->first() : $pets->first();
+
+      $pet = $petService->transformData($pet);
       session()->put('session_pet', $pet);
       session()->save();
    }

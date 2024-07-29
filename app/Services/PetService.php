@@ -12,19 +12,31 @@ class PetService
    public function transformData(Pet $pet)
    {
       $pet->load([
-         'appointment.serviceType' => fn($q) => $q->latest(),
+         'appointment' => function ($q) {
+            $q->orderBy('created_at');
+            $q->with('appointmentSchedule', 'serviceType');
+         },
          'breed.petType',
          'attachment',
          'petAllergy' => fn($q) => $q->latest(),
+         'petAllergy.icon',
          'medicalRecord' => fn($q) => $q->latest(),
          'petVaccination.vaccination' => fn($q) => $q->latest(),
-         'petWeight' => fn($q) => $q->latest()
+         'petWeight'
       ]);
 
-      $pet->gender = $pet->gender == 'm' ? 'Jantan' : 'Betina';
+      [$futureAppointment, $historyAppointment] =  $pet->appointment->partition(function ($appointment) {
+         return $appointment->appointment_date > now();
+      });
+
+      $pet->gender = filled($pet->gender) == 'm' ? 'Jantan' : 'Betina';
       $pet->age = Carbon::parse($pet->birth_date)->age;
       $pet->thumbnail_image = $pet->attachment->first()?->path;
-      $pet->weight = $pet->weight?->first() . ' Kg';
+      $pet->weight = $pet->petWeight->first()?->weight . ' Kg';
+      $pet->future_appointment = $futureAppointment->take(3);
+      $pet->history_appointment = $historyAppointment->take(3);
+
+      $pet->petWeight = $pet->petWeight->take(6);
 
       return $pet;
    }

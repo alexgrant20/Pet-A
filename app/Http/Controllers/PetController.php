@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PetOwner\StorePetRequest;
+use App\Models\AllergyCategory;
 use App\Models\Breed;
 use App\Models\FieldAttachmentUpload;
+use App\Models\Icon;
 use App\Models\MedicalRecord;
 use App\Models\Pet;
 use App\Models\PetAllergy;
 use App\Models\PetType;
 use App\Models\PetVaccination;
+use App\Models\PetWeight;
 use App\Models\Vaccination;
 use App\Services\PetService;
 use App\Utilities\FieldAttachmentUploadUtility;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,8 +43,52 @@ class PetController extends Controller
    {
       $petTypes = PetType::all();
       $breeds = Breed::all();
+      $allergyCategory = AllergyCategory::orderBy('name')->get();
 
-      return view('app.pet-owner.pets.create', compact('petTypes', 'breeds'));
+      $allergyTemplate = [
+         [
+            'name' => 'chicken',
+            'description' => 'Allergy with chicken base product',
+            'icon' => 'fa-light fa-drumstick-bite'
+         ],
+         [
+            'name' => 'cow',
+            'description' => 'Allergy with cow base product',
+            'icon' => 'fa-light fa-cow'
+         ],
+         [
+            'name' => 'insect',
+            'description' => 'Allergy with insect base product',
+            'icon' => 'fa-light fa-bug'
+         ],
+         [
+            'name' => 'seed',
+            'description' => 'Allergy with seed base product',
+            'icon' => 'fa-light fa-acorn'
+         ],
+         [
+            'name' => 'soap',
+            'description' => 'Allergy with soap',
+            'icon' => 'fa-light fa-pump-soap'
+         ],
+         [
+            'name' => 'wheat',
+            'description' => 'Allergy with wheat base product',
+            'icon' => 'fa-light fa-wheat'
+         ],
+         [
+            'name' => 'mushroom',
+            'description' => 'Allergy with mushroom base product',
+            'icon' => 'fa-light fa-mushroom'
+         ],
+         [
+            'name' => 'Peanut',
+            'description' => 'Allergy with peanut base product',
+            'icon' => 'fa-light fa-peanut'
+         ]
+      ];
+
+      return view('app.pet-owner.pets.create', compact('petTypes', 'breeds', 'allergyTemplate', 'allergyCategory'));
    }
 
    public function store(StorePetRequest $request)
@@ -48,49 +96,43 @@ class PetController extends Controller
       $payload = collect($request->validated());
       $payload['pet_owner_id'] = Auth::user()->profile->id;
 
-      $petAllergy = collect(json_decode($request->pet_allergy));
-      $petVaccination = collect(json_decode($request->pet_vaccination));
-      $petMedicalRecord = collect(json_decode($request->pet_medical));
+      $data = $request->validated();
+
+      $petAllergy = collect($data['pet_allergy_ids']);
 
       try {
          DB::beginTransaction();
 
          $pet = Pet::create([
             'pet_owner_id' => Auth::user()->profile->id,
-            'name' => $payload['name'],
-            'chip_number' => $payload['chip_number'],
-            'pet_type_id' => $payload['pet_type_id'],
-            'breed_id' => $payload['breed_id'],
-            'birth_date' => $payload['birth_date'],
-            'weight' => $payload['weight'],
-            'gender' => $payload['gender']
+            'name' => $data['name'],
+            'breed_id' => $data['breed_id'],
+            'birth_date' => $data['birth_date'],
+            'gender' => $data['gender']
          ]);
 
+         if (isset($data['weight'])) {
+            PetWeight::create([
+               'pet_id' => $pet->id,
+               'weight' => $data['weight'],
+               'age' => isset($data['birth_date']) ? Carbon::parse($data['birth_date'])->age : 0,
+            ]);
+         }
+
+         $icon = Icon::all()->pluck('id', 'name');
+
          if ($petAllergy->isNotEmpty()) {
-            $petAllergy->transform(function ($allergy) use ($pet) {
-               $tempAllergy['name'] = $allergy[0];
-               $tempAllergy['note'] = $allergy[1];
+            $petAllergy->transform(function ($allergy) use ($pet, $icon) {
+               $tempAllergy['name'] = $allergy->name;
+               $tempAllergy['note'] = $allergy->description;
+               $tempAllergy['icon_id'] = $icon[$allergy->icon];
+               $tempAllergy['allergy_category_id'] = $allergy->allergy_category_id;
+
                $tempAllergy['pet_id'] = $pet->id;
                return $tempAllergy;
             });
 
             PetAllergy::insert($petAllergy->toArray());
-         }
-
-         if ($petVaccination->isNotEmpty()) {
-
-            $petVaccinationNameList = $petVaccination->pluck(0)->all();
-            $petVaccinationDict = Vaccination::whereIn('name', $petVaccinationNameList)->pluck('id', 'name');
-
-            $petVaccination->transform(function ($vaccination) use ($pet, $petVaccinationDict) {
-               $tempVaccination['given_at'] = $vaccination[2];
-               $tempVaccination['given_by'] = $vaccination[1];
-               $tempVaccination['pet_id'] = $pet->id;
-               $tempVaccination['vaccination_id'] = $petVaccinationDict[$vaccination[0]];
-               return $tempVaccination;
-            });
-
-            PetVaccination::insert($petVaccination->toArray());
          }
 
          $this->fieldAttachmentUploadUtility
@@ -100,14 +142,13 @@ class PetController extends Controller
             ->setFieldName('pet_image')
             ->uploadFile($request);
       } catch (\Exception $e) {
-         dd($e->getMessage());
          DB::rollBack();
          return back()->with('error-swal', 'Something Went Wrong!');
       }
 
       DB::commit();
 
-      return to_route('pet-owner.index')->with('success-toast', 'Pet Successfully Created');
+      // return to_route('pet-owner.index')->with('success-toast', 'Pet Successfully Created');
    }
 
    public function show($petId)
@@ -120,28 +161,66 @@ class PetController extends Controller
       return view('app.pet-owner.pets.show', compact('pet'));
    }
 
-   /**
-    * Show the form for editing the specified resource.
-    */
-   public function edit($petId)
+   public function edit(Request $request, $petId)
    {
-      $pet = Pet::where([
+      $selectedPet = Pet::where([
          ['id', $petId],
          ['pet_owner_id', auth()->user()->profile->id]
-      ])->with('petVaccination.vaccination', 'petAllergy', 'breed')->firstOrFail();
+      ])->with([
+         'petVaccination.vaccination',
+         'petAllergy' => function ($q) {
+            $q->with('icon', 'allergyCategory');
+         },
+         'breed',
+         'petWeight'
+      ])->firstOrFail();
+
+      $jumpToStep = $request->step;
 
       $petTypes = PetType::all();
       $breeds = Breed::all();
+      $allergyCategories = AllergyCategory::all();
+      $icons = Icon::all();
 
-      return view('app.pet-owner.pets.edit', compact('pet', 'petTypes', 'breeds'));
+      return view('app.pet-owner.pets.edit', compact(
+         'selectedPet',
+         'petTypes',
+         'breeds',
+         'allergyCategories',
+         'icons',
+         'jumpToStep'
+      ));
    }
 
-   /**
-    * Update the specified resource in storage.
-    */
-   public function update(Request $request, string $id)
+   public function update(Request $request, Pet $pet)
    {
-      //
+      $pet->update([
+         'pet_owner_id' => Auth::user()->profile->id,
+         'name' => $request['name'],
+         'breed_id' => $request['breed_id'],
+         'birth_date' => $request['birth_date'],
+         'gender' => $request['gender'],
+         'chip_number' => $request['chip_number']
+      ]);
+
+      if (isset($request['weight'])) {
+         PetWeight::create([
+            'pet_id' => $pet->id,
+            'weight' => $request['weight'],
+            'age' => isset($data['birth_date']) ? Carbon::parse($data['birth_date'])->age : 0,
+         ]);
+      }
+
+      if ($request->file('pet_image')) {
+         $this->fieldAttachmentUploadUtility
+            ->setRefTable($pet::class)
+            ->setRefId($pet->id)
+            ->setFolder('pet_image')
+            ->setFieldName('pet_image')
+            ->uploadFile($request);
+      }
+
+      return to_route('pet-owner.index')->with('success-toast', 'Hewan Peliharaan Berhasil Diperbarui');
    }
 
    /**

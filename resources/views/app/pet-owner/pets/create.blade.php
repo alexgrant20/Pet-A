@@ -3,58 +3,151 @@
 @section('title', 'Pet')
 
 @section('content')
-   <section class="p-4 w-full h-full">
-      <div class="flex justify-between">
-         <h2 class="text-primary text-2xl font-bold">Tambahkan Hewan Peliharaan</h2>
-      </div>
+   <section class="p-4 pt-12 lg:p-14 w-full h-full">
 
-      <div class="w-full h-full flex items-center justify-center">
-         <div class="w-1/2"></div>
-         <div class="w-1/2">
-            <div class="grid grid-cols-2 gap-4">
-               @foreach ($petTypes as $petType)
-                   <div class=" bg-primary text-white bg-opacity-85 flex flex-col items-center justify-center gap-5 h-32">
-                     <i class="{{ $petType->icon->name }} fa-3x"></i>
-                   </div>
-               @endforeach
-            </div>
-         </div>
-      </div>
-
-      <div class="items-center gap-10 hidden">
-         <div class="bs-stepper w-full">
-            <div class="bs-stepper-header" role="tablist">
-               <!-- your steps here -->
-               <div class="step" data-target="#pet-basic-detail-part">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="pet-basic-detail-part"
-                     id="pet-basic-detail-part-trigger">
-                     <span class="bs-stepper-circle"><i class="fa-solid fa-paw"></i></span>
-                     <span class="bs-stepper-label">Informasi Hewan</span>
-                  </button>
-               </div>
-               <div class="line"></div>
-               <div class="step" data-target="#pet-allergy-part">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="pet-allergy-part"
-                     id="pet-allergy-part-trigger">
-                     <span class="bs-stepper-circle"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i></span>
-                     <span class="bs-stepper-label">Informasi Alergi</span>
-                  </button>
-               </div>
-               <div class="line"></div>
-               <div class="step" data-target="#pet-vaccination-part">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="pet-vaccination-part"
-                     id="pet-vaccination-part-trigger">
-                     <span class="bs-stepper-circle"><i class="fa-solid fa-syringe"></i></span>
-                     <span class="bs-stepper-label">Riwayat Vaksinasi</span>
-                  </button>
+      <div class="bs-stepper w-full h-full flex flex-col relative">
+         <div class="bs-stepper-content flex-1 flex flex-col">
+            <!-- your steps content here -->
+            <div id="pet-name-part" class="content h-full" role="tabpanel" aria-labelledby="pet-name-part-trigger">
+               <div class="h-full flex flex-col justify-between items-center">
+                  <div class="lg:w-1/2">
+                     <div class="text-center">
+                        <h2 class="text-gray-700 text-3xl font-bold mb-10">
+                           Siapa Nama hewan Peliharaan Anda?
+                        </h2>
+                     </div>
+                     <input type="text" name="name" placeholder="Masukan nama peliharaan"
+                        class="p-3 border-grayZ bg-transparent border-b w-full outline-none pet_name text-2xl" />
+                  </div>
+                  <div class="text-end ms-auto">
+                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
+                  </div>
                </div>
             </div>
-            <div class="bs-stepper-content">
-               <!-- your steps content here -->
-               <div id="pet-basic-detail-part" class="content" role="tabpanel"
-                  aria-labelledby="pet-basic-detail-part-trigger">
 
-                  <form action="#" class="pet_basic_detail_form" enctype="multipart/form-data">
+            <div id="pet-type-part" class="content h-full" role="tabpanel" aria-labelledby="pet-type-part-trigger">
+               <div class="h-full flex flex-col justify-between items-center gap-11">
+                  <div class="lg:w-1/2">
+                     <div class="text-center">
+                        <h2 class="text-gray-700 text-3xl font-bold mb-10">Apa jenis hewan peliharaan anda?
+                        </h2>
+                     </div>
+                     <div class="grid grid-cols-2 gap-4 pet_type_select">
+                        @foreach ($petTypes as $petType)
+                           <input class="hidden pet_type_id" type="radio" name="pet_type_id" value="{{ $petType->id }}"
+                              id="pet_type_{{ $petType->id }}">
+                           <label for="pet_type_{{ $petType->id }}">
+                              <div
+                                 class="bg-primary text-white bg-opacity-75 border-orange-800 !h-32 flex flex-col gap-4 items-center justify-center cursor-pointer rounded-xl item">
+                                 <i class="{{ $petType->icon->name }} fa-3x"></i>
+                                 <span class="text-xl font-bold">{{ ucwords($petType->name) }}</span>
+                              </div>
+                           </label>
+                        @endforeach
+                     </div>
+                  </div>
+
+                  <div class="absolute top-0 left-0">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
+                  <div class="text-end ms-auto">
+                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
+                  </div>
+               </div>
+            </div>
+
+            <div id="pet-breed-part" class="content h-full" role="tabpanel" aria-labelledby="pet-breed-part-trigger">
+               <div class="h-full flex flex-col justify-between items-center">
+                  <div class="lg:w-1/2">
+                     <div class="text-center">
+                        <h2 class="text-gray-700 text-3xl font-bold mb-10">
+                           Sebutkan jenis <span class="pet_name_display"></span> ?
+                        </h2>
+                     </div>
+
+                     <select id="breed_id" name="breed_id"
+                        class="select select-2 select-bordered bg-transparent w-full form-control flex-row text-2xl"
+                        data-placeholder="Cari jenis">
+                        <option value=""></option>
+                     </select>
+                  </div>
+
+                  <div class="absolute top-0 left-0">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
+                  <div class="text-end ms-auto">
+                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
+                  </div>
+               </div>
+            </div>
+
+            <div id="pet-more-information-part" class="content h-full" role="tabpanel"
+               aria-labelledby="pet-more-information-part-trigger">
+               <div class="h-full flex flex-col justify-between items-center">
+                  <div class="lg:w-1/2">
+                     <div class="text-center">
+                        <h2 class="text-gray-700 text-3xl font-bold mb-10">
+                           Beri tahu kami lebih mengenai <span class="pet_name_display"></span> ?
+                        </h2>
+                     </div>
+
+                     <div class="grid grid-cols-2 gap-5">
+                        <div class="form-control w-full">
+                           <input type="text" name="weight" placeholder="Masukan berat hewan"
+                              class="input input-bordered w-full bg-transparent hover:outline-none focus-visible:outline-none" />
+                           <div class="label">
+                              <span class="ms-auto label-text-alt">Dalam bentuk Kg</span>
+                           </div>
+                        </div>
+                        <div class="form-control w-full">
+                           <input type="text" name="birth_date" placeholder="Masukan tanggal lahir"
+                              class="input input-bordered w-full bg-transparent hover:outline-none focus-visible:outline-none date-picker"
+                              readonly />
+                        </div>
+
+                        <div class="flex flex-col items-center gap-4 col-span-2">
+                           <label class="text-2xl" for="">Jenis Kelamin</label>
+                           <div class="d-flex fa-5x text-gray-400">
+                              <input class="hidden" type="radio" name="gender" value="m" id="male">
+                              <input class="hidden" type="radio" name="gender" value="f" id="female">
+                              <label class="gender" for="male">
+                                 <i class="fa-solid fa-mars"></i>
+                              </label>
+                              <label class="gender" for="female">
+                                 <i class="fa-solid fa-venus"></i>
+                              </label>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="absolute top-0 left-0">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
+                  <div class="text-end ms-auto">
+                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
+                  </div>
+               </div>
+            </div>
+
+            <div id="pet-image-part" class="content h-full" role="tabpanel" aria-labelledby="pet-image-part-trigger">
+               <div class="h-full flex flex-col justify-between items-center">
+                  <div class="lg:w-1/2">
+                     <div class="text-center">
+                        <h2 class="text-gray-700 text-3xl font-bold mb-10">
+                           Tambahkan Gambar
+                        </h2>
+                     </div>
+
                      <div class="flex flex-col gap-5 items-center justify-center mb-3 flex-grow">
                         <div class="relative">
                            <label for="pet_image" class="link">
@@ -63,183 +156,119 @@
                                  <i class="fa-regular fa-images"></i>
                               </div>
                            </label>
-                           <img id="pet_image_preview" class="w-36 h-36 rounded-full unselectable"
+                           <img id="pet_image_preview" class="w-40 h-40 rounded unselectable"
                               src="{{ asset('assets/default-pet.jpg') }}" alt="pet image">
                         </div>
-                        <input name="pet_image" id="pet_image" type="file" class="hidden" accept=".png, .jpg, .jpeg" />
+                        <input name="pet_image" id="pet_image" type="file" class="hidden"
+                           accept=".png, .jpg, .jpeg" />
                      </div>
+                  </div>
 
-                     <div class="grid grid-cols-3 gap-3 mb-5">
-                        <label class="form-control w-full">
-                           <div class="label">
-                              <span class="label-text font-semibold">Nama</span>
-                           </div>
-                           <input type="text" name="name" class="input input-bordered w-full form-validation" />
-                        </label>
+                  <div class="absolute top-0 left-0">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
 
-                        <label class="form-control w-full">
-                           <div class="label">
-                              <span class="label-text font-semibold">Nomor Chip</span>
-                           </div>
-                           <input type="text" name="chip_number" class="input input-bordered w-full form-validation" />
-                        </label>
-
-                        <label class="form-control w-full">
-                           <div class="label">
-                              <span class="label-text font-semibold">Tipe</span>
-                           </div>
-                           <div>
-                              <select id="pet_type_id" name="pet_type_id"
-                                 class="select select-2 select-bordered w-full form-control flex-row">
-                                 <option value="" hidden></option>
-                                 @foreach ($petTypes as $petType)
-                                    <option value="{{ $petType->id }}">{{ $petType->name }}</option>
-                                 @endforeach
-                              </select>
-                           </div>
-                        </label>
-
-                        <label class="form-control w-full">
-                           <div class="label">
-                              <span class="label-text font-semibold">Jenis</span>
-                           </div>
-                           <select id="breed_id" name="breed_id"
-                              class="select select-2 select-bordered w-full form-control flex-row">
-                              <option value="" hidden></option>
-                           </select>
-                        </label>
-
-                        <label class="form-control w-full">
-                           <div class="label">
-                              <span class="label-text font-semibold">Tanggal Lahir</span>
-                           </div>
-                           <input type="date" class="input input-bordered w-full form-validation" name="birth_date" />
-                        </label>
-
-                        <label class="form-control w-full">
-                           <div class="label">
-                              <span class="label-text font-semibold">Berat</span>
-                           </div>
-                           <label class="input input-bordered flex items-center gap-2">
-                              <input type="text" name="weight" class="grow" />
-                              Kg
-                           </label>
-                        </label>
-
-                        <label class="form-control w-full">
-                           <div class="label">
-                              <span class="label-text font-semibold">Jenis Kelamin</span>
-                           </div>
-                           <select class="select select-bordered w-full form-control flex-row" name="gender">
-                              <option value="" hidden></option>
-                              <option value="m">Male</option>
-                              <option value="f">Female</option>
-                           </select>
-                        </label>
-                     </div>
-                     <div class="flex justify-end">
-                        <button type="submit" class="btn btn-primary btn-padding stepper_next">Lanjutkan <i
-                              class="fa fa-paw"></i></button>
-                     </div>
-                  </form>
-               </div>
-               <div id="pet-allergy-part" class="content" role="tabpanel" aria-labelledby="pet-allergy-part-trigger">
-                  <form class="grid gap-3 mb-12">
-                     <input type="hidden" class="row_index">
-
-                     <label class="form-control w-full">
-                        <div class="label">
-                           <span class="label-text font-semibold">Alergi</span>
-                        </div>
-                        <input type="text" class="input input-bordered w-full allergy_name" />
-                     </label>
-
-                     <label class="form-control w-full">
-                        <div class="label">
-                           <span class="label-text font-semibold">Deskripsi</span>
-                        </div>
-                        <input type="text" class="input input-bordered w-full allergy_description" />
-                     </label>
-
-                     <div class="flex justify-end">
-                        <button type="submit"
-                           class="btn btn-padding btn-primary mt-3 pet_allergy_btn">Tambahkan</button>
-                     </div>
-                  </form>
-
-                  <table class="pet_allergy_list_table row-border">
-                     <thead>
-                        <tr>
-                           <th class="w-3/12">Alergi</th>
-                           <th>Deskripsi</th>
-                           <th class="w-2/12">Action</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                     </tbody>
-                  </table>
-
-                  <div class="flex justify-end gap-3 mt-5">
-                     <button type="submit" class="btn btn-primary btn-outline btn-padding stepper_previous"><i
-                           class="fa fa-arrow-left"></i> Sebelumnya</button>
-                     <button type="submit" class="btn btn-primary btn-padding stepper_next">Lanjutkan <i
-                           class="fa fa-paw"></i></button>
+                  <div class="text-end ms-auto">
+                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
                   </div>
                </div>
-               <div id="pet-vaccination-part" class="content" role="tabpanel"
-                  aria-labelledby="pet-vaccination-part-trigger">
-                  <form action="#" class="grid gap-3 mb-12">
-                     <input type="hidden" class="row_index">
+            </div>
 
-                     <label class="form-control w-full">
-                        <div class="label">
-                           <span class="label-text font-semibold">Nama Vaksinasi</span>
+            <div id="pet-allergy-part" class="content h-full" role="tabpanel"
+               aria-labelledby="pet-allergy-part-trigger">
+               <div class="h-full flex flex-col justify-between items-center gap-11">
+                  <div class="lg:w-1/2">
+                     <div class="text-center mb-5">
+                        <h2 class="text-gray-700 text-3xl font-bold mb-10">Apakah Hewan Anda Memiliki Alergi?
+                        </h2>
+
+                        <div
+                           class="border border-gray-400 p-4 rounded-xl flex items-center justify-center gap-5 w-full mx-auto">
+                           <div class="tooltip tooltip-bottom tooltip-info" data-tip="click to change severity">
+                              <button class="text-primary"><i class="fa-light fa-circle-info text-lg"></i></button>
+                           </div>
+                           <h3 class="font-bold">
+                              Allergy Severity
+                           </h3>
+                           <div class="flex gap-2 items-center">
+                              <div class="w-3 h-3 rounded-full bg-secondary"></div>
+                              <span class="font-bold">Mild</span>
+                           </div>
+                           <div class="flex gap-2 items-center">
+                              <div class="w-3 h-3 rounded-full bg-accent"></div>
+                              <span class="font-bold">Medium</span>
+                           </div>
+                           <div class="flex gap-2 items-center">
+                              <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                              <span class="font-bold">Severe</span>
+                           </div>
                         </div>
-
-                        <select class="select select-bordered w-full form-control flex-row vaccination_name">
-                        </select>
-                     </label>
-
-                     <label class="form-control w-full">
-                        <div class="label">
-                           <span class="label-text font-semibold">Nama Dokter</span>
-                        </div>
-                        <input type="text" class="input input-bordered w-full vaccination_doctor_name" />
-                     </label>
-
-                     <label class="form-control w-full">
-                        <div class="label">
-                           <span class="label-text font-semibold">Diberikan Pada</span>
-                        </div>
-                        <input type="date" class="input input-bordered w-full vaccination_given_at" />
-                     </label>
-
-                     <div class="flex justify-end">
-                        <button type="submit"
-                           class="btn btn-padding btn-primary mt-3 pet_vaccination_btn">Tambahkan</button>
                      </div>
-                  </form>
+                     <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pet_allergy_select">
+                        @foreach ($allergyTemplate as $allergy)
+                           <div
+                              class="item border border-primary text-primary bg-opacity-85 cursor-pointer rounded-xl p-5 pet_allergy"
+                              id="{{ $allergy['name'] }}">
+                              <label class="flex flex-col gap-4 items-center justify-center pointer-events-none"
+                                 for="{{ $allergy['name'] }}">
+                                 <i class="{{ $allergy['icon'] }} fa-3x"></i>
+                                 <span class="text-xl font-bold">{{ $allergy['name'] }}</span>
+                              </label>
+                           </div>
+                        @endforeach
+                     </div>
+                  </div>
 
-                  <table class="pet_vaccination_list_table w-full row-border text-left">
-                     <thead>
-                        <tr>
-                           <th class="w-3/12">Nama Vaksin</th>
-                           <th class="w-3/12">Nama Dokter</th>
-                           <th class="w-3/12">Diberikan Pada</th>
-                           <th class="w-3/12">Action</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                     </tbody>
-                  </table>
+                  <div class="absolute top-0 left-0">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
 
-                  <div class="flex justify-end gap-3 mt-5">
-                     <button type="submit" class="btn btn-primary btn-outline btn-padding stepper_previous"><i
-                           class="fa fa-arrow-left"></i> Sebelumnya</button>
-                     <button type="submit" class="btn btn-primary btn-padding stepper_finish">Selesaikan <i
-                           class="fa fa-paw"></i></button>
+                  <div class="text-end ms-auto">
+                     <button class="btn btn-primary btn-padding stepper_finish">Selesaikan</button>
                   </div>
                </div>
+            </div>
+         </div>
+         <div class="bs-stepper-header justify-center mb-6" role="tablist">
+            <div class="step" data-target="#pet-name-part">
+               <button type="button" class="step-trigger" role="tab" aria-controls="pet-name-part"
+                  id="pet-name-part-trigger">
+                  <span class="bs-stepper-circle !w-4 !h-4 !rounded-full"></span>
+               </button>
+            </div>
+            <div class="step" data-target="#pet-type-part">
+               <button type="button" class="step-trigger" role="tab" aria-controls="pet-type-part"
+                  id="pet-type-part-trigger">
+                  <span class="bs-stepper-circle !w-4 !h-4 !rounded-full"></span>
+               </button>
+            </div>
+            <div class="step" data-target="#pet-breed-part">
+               <button type="button" class="step-trigger" role="tab" aria-controls="pet-breed-part"
+                  id="pet-breed-part-trigger">
+                  <span class="bs-stepper-circle !w-4 !h-4 !rounded-full"></span>
+               </button>
+            </div>
+            <div class="step" data-target="#pet-more-information-part">
+               <button type="button" class="step-trigger" role="tab" aria-controls="pet-more-information-part"
+                  id="pet-more-information-part-trigger">
+                  <span class="bs-stepper-circle !w-4 !h-4 !rounded-full"></span>
+               </button>
+            </div>
+            <div class="step" data-target="#pet-image-part">
+               <button type="button" class="step-trigger" role="tab" aria-controls="pet-image-part"
+                  id="pet-image-part-trigger">
+                  <span class="bs-stepper-circle !w-4 !h-4 !rounded-full"></span>
+               </button>
+            </div>
+            <div class="step" data-target="#pet-allergy-part">
+               <button type="button" class="step-trigger" role="tab" aria-controls="pet-allergy-part"
+                  id="pet-allergy-part-trigger">
+                  <span class="bs-stepper-circle !w-4 !h-4 !rounded-full"></span>
+               </button>
             </div>
          </div>
       </div>
@@ -249,6 +278,8 @@
 @section('js-footer')
    <script>
       $(function() {
+         const defaultPetAllergy = @json($allergyTemplate);
+
          $('#pet_image').change(function() {
             previewImageWithSelector(
                this,
@@ -256,51 +287,95 @@
                "{{ asset('assets/default-pet.jpg') }}")
          });
 
-         const plainDatatableConfiguration = {
-            bLengthChange: false,
-            autoWidth: false,
-            searching: false,
-            paging: false,
-            info: false
-         };
+         $('.gender').click(function(e) {
+            $('.gender').removeClass('text-primary');
 
-         const petAllergyDatatables = $('.pet_allergy_list_table').DataTable(plainDatatableConfiguration);
-         const petMedicalRecordDatatables = $('.pet_medical_record_list_table').DataTable(
-            plainDatatableConfiguration);
-         const petVaccinationDatatables = $('.pet_vaccination_list_table').DataTable(plainDatatableConfiguration);
+            $(this).addClass('text-primary');
+         });
 
-         $('#pet_type_id').change(function() {
-            const getBreedTemplateUrl = "{{ route('master.breed', ':PET_TYPE_ID:') }}";
-            const getVaccinationTemplateUrl = "{{ route('master.vaccination', ':PET_TYPE_ID:') }}";
+         $('.pet_type_select .item').click(function() {
+            $('.pet_type_select .border-2').removeClass('border-2 shadow-xl');
+            $(this).addClass('border-2 shadow-xl');
+         });
 
-            $.ajax({
-               method: 'get',
-               url: getBreedTemplateUrl.replace(':PET_TYPE_ID:', $(this).val()),
-               beforeSend: function() {
-                  $('#breed_id').empty().trigger("change");
-               },
-               success: function(data) {
-                  $('#breed_id').prepend(new Option('', ''));
-                  data.map((d) => $('#breed_id').append(new Option(d.text, d.id)));
-               }
+         $('.pet_name').change(function() {
+            $('.pet_name_display').text($(this).val())
+         });
+
+         console.log(defaultPetAllergy)
+
+         $('.pet_allergy_select .item').click(function() {
+            const mildColor = 'bg-secondary';
+            const mediumColor = 'bg-accent';
+            const severeColor = 'bg-red-400';
+
+            const isSelected = $(this).hasClass('selected');
+            const hasMildColor = $(this).hasClass(mildColor);
+            const hasMediumColor = $(this).hasClass(mediumColor);
+
+            const selectedValue = $(this).attr('id');
+            const objPetAllergy = defaultPetAllergy.find(o => o.name === selectedValue);
+
+            $(this).attr('class', function(i, c) {
+               return c.replace(/(^|\s)bg-\S+/g, '');
             });
 
-            $.ajax({
-               method: 'get',
-               url: getVaccinationTemplateUrl.replace(':PET_TYPE_ID:', $(this).val()),
-               beforeSend: function() {
-                  $('.vaccination_name').empty().trigger("change");
-               },
-               success: function(data) {
-                  $('.vaccination_name').prepend(new Option('', ''));
-                  data.map((d) => $('.vaccination_name').append(new Option(d.text, d.text)));
+            if (!isSelected) {
+               $(this).addClass(`${mildColor} text-white selected`);
+               objPetAllergy.allergy_category_id = 1;
+            } else if (hasMildColor) {
+               $(this).addClass(mediumColor);
+               objPetAllergy.allergy_category_id = 2;
+            } else if (hasMediumColor) {
+               $(this).addClass(severeColor);
+               objPetAllergy.allergy_category_id = 3;
+            } else {
+               $(this).removeClass('text-white selected').addClass('text-primary');
+               objPetAllergy.allergy_category_id = null;
+            }
+         });
+
+         $('.pet_type_id').change(function() {
+            const getBreedTemplateUrl = "{{ route('master.breed', ':PET_TYPE_ID:') }}";
+
+            $('#breed_id').select2({
+               placeholder: '',
+               ajax: {
+                  delay: 500,
+                  cache: true,
+                  url: getBreedTemplateUrl.replace(':PET_TYPE_ID:', $(this).val()),
+                  data: function(params) {
+                     return {
+                        q: params.term,
+                        page: params.page || 1,
+                     };
+                  },
+                  processResults: function(res, params) {
+                     params.page = params.page || 1;
+
+                     const map = res.result.map((itm) => {
+                        return {
+                           id: itm.id,
+                           text: itm.text,
+                        }
+                     });
+
+                     const results = map || [];
+
+                     return {
+                        results: results,
+                        pagination: {
+                           more: results.length >= 10,
+                        },
+                     };
+                  },
                }
             });
          });
 
          const stepper = new Stepper($('.bs-stepper')[0], {
             linear: false
-         })
+         });
 
          $('.stepper_next').click(function(e) {
             e.preventDefault();
@@ -312,28 +387,44 @@
             stepper.previous();
          });
 
+         function getSelectedValues(selector) {
+            const values = [];
+            $(`${selector}.selected`).each(function() {
+               values.push($(this).attr('id'));
+            });
+            return values;
+         }
+
          $('.stepper_finish').click(function(e) {
             e.preventDefault();
 
-            const data = new FormData($('.pet_basic_detail_form')[0]);
+            $(this).attr('disabled', true);
 
-            const deselectAction = row => row.slice(0, -1);
+            const petAllergy = getSelectedValues('.pet_allergy');
 
-            data.append('pet_allergy',
-               JSON.stringify(petAllergyDatatables.rows().data().toArray().map(deselectAction))
-            );
+            const petAllergyIds = defaultPetAllergy.filter(item => petAllergy.includes(item.name));
+            const name = $('[name="name"]').val();
+            const breedId = $('[name="breed_id"]').val();
+            const gender = $('[name="gender"]').val();
+            const weight = $('[name="weight"]').val();
+            const chipNumber = $('[name="chip_number"]').val();
+            const birthDate = $('[name="birth_date"]').val();
+            const petImage = $('[name="pet_image"]')[0].files[0];
 
-            data.append('pet_vaccination',
-               JSON.stringify(petVaccinationDatatables.rows().data().toArray().map(deselectAction))
-            );
+            const formData = new FormData();
 
-            data.append('pet_medical',
-               JSON.stringify(petMedicalRecordDatatables.rows().data().toArray().map(deselectAction))
-            );
+            formData.append('name', name);
+            formData.append('breed_id', breedId);
+            formData.append('gender', gender);
+            formData.append('weight', weight);
+            formData.append('chip_number', chipNumber);
+            formData.append('birth_date', birthDate);
+            formData.append('pet_image', petImage);
+            formData.append('pet_allergy_ids', JSON.stringify(petAllergyIds));
 
             $.post({
                url: "{{ route('pet-owner.pet.store') }}",
-               data,
+               data: formData,
                processData: false,
                contentType: false,
                beforeSend: function() {
@@ -344,98 +435,15 @@
 
                   window.location.href = index;
                },
-               error: function () {
-                  swal('error', 'Terjadi Kesalahan');
+               error: function() {
+                  swal('error', 'Terjadi Kesalahan', 'error');
+                  $.LoadingOverlay("hide")
+
+                  $('.stepper_finish').attr('disabled', false);
                }
             });
          })
-
-         bindDeleteMethod(
-            '.pet_allergy_list_table',
-            petAllergyDatatables,
-            ['.allergy_name, .allergy_description, .row_index']
-         );
-
-         bindEditMethod(
-            '.pet_allergy_list_table',
-            petAllergyDatatables,
-            ['.allergy_name', '.allergy_description']
-         );
-
-         bindDatatableAddRecordMethod(
-            '.pet_allergy_btn',
-            petAllergyDatatables,
-            ['.allergy_name', '.allergy_description']
-         );
-
-         bindDatatableAddRecordMethod(
-            '.pet_vaccination_btn',
-            petVaccinationDatatables,
-            ['.vaccination_name', '.vaccination_doctor_name', '.vaccination_given_at']
-         );
-
-         bindEditMethod(
-            '.pet_vaccination_list_table',
-            petVaccinationDatatables,
-            ['.vaccination_name', '.vaccination_doctor_name', '.vaccination_given_at']
-         );
-
-         bindDeleteMethod(
-            '.pet_vaccination_list_table',
-            petVaccinationDatatables,
-            ['.vaccination_name', '.vaccination_doctor_name', '.vaccination_given_at']
-         );
       });
-
-      function bindDeleteMethod(tableSelector, datatable, inputsSelector) {
-         $(tableSelector + ' tbody').on('click', '.delete_btn', function() {
-            console.log('sada');
-            datatable.row($(this).parents('tr')).remove().draw();
-
-            $(...inputsSelector).val('');
-         });
-      }
-
-      function bindEditMethod(tableSelector, datatables, inputs) {
-         $(tableSelector + ' tbody').on('click', '.edit_btn', function() {
-            const row = datatables.row($(this).parents('tr'));
-            const data = row.data();
-
-            inputs.forEach(function(selector, index) {
-               $(selector).val(data[index]);
-            });
-
-            $('.row_index').val(row.index());
-         });
-      }
-
-      function bindDatatableAddRecordMethod(formBtnSelector, datatable, inputs) {
-         $(document).on('click', formBtnSelector, function(e) {
-            e.preventDefault();
-
-            const $formElement = $(e.currentTarget).closest('form');
-            const rowIndex = $formElement.find('.row_index').val();
-            const payload = [];
-
-            inputs.forEach((selector) => payload.push($formElement.find(selector).val()));
-
-            const actionElement =
-               `<div class='flex gap-1'>
-               <button class='btn p-2 rounded-full btn-primary edit_btn'><i class='fa-solid fa-pencil'></i></button>
-               <button class='btn p-2 rounded-full btn-secondary text-white delete_btn'><i class='fa-solid fa-trash'></i></button>
-               </div>`;
-
-            payload.push(actionElement);
-
-            if (rowIndex) {
-               datatable.row(rowIndex).data(payload);
-            } else {
-               datatable.row.add(payload).draw();
-            }
-
-            $(inputs.join(', ') + ' ,.row_index').val('');
-         });
-      }
    </script>
 
    {!! JsValidator::formRequest(

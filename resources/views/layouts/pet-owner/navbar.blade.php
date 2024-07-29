@@ -47,7 +47,7 @@
                      class="bg-white font-bold text-primary rounded-full w-5 h-5 text-[0.9rem] flex items-center justify-center bg-opacity-70">
                      {{ $pets->count() }}
                   </div>
-                  <img class="w-12 h-12 rounded-full bg-gray-200" alt="user" src="{{ $pet?->thumbnail_image }}" />
+                  <img class="w-12 h-12 rounded-full bg-gray-200" alt="user" src="{{ asset($pet?->thumbnail_image) }}" />
                </div>
                <span class="tracking-wider">Profile</span>
                <i class="fa-solid fa-chevron-down"></i>

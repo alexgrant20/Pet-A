@@ -49,7 +49,7 @@ return new class extends Migration
 
         Schema::table('medical_records', function (Blueprint $table) {
             $table->foreign('pet_id')->references('id')->on('pets')->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreign('appointment_id')->references('id')->on('pet_medications')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreign('appointment_id')->references('id')->on('appointments')->cascadeOnUpdate()->restrictOnDelete();
         });
 
         Schema::table('pet_vaccinations', function (Blueprint $table) {

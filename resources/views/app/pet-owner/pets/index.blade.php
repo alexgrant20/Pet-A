@@ -3,7 +3,7 @@
 @section('title', 'Pet')
 
 @section('content')
-  <section>
+  <section class="p-4">
     <div class="flex justify-between mb-4">
       <h2 class="text-primary text-2xl font-bold">Pet Family</h2>
       <a href="{{ route('pet-owner.pet.create') }}" class="btn btn-primary btn-padding">Add Pet <i class="fa fa-solid fa-plus"></i></a>

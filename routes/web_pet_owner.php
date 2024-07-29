@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PetAllergyController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetOwner\AppointmentController;
 use App\Http\Controllers\PetOwner\AppointmentRequestController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\PetOwner\MedicalRecordController;
 use App\Http\Controllers\PetOwner\OnlineConsultationController;
 use App\Http\Controllers\PetOwner\ProfileController;
 use App\Http\Controllers\PetOwner\VaccinationController;
+use App\Http\Controllers\PetVaccinationController;
 use App\Models\Appointment;
 use App\Models\Pet;
 use Carbon\Carbon;
@@ -38,4 +40,18 @@ Route::put('/profile/{petOwner}', [ProfileController::class, 'update'])->name('p
 Route::resource('/online-consultation', OnlineConsultationController::class);
 Route::resource('/appointment', AppointmentController::class);
 Route::get('/list/appointment', [AppointmentController::class, 'getList'])->name('list.appointment');
-Route::get('/medical-record',[MedicalRecordController::class, 'index'])->name('medical-record.index');
+Route::get('/medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
+
+Route::name('pet-allergy.')
+   ->controller(PetAllergyController::class)
+   ->group(function () {
+      Route::post('/pet-allergy', 'store')->name('store');
+      Route::delete('/pet-allergy/{petAllergy}', 'destroy')->name('destroy');
+   });
+
+Route::name('pet-vaccination.')
+   ->controller(PetVaccinationController::class)
+   ->group(function () {
+      Route::post('/pet-vaccination', 'store')->name('store');
+      Route::delete('/pet-vaccination/{petVaccination}', 'destroy')->name('destroy');
+   });

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pet_weights', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pet_id');
-            $table->unsignedSmallInteger('weight');
+            $table->unsignedFloat('weight');
             $table->unsignedTinyInteger('age');
 
             $table->timestamps();

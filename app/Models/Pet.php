@@ -11,6 +11,10 @@ class Pet extends Model
 
    protected $guarded = ['id'];
 
+   protected $casts = [
+      'birth_date' => 'datetime',
+   ];
+
    public function petOwner()
    {
       return $this->belongsTo(PetOwner::class);

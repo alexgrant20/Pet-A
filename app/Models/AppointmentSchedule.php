@@ -11,6 +11,14 @@ class AppointmentSchedule extends Model
 
     protected $guarded = ['id'];
 
+    protected $dates = ['created_at', 'updated_at', 'start_time'];
+
+    protected $casts = [
+       'created_at' => 'datetime',
+       'updated_at' => 'datetime',
+       'start_time' => 'datetime',
+    ];
+
     public function veterinarian()
     {
         return $this->belongsTo(Veterinarian::class);
