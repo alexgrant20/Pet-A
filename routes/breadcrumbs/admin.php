@@ -176,3 +176,18 @@ Breadcrumbs::for('appointment-schedule-edit', function (BreadcrumbTrail $trail) 
 	$trail->parent('appointment-schedule');
 	$trail->push('Ubah Jadwal Dokter Hewan');
 });
+
+Breadcrumbs::for('clinic', function (BreadcrumbTrail $trail) {
+	$trail->parent('home-admin');
+	$trail->push('Tempat Praktik', route('admin.clinic.index'));
+});
+
+Breadcrumbs::for('clinic-create', function (BreadcrumbTrail $trail) {
+	$trail->parent('clinic');
+	$trail->push('Tambah Tempat Praktik', route('admin.clinic.create'));
+});
+
+Breadcrumbs::for('clinic-edit', function (BreadcrumbTrail $trail) {
+	$trail->parent('clinic');
+	$trail->push('Ubah Tempat Praktik');
+});

@@ -1,5 +1,5 @@
 <div class="drawer-side">
-  <div class="p-4 w-fit md:w-80 min-h-full bg-white bg-red text-neutral-400">
+  <div class="p-4 w-fit md:w-80 min-h-full bg-primary bg-red text-white">
     <ul class="menu menu-md gap-3">
       <li>
         <a class="text-[1.1rem] gap-4" href="{{ route('home') }}">
@@ -16,7 +16,7 @@
             <details>
               <summary class="text-[1.1rem] gap-3">
                 <i class="fa {{ @$menu['icon'] }}"></i>
-                <span class="hidden md:block text-3xl">
+                <span class="hidden md:block">
                   {{ @$menu['label'] }}
                 </span>
               </summary>

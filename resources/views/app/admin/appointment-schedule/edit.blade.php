@@ -38,9 +38,18 @@
                @foreach ($appointmentSchedules as $appointmentSchedule)
                   <input type="hidden" name="appointment_schedule[id][{{ $loop->index }}]"
                      value="{{ Crypt::encrypt($appointmentSchedule->id) }}">
-                  <input type="time" name="appointment_schedule[start_time][{{ $loop->index }}]"
-                     class="input input-bordered w-full form-validation mb-3"
-                     value="{{ $appointmentSchedule->start_time }}" />
+                  <div class="grid grid-cols-12 gap-2">
+                     <div class="col-span-11">
+                        <input type="time" name="appointment_schedule[start_time][{{ $loop->index }}]"
+                           class="input input-bordered w-full form-validation mb-3"
+                           value="{{ $appointmentSchedule->start_time }}" />
+                     </div>
+
+                     <button class="btn btn-error text-base-100 py-2 btn_delete_schedule" id="btn_delete_schedule"
+                        data-value="{{ Crypt::encrypt($appointmentSchedule->id) }}">
+                        <i class="fa fa-trash"></i>
+                     </button>
+                  </div>
                @endforeach
             </label>
 
@@ -61,6 +70,28 @@
          placeholder: function() {
             $(this).attr('data-placeholder');
          }
+      });
+
+      $('.btn_delete_schedule').click(function(e) {
+         e.preventDefault();
+
+         const token = $(this).data('token');
+
+         const scheduleId = $(this).attr('data-value');
+         let route = "{{ route('admin.appointment-schedule.destroy', '::schedule_id::') }}";
+         route = route.replace('::schedule_id::', scheduleId);
+
+         $.ajax({
+            url: route,
+            type: 'POST',
+            data: {
+               _method: 'DELETE',
+               _token: token
+            },
+            success: function() {
+               $(this).remove();
+            }
+         });
       });
    </script>
 @endsection

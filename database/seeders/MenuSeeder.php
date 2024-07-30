@@ -12,7 +12,7 @@ class MenuSeeder extends Seeder
     $masterMenu = Menu::create([
       'icon' => 'fa fa-database',
       'label' => 'Master',
-      'order' => 1,
+      'order' => 6,
     ]);
 
     Menu::create([
@@ -73,9 +73,30 @@ class MenuSeeder extends Seeder
 
     Menu::create([
       'label' => 'Veterinarian',
-      'order' => 2,
+      'order' => 4,
       'icon' => 'fa fa-user-doctor',
       'route_name' => 'admin.veterinarian.index'
+    ]);
+
+    Menu::create([
+      'label' => 'Tempat Praktik',
+      'order' => 3,
+      'icon' => 'fa fa-hospital',
+      'route_name' => 'admin.clinic.index'
+    ]);
+
+    Menu::create([
+      'label' => 'Janji Temu',
+      'order' => 1,
+      'icon' => 'fa fa-alarm-clock',
+      'route_name' => 'admin.appointment.index'
+    ]);
+
+    Menu::create([
+      'label' => 'Jadwal',
+      'order' => 1,
+      'icon' => 'fa fa-calendar-days',
+      'route_name' => 'admin.appointment-schedule.index'
     ]);
 
     Menu::create([
@@ -118,7 +139,7 @@ class MenuSeeder extends Seeder
     Menu::create([
       'icon' => 'fa-users',
       'label' => 'User Management',
-      'order' => 2,
+      'order' => 5,
       'route_name' => 'admin.user-management.index'
    ]);
   }

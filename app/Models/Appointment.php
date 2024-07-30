@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Appointment extends Model
 {
@@ -39,15 +40,14 @@ class Appointment extends Model
    {
       return $this->belongsTo(Clinic::class);
    }
+    public function veterinarian()
+    {
+        return $this->belongsTo(Veterinarian::class);
+    }
 
    public function appointmentType()
    {
       return $this->belongsTo(AppointmentType::class);
-   }
-
-   public function veterinarian()
-   {
-      return $this->belongsTo(Veterinarian::class);
    }
 
    public function appointmentSchedule()
@@ -55,8 +55,24 @@ class Appointment extends Model
       return $this->belongsTo(AppointmentSchedule::class);
    }
 
-   public function serviceType()
-   {
-      return $this->belongsTo(ServiceType::class);
-   }
+    public function serviceType()
+    {
+        return $this->belongsTo(ServiceType::class);
+    }
+
+    public function getAppointmentDate()
+    {
+        return (new Carbon($this->appointment_date))->translatedFormat("l, d F Y");
+    }
+
+    public function getAppointmentTime()
+    {
+        $this->loadMissing('appointmentSchedule');
+
+        $appointmentSchedule = $this->appointmentSchedule;
+        $startTime= (new Carbon($appointmentSchedule->start_time))->translatedFormat("H:i");
+        $endTime = (new Carbon($appointmentSchedule->end_time))->translatedFormat("H:i");
+
+        return "$startTime - $endTime";
+    }
 }

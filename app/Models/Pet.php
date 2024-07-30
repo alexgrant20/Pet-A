@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Pet extends Model
 {
@@ -58,5 +59,19 @@ class Pet extends Model
    public function appointment()
    {
       return $this->hasMany(Appointment::class);
+   }
+
+   public function getAge()
+   {
+      $age = null;
+      $birthDate = new Carbon($this->birth_date);
+      $ageYear = date_diff($birthDate, now())->format("%y");
+      $ageMonth = date_diff($birthDate, now())->format("%m");
+
+      if ($ageYear > 0 && $ageMonth > 0) $age = "$ageYear tahun $ageMonth bulan";
+      else if ($ageYear > 0) $age = $ageYear  . " tahun";
+      else if ($ageMonth > 0) $age = $ageMonth . " bulan";
+
+      return $age;
    }
 }

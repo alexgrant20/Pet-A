@@ -188,6 +188,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'RoleInterface' => App\Interfaces\RoleInterface::class,
+        'ServiceTypeInterface' => App\Interfaces\ServiceTypeInterface::class,
     ])->toArray(),
 
 ];

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\AppointmentScheduleController;
+use App\Http\Controllers\Admin\ClinicController;
 use App\Http\Controllers\Admin\ServicePriceController;
 use App\Http\Controllers\Admin\VeterinarianController;
 use App\Http\Controllers\Admin\UserManagementController;
@@ -60,7 +62,13 @@ Route::prefix('/user-management')
 Route::resource('service-price', ServicePriceController::class, ['parameters' => ['service-price' => 'servicePrice']]);
 Route::get('/list/service-price', [ServicePriceController::class, 'getList'])->name('service-price.list');
 
-Route::resource('appointment-schedule', AppointmentScheduleController::class, ['parameters' => ['appointment-schedule' => 'appointmentSchedule']])->except(['edit', 'update', 'show']);
+Route::resource('clinic', ClinicController::class);
+Route::get('/list/clinic', [ClinicController::class, 'getList'])->name('clinic.list');
+
+Route::resource('appointment', AppointmentController::class)->only(['index', 'show', 'update']);
+Route::get('/list/appointment', [AppointmentController::class, 'getList'])->name('appointment.list');
+
+Route::resource('appointment-schedule', AppointmentScheduleController::class, ['parameters' => ['appointment-schedule' => 'appointmentSchedule']])->except(['edit', 'update', 'show', 'destroy']);
 Route::get('/list/appointment-schedule', [AppointmentScheduleController::class, 'getList'])->name('appointment-schedule.list');
 Route::prefix('/appointment-schedule')
 ->controller(AppointmentScheduleController::class)
@@ -68,4 +76,6 @@ Route::prefix('/appointment-schedule')
 ->group(function() {
    Route::get('/{day}/edit', 'edit')->name('edit');
    Route::put('/{day}', 'update')->name('update');
+
+   Route::delete('/{scheduleId}', 'destroy')->name('destroy');
 });

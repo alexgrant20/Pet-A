@@ -36,4 +36,9 @@ class Clinic extends Model
     {
         return $this->morphMany(User::class, 'profile');
     }
+
+    public function attachment()
+    {
+        return $this->morphMany(FieldAttachmentUpload::class, 'attachment');
+    }
 }

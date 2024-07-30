@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAppointmentScheduleRequest;
 use App\Http\Requests\Admin\UpdateAppointmentScheduleRequest;
 use App\Models\AppointmentSchedule;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +25,7 @@ class AppointmentScheduleController extends Controller
       $appointmentSchedules = AppointmentSchedule::where('veterinarian_id', Auth::user()->profile_id)
          ->get()
          ->groupBy('day')
-         ->sort();
+         ->sortKeys();
 
       $dayMapping = array("1" => "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
       return DataTables::of($appointmentSchedules)
@@ -36,6 +34,7 @@ class AppointmentScheduleController extends Controller
             return $dayMapping[$data[0]->day];
          })
          ->addColumn('start_time', function ($data) {
+            $data = $data->sortBy('start_time');
             return view('app.admin.appointment-schedule.components.__schedule', compact('data'));
          })
          ->addColumn('action', function ($data) {
@@ -110,8 +109,16 @@ class AppointmentScheduleController extends Controller
       return to_route('admin.appointment-schedule.index')->with('success-toast', 'Berhasil Mengubah Jadwal Dokter Hewan');
    }
 
-   public function destroy()
+   public function destroy($scheduleId)
    {
+      try {
+         $appointmentScheduleId = Crypt::decrypt($scheduleId);
+      } catch (\Exception $e) {
+         return back()->with('error-toast', 'Gagal Menghapus Jadwal Dokter Hewan');
+      }
 
+      AppointmentSchedule::where('id', $appointmentScheduleId)->delete();
+
+      return to_route('admin.appointment-schedule.edit', $appointmentScheduleId)->with('success-toast', 'Berhasil Menghapus Jadwal Dokter Hewan');
    }
 }
