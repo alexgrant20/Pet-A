@@ -235,7 +235,7 @@
                         <div class="label">
                            <span class="label-text font-semibold">Diberikan Pada</span>
                         </div>
-                        <input type="date" class="input input-bordered w-full date-picker" name="given_at" />
+                        <input type="text" class="input input-bordered w-full date-picker" name="given_at" readonly />
                      </label>
 
                      <div class="flex justify-end">
@@ -354,7 +354,8 @@
                },
                {
                   data: 'given_at',
-                  name: 'given_at'
+                  name: 'given_at',
+                  type: 'string',
                },
                {
                   data: 'action',

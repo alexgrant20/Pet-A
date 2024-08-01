@@ -36,7 +36,7 @@ class PetService
       $pet->future_appointment = $futureAppointment->take(3);
       $pet->history_appointment = $historyAppointment->take(3);
 
-      $pet->petWeight = $pet->petWeight->take(6);
+      $pet->petWeight = $pet->petWeight;
 
       return $pet;
    }

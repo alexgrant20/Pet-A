@@ -28,6 +28,6 @@ class PetVaccination extends Model
 
    public function getGivenAtAttribute($value)
    {
-       return Carbon::parse($value)->format('m/d/y');
+       return Carbon::parse($value)->format('m/d/Y');
    }
 }
