@@ -27,7 +27,9 @@ class EnsurePetSession
       $pets = Auth::user()->profile->pet;
 
       if($pets->count() == 0) {
-         session()->delete('session_pet');
+         if(session()->has('session_pet')) {
+            session()->delete('session_pet');
+         }
          return null;
       }
 
