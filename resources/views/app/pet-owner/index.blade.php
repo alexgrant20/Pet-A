@@ -9,32 +9,30 @@
             <div class="card flex-1">
                <div class="card-body rounded shadow-2xl pet_detail_container w-full">
                   <div class="container_pet_detail w-full flex flex-col items-center relative">
-                     @if ($pet)
-                        <div class="absolute right-0">
-                           <a href="{{ route('pet-owner.pet.edit', $pet?->id ?? '#') }}" class="cursor-pointer">
-                              <i class="fa-solid fa-pen-circle fa-2x text-primary"></i>
-                           </a>
-                        </div>
-                     @endif
+                     <div class="absolute right-0">
+                        <a href="{{ route('pet-owner.pet.edit', $pet->id) }}" class="cursor-pointer">
+                           <i class="fa-solid fa-pen-circle fa-2x text-primary"></i>
+                        </a>
+                     </div>
                      <img class="rounded-full w-36 h-36 pet_image border border-gray-400 mb-5"
                         src="{{ asset($pet?->thumbnail_image) }}" alt="">
                      <div>
-                        <h1 class="text-3xl font-bold pet_name text-center">{{ $pet?->name }}</h1>
-                        <h2 class="pet_breed text-2xl text-gray-400 text-center">{{ $pet?->breed->name }}</h2>
+                        <h1 class="text-3xl font-bold pet_name text-center">{{ $pet->name }}</h1>
+                        <h2 class="pet_breed text-2xl text-gray-400 text-center">{{ $pet->breed->name }}</h2>
                      </div>
 
                      <div class="mt-8 flex flex-row justify-center gap-3 text-lg">
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
                            <span class="text-primary font-bold">Umur</span>
-                           <span class="text-gray-900 font-bold">{{ $pet?->getAge() }}</span>
+                           <span class="text-gray-900 font-bold">{{ $pet->getAge() }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
                            <span class="text-primary font-bold">Berat</span>
-                           <span class="text-gray-900 font-bold pet_weight">{{ $pet?->weight }}</span>
+                           <span class="text-gray-900 font-bold pet_weight">{{ $pet->weight }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
                            <span class="text-primary font-bold">Sex</span>
-                           <span class="text-gray-900 font-bold pet_gender">{{ $pet?->gender }}</span>
+                           <span class="text-gray-900 font-bold pet_gender">{{ $pet->gender }}</span>
                         </div>
                      </div>
 
@@ -83,9 +81,11 @@
                </div>
                <div class="grid grid-cols-1 xl:grid-cols-2 xl:grid-rows-2 gap-5">
                   <section>
-                     <x-pet-owner.card titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 2]) }}"
+                     <x-pet-owner.card
+                        titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 2]) }}"
                         title='Informasi Alergi' :totalAllergy="$pet?->petAllergy->count()">
-                        <div class="grid grid-flow-row gap-y-4 {{ $pet?->petAllergy->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-48 no-scrollbar">
+                        <div
+                           class="grid grid-flow-row gap-y-4 {{ $pet?->petAllergy->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-48 no-scrollbar">
                            @forelse ($pet?->petAllergy->all() ?? [] as $petAllergy)
                               <div class="card row-span-1">
                                  <div class="card-body flex-row p-0 gap-4 items-center justify-start">
@@ -115,9 +115,11 @@
                   </section>
 
                   <section>
-                     <x-pet-owner.card titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3])  }}"
+                     <x-pet-owner.card
+                        titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3]) }}"
                         title='Riwayat Penyakit' :totalAllergy="$pet?->medicalRecord->count()">
-                        <div class="grid grid-flow-row gap-y-4 {{ $pet?->medicalRecord->count() > 3 ?: 'grid-rows-3' }}  overflow-y-auto h-48 no-scrollbar">
+                        <div
+                           class="grid grid-flow-row gap-y-4 {{ $pet?->medicalRecord->count() > 3 ?: 'grid-rows-3' }}  overflow-y-auto h-48 no-scrollbar">
                            @forelse ($pet?->medicalRecord->all() ?? [] as $medicalRecord)
                               <div class="card row-span-1">
                                  <div
@@ -149,8 +151,10 @@
 
                   <section>
                      <x-pet-owner.card title='Vaksinasi'
-                        titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3]) }}" :totalAllergy="$pet?->petVaccination->count()">
-                        <div class="grid grid-flow-row gap-y-2 {{ $pet?->petVaccination->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-48 no-scrollbar">
+                        titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3]) }}"
+                        :totalAllergy="$pet?->petVaccination->count()">
+                        <div
+                           class="grid grid-flow-row gap-y-2 {{ $pet?->petVaccination->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-48 no-scrollbar">
                            @forelse ($pet?->petVaccination->all() ?? [] as $petVaccination)
                               <div class="card">
                                  <div
@@ -188,10 +192,9 @@
                            </div>
                            <div class="w-full overflow-x-auto h-full">
                               <div class="w-full h-full">
-                                 <canvas class="w-0 h-full" id="acquisitions"></canvas>
-                                {{-- <canvas id="chart1" height="300" width="0"></canvas> --}}
+                                 <canvas class="w-0 h-full max-h-52" id="acquisitions"></canvas>
                               </div>
-                            </div>
+                           </div>
                         </div>
                      </div>
 
