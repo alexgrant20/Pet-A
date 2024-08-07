@@ -10,7 +10,7 @@
             <!-- your steps content here -->
             <div id="pet-name-part" class="content h-full" role="tabpanel" aria-labelledby="pet-name-part-trigger">
                <div class="h-full flex flex-col justify-between items-center">
-                  <div class="lg:w-1/2">
+                  <div class="lg:w-1/2 flex-1 justify-center flex flex-col">
                      <div class="text-center">
                         <h2 class="text-gray-700 text-3xl font-bold mb-10">
                            Siapa Nama hewan Peliharaan Anda?
@@ -27,6 +27,12 @@
 
             <div id="pet-type-part" class="content h-full" role="tabpanel" aria-labelledby="pet-type-part-trigger">
                <div class="h-full flex flex-col justify-between items-center gap-11">
+                  <div class="me-auto">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
                   <div class="lg:w-1/2">
                      <div class="text-center">
                         <h2 class="text-gray-700 text-3xl font-bold mb-10">Apa jenis hewan peliharaan anda?
@@ -47,12 +53,6 @@
                      </div>
                   </div>
 
-                  <div class="absolute top-0 left-0">
-                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
-                        <i class="fa-light fa-chevron-left"></i>
-                     </button>
-                  </div>
-
                   <div class="text-end ms-auto">
                      <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
                   </div>
@@ -61,6 +61,12 @@
 
             <div id="pet-breed-part" class="content h-full" role="tabpanel" aria-labelledby="pet-breed-part-trigger">
                <div class="h-full flex flex-col justify-between items-center">
+                  <div class="me-auto">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
                   <div class="lg:w-1/2">
                      <div class="text-center">
                         <h2 class="text-gray-700 text-3xl font-bold mb-10">
@@ -75,12 +81,6 @@
                      </select>
                   </div>
 
-                  <div class="absolute top-0 left-0">
-                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
-                        <i class="fa-light fa-chevron-left"></i>
-                     </button>
-                  </div>
-
                   <div class="text-end ms-auto">
                      <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
                   </div>
@@ -90,6 +90,12 @@
             <div id="pet-more-information-part" class="content h-full" role="tabpanel"
                aria-labelledby="pet-more-information-part-trigger">
                <div class="h-full flex flex-col justify-between items-center">
+                  <div class="me-auto">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
                   <div class="lg:w-1/2">
                      <div class="text-center">
                         <h2 class="text-gray-700 text-3xl font-bold mb-10">
@@ -127,12 +133,6 @@
                      </div>
                   </div>
 
-                  <div class="absolute top-0 left-0">
-                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
-                        <i class="fa-light fa-chevron-left"></i>
-                     </button>
-                  </div>
-
                   <div class="text-end ms-auto">
                      <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
                   </div>
@@ -141,6 +141,12 @@
 
             <div id="pet-image-part" class="content h-full" role="tabpanel" aria-labelledby="pet-image-part-trigger">
                <div class="h-full flex flex-col justify-between items-center">
+                  <div class="me-auto">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
                   <div class="lg:w-1/2">
                      <div class="text-center">
                         <h2 class="text-gray-700 text-3xl font-bold mb-10">
@@ -164,12 +170,6 @@
                      </div>
                   </div>
 
-                  <div class="absolute top-0 left-0">
-                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
-                        <i class="fa-light fa-chevron-left"></i>
-                     </button>
-                  </div>
-
                   <div class="text-end ms-auto">
                      <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
                   </div>
@@ -179,6 +179,12 @@
             <div id="pet-allergy-part" class="content h-full" role="tabpanel"
                aria-labelledby="pet-allergy-part-trigger">
                <div class="h-full flex flex-col justify-between items-center gap-11">
+                  <div class="me-auto">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
                   <div class="lg:w-1/2">
                      <div class="text-center mb-5">
                         <h2 class="text-gray-700 text-3xl font-bold mb-10">Apakah Hewan Anda Memiliki Alergi?
@@ -219,12 +225,6 @@
                            </div>
                         @endforeach
                      </div>
-                  </div>
-
-                  <div class="absolute top-0 left-0">
-                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
-                        <i class="fa-light fa-chevron-left"></i>
-                     </button>
                   </div>
 
                   <div class="text-end ms-auto">

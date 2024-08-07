@@ -123,6 +123,7 @@ return new class extends Migration
         });
 
         Schema::table('notifications', function (Blueprint $table) {
+            $table->foreign('pet_id')->references('id')->on('pets')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
         });
 

@@ -3,7 +3,7 @@
 @section('title', 'Pet')
 
 @section('content')
-   <section>
+   <section class="px-5 py-10">
       <div class="flex justify-between">
          <h2 class="text-primary text-2xl font-bold">Tambahkan Appointment</h2>
       </div>
@@ -18,7 +18,7 @@
                      </div>
                      <div>
                         <select id="pet_id" name="pet_id"
-                           class="select select-2 select-bordered w-full form-control flex-row">
+                           class="select select-2 select-bordered w-full form-control flex-row" data-placeholder="">
                            <option value="" hidden></option>
                            @foreach ($pets as $pet)
                               <option value="{{ $pet->id }}">{{ $pet->name }}</option>
@@ -33,7 +33,7 @@
                      </div>
                      <div>
                         <select id="service_type_id" name="service_type_id"
-                           class="select select-2 select-bordered w-full form-control flex-row">
+                           class="select select-2 select-bordered w-full form-control flex-row" data-placeholder="">
                            <option value="" hidden></option>
                            @foreach ($serviceTypes as $serviceType)
                               <option value="{{ $serviceType->id }}">{{ $serviceType->name }}</option>
@@ -46,14 +46,17 @@
                      <div class="label">
                         <span class="label-text font-semibold">Tanggal Pertemuan</span>
                      </div>
-                     <input type="date" name="appointment_date" class="input input-bordered w-full" />
+
+                     <input type="text" name="appointment_date"
+                              class="input input-bordered w-full date-picker"
+                              readonly />
                   </label>
 
                   <label class="form-control w-full col-span-3">
                      <div class="label">
                         <span class="label-text font-semibold">Keluhan</span>
                      </div>
-                     <textarea name="appointment_note" class="input input-bordered w-full form-validation"></textarea>
+                     <textarea name="appointment_note" class="textarea textarea-bordered w-full form-validation"></textarea>
                   </label>
                </div>
                <div class="flex justify-end">

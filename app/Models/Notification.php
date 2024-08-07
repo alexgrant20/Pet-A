@@ -7,12 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
-    use HasFactory;
+   use HasFactory;
 
-    protected $guarded = ['id'];
+   protected $guarded = ['id'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+
+   protected $casts = [
+      'date_start' => 'datetime',
+      'date_end' => 'datetime',
+   ];
+
+   public function user()
+   {
+      return $this->belongsTo(User::class);
+   }
+
+   public function pet()
+   {
+      return $this->belongsTo(Pet::class);
+   }
 }

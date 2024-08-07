@@ -3,44 +3,57 @@
 @section('title', 'Appointment')
 
 @section('content')
-   <div class="flex gap-2 min-h-[inherit]">
-      <div class="w-1/3 border-e flex flex-col items-center min-h-[inherit]">
-         <h1 class="text-2xl text-gray-800 font-bold mb-3">Chat Dokter di Pet-A</h1>
-         <span class="text-gray-600 mb-5">Layanan telemedisin yang siap siaga untuk bantu kamu hidup lebih sehat</span>
-         <div class="owl-carousel owl-theme">
-            <div class="flex flex-col gap-3 items-center justify-center">
-               <div class="w-36 h-36">
-                  <img class="w-full" src="{{ asset('assets/dog-and-cat.png') }}" alt="">
-               </div>
-               <span class="font-semibold">Memiliki banyak dokter yang terverifikasi</span>
-            </div>
-            <div class="flex flex-col gap-3 items-center justify-center">
-               <div class="w-36 h-36">
-                  <img class="w-full" src="{{ asset('assets/circel-pets.svg') }}" alt="">
-               </div>
-               <span class="font-semibold">Memiliki banyak dokter yang terverifikasi</span>
-            </div>
-         </div>
+   <div class="flex flex-col gap-5 min-h-[inherit] py-10 px-6">
+      <label class="input input-bordered flex items-center gap-2">
+         <input type="text" class="grow" placeholder="Search" />
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
+            <path fill-rule="evenodd"
+               d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+               clip-rule="evenodd" />
+         </svg>
+      </label>
 
-      </div>
-
-      <div class="grid gap-5 grid-cols-1 xl:grid-cols-2 w-2/3">
+      <div class="grid gap-5 grid-cols-1 xl:grid-cols-3 w-full">
          @foreach ($veterinarians as $veterinarian)
-            <div class="card h-fit border border-gray-400">
+            <div class="card h-fit bg-orange-50 shadow-2xl">
                <div class="card-body px-2 py-3">
                   <div class="flex items-center gap-5">
-                     <img class="w-28 h-28 object-cover rounded"
-                        src="{{ asset($veterinarian->attachment->first()?->path) }}"
+                     <img class="w-14 h-14 object-cover rounded-full"
+                        src="https://static.vecteezy.com/system/resources/thumbnails/028/287/384/small/a-mature-indian-male-doctor-on-a-white-background-ai-generated-photo.jpg "
                         alt="">
                      <div class="flex-grow flex flex-col gap-2">
-                        <p class="font-semibold text-gray-800">{{ $veterinarian->user->name }}</p>
-                        <p class="text-sm text-gray-700">{{ $veterinarian->petType->pluck('name')->join(', ') }}</p>
-                        <div class="badge badge-primary rounded-md font-semibold">8 Tahun</div>
-                        <div class="flex items-center justify-center mt-3">
-                           <p class="font-semibold text-gray-800">Rp. 50.000</p>
-                           <a href="{{ route('pet-owner.appointment.create', $veterinarian->id) }}" class="btn btn-primary btn-square px-9 py-2">Order</a>
+                        <p class="font-bold text-gray-800">{{ $veterinarian->user->name }}</p>
+
+                        <div class="flex flex-row gap-1">
+                           @foreach ($veterinarian->petType->pluck('name') as $petType)
+                              <div class="badge badge-primary rounded-full font-semibold">{{ $petType }}</div>
+                           @endforeach
                         </div>
                      </div>
+                     <div class="badge bg-slate-500  text-white">
+                        <i class="fa-solid fa-star"></i>
+                        <span class="ms-1 font-semibold"> N/A</span>
+                     </div>
+                  </div>
+
+                  <div class="bg-gray-200/50 rounded-lg">
+                     <div class="grid grid-cols-2 p-2">
+                        <div class="flex">
+                           <div class="flex flex-col flex-1 items-center">
+                              <span class="text-neutral font-semibold">Pengalaman</span>
+                              <span class="text-black/60 font-bold">5 Tahun</span>
+                           </div>
+                        </div>
+                        <div class="flex flex-col flex-1 items-center">
+                           <span class="text-neutral font-semibold">Biaya</span>
+                           <span class="text-black/60 font-bold">Rp. 500.000</span>
+                        </div>
+                     </div>
+                     <a class="bg-primary text-white flex gap-2 justify-center items-center p-2 w-full hover:brightness-90"
+                        href="{{ route('pet-owner.appointment.create') }}">
+                        <span class="font-bold">Book Appointment</span>
+                        <i class="fa-regular fa-chevron-right"></i>
+                     </a>
                   </div>
                </div>
             </div>

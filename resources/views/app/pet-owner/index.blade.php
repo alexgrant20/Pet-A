@@ -26,7 +26,7 @@
                      <div class="mt-8 flex flex-row justify-center gap-3 text-lg">
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
                            <span class="text-primary font-bold">Umur</span>
-                           <span class="text-gray-900 font-bold">{{ $pet?->age }}</span>
+                           <span class="text-gray-900 font-bold">{{ $pet?->getAge() }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
                            <span class="text-primary font-bold">Berat</span>
@@ -85,7 +85,7 @@
                   <section>
                      <x-pet-owner.card titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 2]) }}"
                         title='Informasi Alergi' :totalAllergy="$pet?->petAllergy->count()">
-                        <div class="grid grid-flow-row gap-y-4 overflow-y-auto h-48 no-scrollbar">
+                        <div class="grid grid-flow-row gap-y-4 {{ $pet?->petAllergy->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-48 no-scrollbar">
                            @forelse ($pet?->petAllergy->all() ?? [] as $petAllergy)
                               <div class="card row-span-1">
                                  <div class="card-body flex-row p-0 gap-4 items-center justify-start">
@@ -117,7 +117,7 @@
                   <section>
                      <x-pet-owner.card titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3])  }}"
                         title='Riwayat Penyakit' :totalAllergy="$pet?->medicalRecord->count()">
-                        <div class="grid grid-flow-row gap-y-4 overflow-y-auto h-48 no-scrollbar">
+                        <div class="grid grid-flow-row gap-y-4 {{ $pet?->medicalRecord->count() > 3 ?: 'grid-rows-3' }}  overflow-y-auto h-48 no-scrollbar">
                            @forelse ($pet?->medicalRecord->all() ?? [] as $medicalRecord)
                               <div class="card row-span-1">
                                  <div
@@ -150,7 +150,7 @@
                   <section>
                      <x-pet-owner.card title='Vaksinasi'
                         titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3]) }}" :totalAllergy="$pet?->petVaccination->count()">
-                        <div class="grid grid-flow-row gap-y-2 overflow-y-auto h-48 no-scrollbar">
+                        <div class="grid grid-flow-row gap-y-2 {{ $pet?->petVaccination->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-48 no-scrollbar">
                            @forelse ($pet?->petVaccination->all() ?? [] as $petVaccination)
                               <div class="card">
                                  <div
@@ -169,7 +169,7 @@
                                  </div>
                               </div>
                            @empty
-                              <div class="flex flex-col items-center justify-end gap-2">
+                              <div class="flex flex-col items-center justify-end gap-2 row-span-3">
                                  <img class="max-h-40" src="{{ asset('assets/no-vaccination.svg') }}" alt="healthy">
                                  <div class="font-semibold">{{ $pet?->name }} belum vaksin nih</div>
                               </div>

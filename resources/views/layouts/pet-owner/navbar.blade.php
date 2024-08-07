@@ -5,7 +5,7 @@
       </a>
    </div>
 
-   <div class="navbar-center hidden lg:flex">
+   <div class="navbar-center hidden md:flex">
       <ul class="menu menu-lg menu-horizontal px-1 text-white text-opacity-70">
          <li>
             <a class="gap-3 text-lg" href="{{ route('home') }}">

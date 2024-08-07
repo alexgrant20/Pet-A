@@ -28,7 +28,7 @@ class EnsurePetSession
 
       if($pets->count() == 0) {
          if(session()->has('session_pet')) {
-            session()->delete('session_pet');
+            session()->forget('session_pet');
          }
          return null;
       }

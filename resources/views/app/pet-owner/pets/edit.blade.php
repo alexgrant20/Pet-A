@@ -8,31 +8,31 @@
          <h2 class="text-primary text-2xl font-bold">Edit Hewan Peliharaan</h2>
       </div>
 
-      <div class="flex items-center gap-10 bg-base-100 shadow-2xl p-9">
+      <div class="flex items-center gap-10">
          <div class="bs-stepper w-full">
             <div class="bs-stepper-header justify-center !mb-10" role="tablist">
                <!-- your steps here -->
                <div class="step" data-target="#pet-basic-detail-part">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="pet-basic-detail-part"
+                  <button type="button" class="step-trigger flex flex-col" role="tab" aria-controls="pet-basic-detail-part"
                      id="pet-basic-detail-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-paw"></i></span>
-                     {{-- <span class="bs-stepper-label">Informasi Hewan</span> --}}
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Informasi Hewan</span>
                   </button>
                </div>
-               {{-- <div class="line"></div> --}}
+               <div class="line"></div>
                <div class="step" data-target="#pet-allergy-part">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="pet-allergy-part"
+                  <button type="button" class="step-trigger flex flex-col" role="tab" aria-controls="pet-allergy-part"
                      id="pet-allergy-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i></span>
-                     {{-- <span class="bs-stepper-label">Alergi</span> --}}
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Informasi Alergi</span>
                   </button>
                </div>
-               {{-- <div class="line"></div> --}}
+               <div class="line"></div>
                <div class="step" data-target="#pet-vaccination-part">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="pet-vaccination-part"
+                  <button type="button" class="step-trigger flex flex-col" role="tab" aria-controls="pet-vaccination-part"
                      id="pet-vaccination-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-syringe"></i></span>
-                     {{-- <span class="bs-stepper-label">Riwayat Vaksinasi</span> --}}
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Riwayat Vaksinasi</span>
                   </button>
                </div>
             </div>
@@ -144,7 +144,7 @@
                      <input type="hidden" class="pet_allergy_id" name="id">
                      <input type="hidden" name="pet_id" value="{{ $selectedPet->id }}">
 
-                     <div class="grid grid-cols-3 gap-2">
+                     <div class="grid lg:grid-cols-3 gap-2">
                         <label class="form-control">
                            <div class="label">
                               <span class="label-text font-semibold">Alergi</span>
