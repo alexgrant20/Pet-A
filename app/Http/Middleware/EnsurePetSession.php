@@ -34,7 +34,7 @@ class EnsurePetSession
             session()->forget('session_pet');
          }
 
-         if(Route::current()->action['as'] == 'pet-owner.pet.index') {
+         if(Route::current()->action['as'] == 'pet-owner.index') {
             return false;
          };
 

@@ -21,18 +21,21 @@
                      <img class="w-14 h-14 object-cover rounded-full"
                         src="https://static.vecteezy.com/system/resources/thumbnails/028/287/384/small/a-mature-indian-male-doctor-on-a-white-background-ai-generated-photo.jpg "
                         alt="">
-                     <div class="flex-grow flex flex-col gap-2">
-                        <p class="font-bold text-gray-800">{{ $veterinarian->user->name }}</p>
 
+                     <div class="flex flex-col flex-1">
+                        <div class="flex-grow flex gap-2">
+                           <p class="font-bold text-gray-800">{{ $veterinarian->user->name }}</p>
+
+                           <div class="badge bg-slate-500  text-white">
+                              <i class="fa-solid fa-star"></i>
+                              <span class="ms-1 font-semibold"> N/A</span>
+                           </div>
+                        </div>
                         <div class="flex flex-row gap-1">
                            @foreach ($veterinarian->petType->pluck('name') as $petType)
                               <div class="badge badge-primary rounded-full font-semibold">{{ $petType }}</div>
                            @endforeach
                         </div>
-                     </div>
-                     <div class="badge bg-slate-500  text-white">
-                        <i class="fa-solid fa-star"></i>
-                        <span class="ms-1 font-semibold"> N/A</span>
                      </div>
                   </div>
 
@@ -41,7 +44,7 @@
                         <div class="flex">
                            <div class="flex flex-col flex-1 items-center">
                               <span class="text-neutral font-semibold">Pengalaman</span>
-                              <span class="text-black/60 font-bold">5 Tahun</span>
+                              <span class="text-black/60 font-bold">{{ $veterinarian->length_of_service }} Tahun</span>
                            </div>
                         </div>
                         <div class="flex flex-col flex-1 items-center">
@@ -50,7 +53,7 @@
                         </div>
                      </div>
                      <a class="bg-primary text-white flex gap-2 justify-center items-center p-2 w-full hover:brightness-90"
-                        href="{{ route('pet-owner.appointment.create') }}">
+                        href="{{ route('pet-owner.appointment.create', $veterinarian->id) }}">
                         <span class="font-bold">Book Appointment</span>
                         <i class="fa-regular fa-chevron-right"></i>
                      </a>

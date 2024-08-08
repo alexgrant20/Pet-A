@@ -79,5 +79,65 @@ class UserSeeder extends Seeder
          'veterinarian_id' => $veterinarian->id,
          'pet_type_id' => 1
       ]);
+
+
+      $veterinarian = Veterinarian::create([
+         'clinic_id' => 1,
+         'length_of_service' => 1
+      ]);
+
+      $veterinarian->user()
+         ->create([
+            'id' => '083a924c-3e20-4a3c-9479-336cb85ab5a6',
+            'name' => 'Veterinarian Dummy',
+            'phone_number' => '081232847218',
+            'email' => 'veterinarian2@dev.io',
+            'password' => Hash::make('veterinarian123')
+         ])
+         ->assignRole('veterinarian');
+
+      $veterinarian
+         ->attachment()
+         ->create([
+            'field_id' => 2,
+            'path' => 'storage/profile_image/veterinarian_dummy.jpg',
+            'attachment_type' => 'veterinarians',
+            'attachment_id' => 1
+         ]);
+
+      VeterinarianPetType::create([
+         'veterinarian_id' => $veterinarian->id,
+         'pet_type_id' => 1
+      ]);
+
+
+      $veterinarian = Veterinarian::create([
+         'clinic_id' => 1,
+         'length_of_service' => 1
+      ]);
+
+      $veterinarian->user()
+         ->create([
+            'id' => '083a924c-3e20-4a3c-9479-336cb85ab5a7',
+            'name' => 'Veterinarian Dummy',
+            'phone_number' => '081232847218',
+            'email' => 'veterinarian3@dev.io',
+            'password' => Hash::make('veterinarian123')
+         ])
+         ->assignRole('veterinarian');
+
+      $veterinarian
+         ->attachment()
+         ->create([
+            'field_id' => 2,
+            'path' => 'storage/profile_image/veterinarian_dummy.jpg',
+            'attachment_type' => 'veterinarians',
+            'attachment_id' => 1
+         ]);
+
+      VeterinarianPetType::create([
+         'veterinarian_id' => $veterinarian->id,
+         'pet_type_id' => 1
+      ]);
    }
 }

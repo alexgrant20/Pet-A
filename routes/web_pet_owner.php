@@ -37,9 +37,16 @@ Route::get('/vaccination', [VaccinationController::class, 'index'])->name('vacci
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::put('/profile/{petOwner}', [ProfileController::class, 'update'])->name('profile.update');
 
-Route::resource('/online-consultation', OnlineConsultationController::class);
-Route::resource('/appointment', AppointmentController::class);
-Route::get('/list/appointment', [AppointmentController::class, 'getList'])->name('list.appointment');
+// Route::resource('/online-consultation', OnlineConsultationController::class);
+
+Route::name('appointment.')
+   ->controller(AppointmentController::class)
+   ->group(function () {
+      Route::get('/', 'index')->name('index');
+      Route::get('/create/{appointment}', 'create')->name('create');
+      Route::get('/list/appointment', 'getList')->name('list.appointment');
+   });
+
 Route::get('/medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
 
 Route::name('pet-allergy.')
