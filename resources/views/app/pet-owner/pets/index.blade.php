@@ -19,7 +19,7 @@
           </div>
           <div class="flex">
             <div class="flex-grow flex items-center justify-center">
-              <a href="{{ route('pet-owner.pet.show', $pet->id) }}" class="btn no-animation btn-primary btn-padding w-full rounded-sm" href="#">Pet Details</a>
+              <a href="{{ route('pet-owner.pet.edit', $pet->id) }}" class="btn no-animation btn-primary btn-padding w-full rounded-sm" href="#">Pet Details</a>
             </div>
           </div>
         </div>

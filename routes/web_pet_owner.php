@@ -40,20 +40,25 @@ Route::put('/profile/{petOwner}', [ProfileController::class, 'update'])->name('p
 // Route::resource('/online-consultation', OnlineConsultationController::class);
 
 Route::name('appointment.')
+   ->prefix('/appointment')
    ->controller(AppointmentController::class)
    ->group(function () {
       Route::get('/', 'index')->name('index');
-      Route::get('/create/{appointment}', 'create')->name('create');
+      Route::get('/create/{veterinarian}', 'create')->name('create');
+      Route::post('/', 'store')->name('store');
       Route::get('/list/appointment', 'getList')->name('list.appointment');
+      Route::get('/getAppointmentSchedule/{veterinarianId}/{day}', 'getAppointmentSchedule')->name('get-appointment-schedule');
+      Route::get('/{appointment}', 'show')->name('show');
    });
 
 Route::get('/medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
 
 Route::name('pet-allergy.')
+   ->prefix('/pet-allergy')
    ->controller(PetAllergyController::class)
    ->group(function () {
-      Route::post('/pet-allergy', 'store')->name('store');
-      Route::delete('/pet-allergy/{petAllergy}', 'destroy')->name('destroy');
+      Route::post('/', 'store')->name('store');
+      Route::delete('/{petAllergy}', 'destroy')->name('destroy');
    });
 
 Route::name('pet-vaccination.')

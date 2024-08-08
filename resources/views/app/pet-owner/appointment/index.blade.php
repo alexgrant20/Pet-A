@@ -67,13 +67,6 @@
 
 @section('js-footer')
    <script>
-      $('.owl-carousel').owlCarousel({
-         items: 1,
-         loop: true,
-         autoplay: true,
-      })
-
-
       $(document).ready(function() {
          // $('body').show();
       })

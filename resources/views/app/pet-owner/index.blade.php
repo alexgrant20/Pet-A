@@ -48,7 +48,8 @@
 
                         <div class="grid grid-rows-{{ $pet?->history_appointment->count() }}">
                            @forelse ($pet?->history_appointment->all() ?? [] as $appointment)
-                              <div
+                              <a
+                                 href="{{ route('pet-owner.appointment.show', $appointment->id) }}"
                                  class="border-b-2 flex py-4 px-2 gap-6 items-center justify-evenly hover:border-secondary transition-colors duration-300">
                                  <div>
                                     <i
@@ -64,7 +65,7 @@
                                  <div class="text-gray-400 text-sm">
                                     {{ $appointment->appointment_date->format('d-m-Y') }}
                                  </div>
-                              </div>
+                              </a>
                            @empty
                            @endforelse
                         </div>
@@ -213,7 +214,7 @@
 
                <div class="grid grid-rows-3 gap-5">
                   @forelse ($pet?->future_appointment->all() ?? [] as $appointment)
-                     <div class="card">
+                     <a href="{{ route('pet-owner.appointment.show', $appointment->id) }}" class="card">
                         <div
                            class="card-body bg-white/65 shadow-xl rounded-xl flex-row p-0 gap-5 items-center justify-start border-2 border-transparent hover:border-primary group transition-all duration-300">
                            <div class="px-8 py-4 flex flex-col font-bold items-center justify-center border-r-2 h-full">
@@ -227,14 +228,14 @@
                               <div class="flex items-center gap-2">
                                  <i class="fa-solid fa-clock text-gray-400"></i>
                                  <span
-                                    class="text-gray-900">{{ $appointment->appointmentSchedule->start_time->format('H:i') }}</span>
+                                    class="text-gray-900">{{ $appointment->appointmentSchedule->start_time }}</span>
                               </div>
                            </div>
                            <div class="ms-auto pe-4 text-transparent group-hover:text-primary duration-500">
                               <i class="fa-solid fa-arrow-right text-lg"></i>
                            </div>
                         </div>
-                     </div>
+                     </a>
                   @empty
                      <div class="card">
                         <a href="{{ route('pet-owner.appointment.index') }}"

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\TimeCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,12 +13,10 @@ class AppointmentSchedule extends Model
 
     protected $guarded = ['id'];
 
-    protected $dates = ['created_at', 'updated_at', 'start_time'];
-
     protected $casts = [
        'created_at' => 'datetime',
        'updated_at' => 'datetime',
-       'start_time' => 'datetime',
+       'start_time' => TimeCast::class,
     ];
 
     public function veterinarian()

@@ -105,7 +105,7 @@
                            <div class="label">
                               <span class="label-text font-semibold">Tanggal Lahir</span>
                            </div>
-                           <input type="text" name="birth_date" value="{{ $selectedPet->birth_date->format('d/m/Y') }}"
+                           <input type="text" name="birth_date" value="{{ $selectedPet->birth_date->format('d-m-Y') }}"
                               class="input input-bordered w-full date-picker" />
                         </label>
 

@@ -12,8 +12,6 @@ class Appointment extends Model
 
    protected $guarded = ['id'];
 
-   protected $dates = ['created_at', 'updated_at', 'appointment_date'];
-
    protected $casts = [
       'created_at' => 'datetime',
       'updated_at' => 'datetime',
