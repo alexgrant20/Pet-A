@@ -133,7 +133,7 @@
       $('[name="appointment_date"]').on('change', function() {
 
          const dateString = $(this).val();
-         const dateArray = dateString.split("/");
+         const dateArray = dateString.split("-");
 
          const newDate = new Date(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
 
@@ -162,8 +162,6 @@
             });
          });
       });
-
-
 
       $('#submit').click(function() {
          const petId = $('[name="pet_id"]').val();

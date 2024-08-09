@@ -30,11 +30,11 @@
                <div class="text-white text-opacity-55 pe-10">
                   <h2 class="mb-3">Pengingat</h2>
 
-                  <div class="grid grid-rows-2 gap-3">
+                  <div class="grid grid-flow-row gap-y-2 {{ auth()->user()->notification->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-64 no-scrollbar">
                      @forelse (auth()->user()->notification ?? [] as $notif)
                         <div class="card">
                            <div
-                              class="card-body bg-white bg-opacity-85 shadow rounded-xl flex-row py-4 px-2 gap-5 items-center justify-center">
+                              class="card-body bg-white bg-opacity-85 shadow rounded-xl flex-row py-4 px-2 gap-5 items-center">
                               <div>
                                  <img class="w-16 h-16 rounded-full" src="{{ asset($notif->pet->attachment->first()->path) }}" alt="">
                               </div>
@@ -46,7 +46,6 @@
                                     <i class="fa-solid fa-calendar text-primary"></i>
                                     <span class="text-gray-900">
                                        {{ $notif->date_start->format('M,d H:i') }}
-
                                     </span>
                                  </div>
                                  <div class="badge-primary badge">

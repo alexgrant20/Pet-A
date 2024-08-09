@@ -75,7 +75,7 @@
             </div>
          </section>
 
-         <div class="w-full px-5 pt-10 xl:ps-0">
+         <div class="w-full px-5 py-10 xl:ps-0">
             <div>
                <div class="mb-5 w-full">
                   <span class="font-bold text-2xl">Kondisi Kesehatan</span>
@@ -198,7 +198,6 @@
                            </div>
                         </div>
                      </div>
-
                   </section>
                </div>
             </div>

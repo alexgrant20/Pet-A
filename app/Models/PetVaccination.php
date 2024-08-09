@@ -12,8 +12,10 @@ class PetVaccination extends Model
 
    protected $guarded = ['id'];
 
-   protected $dates = [
-      'given_at'
+   protected $casts = [
+      'created_at' => 'datetime',
+      'updated_at' => 'datetime',
+      'given_at' => 'datetime',
    ];
 
    public function pet()

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PetOwner\StoreAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\AppointmentSchedule;
+use App\Models\Notification;
 use App\Models\ServicePrice;
 use App\Models\ServiceType;
 use App\Models\Veterinarian;
@@ -58,6 +59,12 @@ class AppointmentController extends Controller
    {
       $veterinarian = Veterinarian::find($request->veterinarian_id);
 
+      Notification::create([
+         'user_id' => Auth::id(),
+         'pet_id' => $request->pet_id,
+         'title' => "Appointment with {$veterinarian->user->name}",
+         'date_start' => $request->appointment_date
+      ]);
 
       $petOwnerId = Auth::user()->profile_id;
 

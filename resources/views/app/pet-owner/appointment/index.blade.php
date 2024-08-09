@@ -19,7 +19,7 @@
                <div class="card-body px-2 py-3">
                   <div class="flex items-center gap-5">
                      <img class="w-14 h-14 object-cover rounded-full"
-                        src="https://static.vecteezy.com/system/resources/thumbnails/028/287/384/small/a-mature-indian-male-doctor-on-a-white-background-ai-generated-photo.jpg "
+                        src="{{ asset($veterinarian->attachment->first()->path) }}"
                         alt="">
 
                      <div class="flex flex-col flex-1">
@@ -49,7 +49,7 @@
                         </div>
                         <div class="flex flex-col flex-1 items-center">
                            <span class="text-neutral font-semibold">Biaya</span>
-                           <span class="text-black/60 font-bold">Rp. 500.000</span>
+                           <span class="text-black/60 font-bold">Rp. {{ number_format(@$veterinarian->servicePrice->first()->price, 0, ',', '.') }}</span>
                         </div>
                      </div>
                      <a class="bg-primary text-white flex gap-2 justify-center items-center p-2 w-full hover:brightness-90"

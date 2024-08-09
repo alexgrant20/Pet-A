@@ -106,10 +106,6 @@
             </div>
          </div>
       </div>
-
-      <div class="flex justify-end">
-         <button type="submit" class="btn btn-primary btn-padding accept" id="submit">Submit</button>
-      </div>
    </section>
 @endsection
 
