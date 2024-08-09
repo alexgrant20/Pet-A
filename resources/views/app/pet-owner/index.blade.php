@@ -4,8 +4,8 @@
 
 @section('content')
    <div class="h-full">
-      <div class="flex flex-col h-full gap-5 justify-start items-start xl:flex-row">
-         <section class="flex justify-stretch bg-white bg-opacity-25 h-fit w-full xl:w-fit xl:h-full">
+      <div class="flex flex-col h-full gap-5 justify-start items-start lg:flex-row">
+         <section class="flex justify-stretch bg-white bg-opacity-25 h-fit w-full xl:w-fit lg:h-full">
             <div class="card flex-1">
                <div class="card-body rounded shadow-2xl pet_detail_container w-full">
                   <div class="container_pet_detail w-full flex flex-col items-center relative">
@@ -80,7 +80,7 @@
                <div class="mb-5 w-full">
                   <span class="font-bold text-2xl">Kondisi Kesehatan</span>
                </div>
-               <div class="grid grid-cols-1 xl:grid-cols-2 xl:grid-rows-2 gap-5">
+               <div class="grid grid-cols-1 2xl:grid-cols-2 2xl:grid-rows-2 gap-5">
                   <section>
                      <x-pet-owner.card
                         titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 2]) }}"

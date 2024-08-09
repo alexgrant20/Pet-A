@@ -10,12 +10,14 @@
          <h1 class="text-3xl font-bold text-gray-800">{{ $veterinarian->user->name }}</h1>
 
          <div class="flex flex-row gap-1 mb-5">
-            <div class="badge badge-primary rounded-full font-semibold">Anjing</div>
+            @foreach ($veterinarian->petType->pluck('name') as $petType)
+               <div class="badge badge-primary rounded-full font-semibold">{{ $petType }}</div>
+            @endforeach
          </div>
 
+
          <div class="w-full lg:w-1/2 text-center text-gray-500">
-            Jl. Raya Kb. Jeruk No.27, RT.1/RW.9, Kemanggisan, Kec. Palmerah, Kota Jakarta Barat, Daerah Khusus Ibukota
-            Jakarta 11530
+            {{ $veterinarian->clinic->name }}
          </div>
       </div>
 
@@ -107,19 +109,6 @@
          </div>
       </div>
 
-
-      <div class="card mb-5">
-         <div class="card-body p-4 rounded-xl bg-white/35 shadow-xl flex flex-row items-center gap-3">
-            <div class="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full">
-               <i class="fa-solid fa-rupiah-sign text-gray-600"></i>
-            </div>
-            <div class="">
-               <div id="price" class="text-gray-800 font-bold">Rp. 0</div>
-               <div class="text-gray-400 font-bold">Service Fee</div>
-            </div>
-         </div>
-      </div>
-
       <div class="flex justify-end">
          <button type="submit" class="btn btn-primary btn-padding accept" id="submit">Submit</button>
       </div>
@@ -193,12 +182,6 @@
                window.location.href = index;
             },
          });
-      });
-
-      const servicesPrice = @json($servicePrices);
-
-      $('#service_type_id').change(function(e) {
-         $('#price').text(convertToRupiah(servicesPrice[e.target.value]));
       });
    </script>
 @endsection

@@ -48,8 +48,8 @@
                            </div>
                         </div>
                         <div class="flex flex-col flex-1 items-center">
-                           <span class="text-neutral font-semibold">Biaya</span>
-                           <span class="text-black/60 font-bold">Rp. {{ number_format(@$veterinarian->servicePrice->first()->price, 0, ',', '.') }}</span>
+                           <span class="text-neutral font-semibold">Klinik</span>
+                           <span class="text-black/60 font-bold">{{ $veterinarian->clinic->name }}</span>
                         </div>
                      </div>
                      <a class="bg-primary text-white flex gap-2 justify-center items-center p-2 w-full hover:brightness-90"

@@ -46,10 +46,8 @@ class AppointmentController extends Controller
 
       $serviceTypes = $veterinarian->servicePrice->pluck('serviceType.name', 'serviceType.id');
 
-      $servicePrices = $veterinarian->servicePrice->pluck('price', 'service_type_id');
-
       $pets = Auth::user()->profile->pet;
-      return view('app.pet-owner.appointment.create', compact('serviceTypes', 'servicePrices', 'pets', 'veterinarian'));
+      return view('app.pet-owner.appointment.create', compact('serviceTypes', 'pets', 'veterinarian'));
    }
 
    /**
