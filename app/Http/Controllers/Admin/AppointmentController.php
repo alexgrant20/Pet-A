@@ -7,6 +7,7 @@ use App\Interfaces\AppointmentTypeInterface;
 use App\Interfaces\ServiceTypeInterface;
 use App\Models\Appointment;
 use App\Models\MedicalRecord;
+use App\Models\PetVaccination;
 use App\Models\Vaccination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -66,7 +67,13 @@ class AppointmentController extends Controller implements ServiceTypeInterface
       $appointment->load([
          'serviceType',
          'pet' => function ($q) {
-            $q->with(['petAllergy', 'attachment', 'breed.petType']);
+            $q->with([
+               'petAllergy',
+               'attachment',
+               'breed.petType',
+               'medicalRecord',
+               'petVaccination.vaccination'
+            ]);
          },
          'petOwner' => function ($q) {
             $q->with('user', 'attachment');
@@ -81,36 +88,56 @@ class AppointmentController extends Controller implements ServiceTypeInterface
       $appointment->load([
          'serviceType',
          'pet' => function ($q) use ($appointment) {
-            $q->with(['petAllergy', 'attachment', 'breed.petType']);
+            $q->with([
+               'petAllergy',
+               'attachment',
+               'breed.petType'
+            ]);
 
             if ($appointment->service_type_id == self::SERVICE_TYPE_VAKSINASI) {
                $q->with('petVaccination');
             }
          },
-         'petOwner' => function ($q) {
-            $q->with('user', 'attachment');
-         },
       ]);
 
-      return view('app.admin.appointment.edit', compact('appointment'));
+      $vaccinations = Vaccination::where('pet_type_id', $appointment->pet->breed->pet_type_id)->get();
+
+      return view('app.admin.appointment.edit', compact('appointment', 'vaccinations'));
    }
 
    public function update(Appointment $appointment, Request $request)
    {
-      if($appointment->service_type_id == self::SERVICE_TYPE_VAKSINASI) {
+      if ($appointment->service_type_id == self::SERVICE_TYPE_VAKSINASI) {
+         $payload = [];
 
-      } else if($appointment->service_type_id == self::SERVICE_TYPE_KONSULTASI) {
-         $appointment->update([
-            'appointment_note' => $request->appointment_note
-         ]);
+         foreach ($request->vaccination as $vaccination) {
+            array_push(
+               $payload,
+               [
+                  'pet_id' => $appointment->pet_id,
+                  'vaccination_id' => $vaccination,
+                  'given_at' => now()->format('Y-m-d'),
+                  'given_by' => $appointment->veterinarian_id,
+               ]
+            );
+         }
 
+         PetVaccination::insert($payload);
+      } else if ($appointment->service_type_id == self::SERVICE_TYPE_KONSULTASI) {
          MedicalRecord::create([
-
+            'pet_id' => $appointment->pet_id,
+            'appointment_id' => $appointment->id,
+            'clinic_name' => $appointment->veterinarian->clinic->name,
+            'veterinarian_name' => $appointment->veterinarian->name,
+            'disease_name' => $request->disease_name,
+            'medicine_name' => $request->medicine_name,
+            'medicine_dosage' => $request->medicine_dosage,
+            'description' => $request->note
          ]);
       }
-   }
 
-   public function delete()
-   {
+      $appointment->update([
+         'appointment_note' => $request->appointment_note
+      ]);
    }
 }

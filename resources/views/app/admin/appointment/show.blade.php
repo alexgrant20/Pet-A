@@ -1,13 +1,13 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Detail Permintaan Janji Temu')
+@section('title', 'Detail Janji Temu')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body flex-row items-center justify-between">
          <div class="section-left">
-            <h1 class="font-bold text-2xl">Detail Permintaan Janji Temu</h1>
-            {{-- {{ Breadcrumbs::render('appointment-show') }} --}}
+            <h1 class="font-bold text-2xl">Detail Janji Temu</h1>
+            {{ Breadcrumbs::render('appointment-show') }}
          </div>
       </div>
    </div>
@@ -167,7 +167,7 @@
          </div>
 
          <div class="text-end">
-            <a href="" class="btn btn-primary btn-padding text-sm">Tulis Hasil Janji Temu</a>
+            <a href="{{ route('admin.appointment.edit', $appointment->id) }}" class="btn btn-primary btn-padding text-sm">Tulis Hasil Janji Temu</a>
          </div>
       </div>
    </div>
