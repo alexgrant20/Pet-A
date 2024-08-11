@@ -1,4 +1,4 @@
-<div class="navbar z-0 bg-primary rounded-3xl px-6 absolute">
+<div class="navbar z-20 bg-primary rounded-3xl px-6 absolute">
    <div class="navbar-start">
       <a href="{{ route('home') }}" class="w-28 hidden xl:block">
          <img src="{{ asset('assets/logo-square-white.png') }}" alt="logo">

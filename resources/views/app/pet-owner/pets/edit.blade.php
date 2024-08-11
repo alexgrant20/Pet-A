@@ -99,7 +99,7 @@
                            <div class="label">
                               <span class="label-text font-semibold">Tanggal Lahir</span>
                            </div>
-                           <input type="text" name="birth_date" value="{{ $selectedPet->birth_date->format('d-m-Y') }}"
+                           <input type="text" name="birth_date" value="{{ $selectedPet->birth_date?->format('d-m-Y') }}"
                               class="input input-bordered w-full date-picker" />
                         </label>
 
@@ -108,7 +108,7 @@
                               <span class="label-text font-semibold">Berat</span>
                            </div>
                            <label class="input input-bordered flex items-center gap-2">
-                              <input type="text" value="{{ $selectedPet->petWeight->first()->weight }}"
+                              <input type="text" value="{{ $selectedPet->petWeight->first()?->weight }}"
                                  class="grow weight" />
                               Kg
                            </label>

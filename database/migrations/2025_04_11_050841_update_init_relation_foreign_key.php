@@ -118,7 +118,6 @@ return new class extends Migration
         });
 
         Schema::table('messages', function (Blueprint $table) {
-            $table->foreign('online_consultation_id')->references('id')->on('online_consultations')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
         });
 

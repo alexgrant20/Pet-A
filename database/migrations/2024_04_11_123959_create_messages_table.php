@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('online_consultation_id');
             $table->uuid('user_id');
+            $table->string('session_id');
             $table->longText('message');
 
             $table->timestamps();

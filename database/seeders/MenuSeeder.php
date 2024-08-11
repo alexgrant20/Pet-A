@@ -142,5 +142,12 @@ class MenuSeeder extends Seeder
       'order' => 5,
       'route_name' => 'admin.user-management.index'
    ]);
+
+    Menu::create([
+      'icon' => 'fa-message',
+      'label' => 'User Support',
+      'order' => 7,
+      'route_name' => 'admin.chat.index'
+   ]);
   }
 }

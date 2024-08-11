@@ -22,7 +22,7 @@ class PetService
          'petAllergy.icon',
          'medicalRecord' => fn($q) => $q->latest(),
          'petVaccination.vaccination' => fn($q) => $q->latest(),
-         'petWeight'
+         'petWeight',
       ]);
 
       [$futureAppointment, $historyAppointment] =  $pet->appointment->partition(function ($appointment) {

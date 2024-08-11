@@ -93,19 +93,6 @@
             </div>
          </div>
       </div>
-
-
-      <div class="card mb-5">
-         <div class="card-body p-4 rounded-xl bg-white/35 shadow-xl flex flex-row items-center gap-3">
-            <div class="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full">
-               <i class="fa-solid fa-rupiah-sign text-gray-600"></i>
-            </div>
-            <div class="">
-               <div id="price" class="text-gray-800 font-bold"></div>
-               <div class="text-gray-400 font-bold">Service Fee</div>
-            </div>
-         </div>
-      </div>
    </section>
 @endsection
 

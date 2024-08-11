@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PetAllergyController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetOwner\AppointmentController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\PetVaccinationController;
 use App\Models\Appointment;
 use App\Models\Pet;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Yajra\DataTables\Facades\DataTables;
@@ -67,3 +69,6 @@ Route::name('pet-vaccination.')
       Route::post('/pet-vaccination', 'store')->name('store');
       Route::delete('/pet-vaccination/{petVaccination}', 'destroy')->name('destroy');
    });
+
+// Client view: chat with the admin
+Route::get('/chat/{sessionId}', [ChatController::class, 'clientChat'])->name('chat');

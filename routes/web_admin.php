@@ -8,12 +8,14 @@ use App\Http\Controllers\Admin\VeterinarianController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\AppointmentTypeController;
 use App\Http\Controllers\BreedController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\MedicationTypeController;
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\PetTypeController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\VaccinationController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('app.admin.index'))->name('index');
@@ -79,3 +81,7 @@ Route::prefix('/appointment-schedule')
 
    Route::delete('/{scheduleId}', 'destroy')->name('destroy');
 });
+
+// Client view: chat with the admin
+Route::get('/chat/{sessionId}', [ChatController::class, 'adminChat'])->name('chat.show');
+Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');

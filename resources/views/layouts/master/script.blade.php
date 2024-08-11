@@ -10,15 +10,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <script>
-   $('form').submit(function(e) {
-      e.preventDefault();
-      const formIsValid = $(this).valid();
-
-      if (!formIsValid) return;
-
-      this.submit();
-   })
-
    $(document).ready(function() {
       $.ajaxSetup({
          headers: {

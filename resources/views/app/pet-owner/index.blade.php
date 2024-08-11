@@ -23,11 +23,11 @@
 
                      <div class="mt-8 flex flex-row justify-center gap-3 text-lg">
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
-                           <span class="text-primary font-bold">Umur</span>
+                           <span class="text-primary font-bold">Age</span>
                            <span class="text-gray-900 font-bold">{{ $pet->getAge() }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
-                           <span class="text-primary font-bold">Berat</span>
+                           <span class="text-primary font-bold">Weight</span>
                            <span class="text-gray-900 font-bold pet_weight">{{ $pet->weight }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
@@ -38,12 +38,7 @@
 
                      <div class="w-full mt-12">
                         <div class="flex justify-between items-center mb-5 w-full">
-                           <span class="font-bold">Janji Temu Terahkir</span>
-                           <a class="text-primary font-bold border-b border-transparent hover:border-primary"
-                              href="#">
-                              <span class="me-1 text-sm">Lihat Semua</span>
-                              <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
-                           </a>
+                           <span class="font-bold">Appointment History</span>
                         </div>
 
                         <div class="grid grid-rows-{{ $pet?->history_appointment->count() }}">
@@ -67,6 +62,10 @@
                                  </div>
                               </a>
                            @empty
+                           <a href="{{ route('pet-owner.appointment.index') }}" class="border border-gray-400 hover:border-primary hover:text-primary cursor-pointer shadow rounded-full flex py-4 px-2 items-center justify-evenly">
+                              <i class="fa-light fa-shield-dog fa-2x"></i>
+                              <div>Meet Our Professional Veterinarian</div>
+                           </a>
                            @endforelse
                         </div>
                      </div>
@@ -78,13 +77,13 @@
          <div class="w-full px-5 py-10 xl:ps-0">
             <div>
                <div class="mb-5 w-full">
-                  <span class="font-bold text-2xl">Kondisi Kesehatan</span>
+                  <span class="font-bold text-2xl">Pet Health Condition</span>
                </div>
                <div class="grid grid-cols-1 2xl:grid-cols-2 2xl:grid-rows-2 gap-5">
                   <section>
                      <x-pet-owner.card
                         titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 2]) }}"
-                        title='Informasi Alergi' :totalAllergy="$pet?->petAllergy->count()">
+                        title='Allergy Information' :totalAllergy="$pet?->petAllergy->count()">
                         <div
                            class="grid grid-flow-row gap-y-4 {{ $pet?->petAllergy->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-48 no-scrollbar">
                            @forelse ($pet?->petAllergy->all() ?? [] as $petAllergy)
@@ -108,7 +107,7 @@
                            @empty
                               <div class="row-span-3 flex flex-col items-center justify-end gap-2">
                                  <img class="max-h-40" src="{{ asset('assets/no-disease.svg') }}" alt="healthy">
-                                 <div class="font-semibold">{{ $pet?->name }} tidak ada alergi</div>
+                                 <div class="font-semibold">{{ $pet?->name }} has no allergy</div>
                               </div>
                            @endforelse
                         </div>
@@ -118,7 +117,7 @@
                   <section>
                      <x-pet-owner.card
                         titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3]) }}"
-                        title='Riwayat Penyakit' :totalAllergy="$pet?->medicalRecord->count()">
+                        title='Medical Record' :totalAllergy="$pet?->medicalRecord->count()">
                         <div
                            class="grid grid-flow-row gap-y-4 {{ $pet?->medicalRecord->count() > 3 ?: 'grid-rows-3' }}  overflow-y-auto h-48 no-scrollbar">
                            @forelse ($pet?->medicalRecord->all() ?? [] as $medicalRecord)
@@ -142,7 +141,7 @@
                            @empty
                               <div class="row-span-3 flex flex-col items-center justify-end gap-2">
                                  <img class="max-h-40" src="{{ asset('assets/no-disease.svg') }}" alt="healthy">
-                                 <div class="font-semibold">{{ $pet?->name }} tidak ada riwayat penyakit</div>
+                                 <div class="font-semibold">{{ $pet?->name }} has no medical record</div>
                               </div>
                            @endforelse
                         </div>
@@ -151,7 +150,7 @@
                   </section>
 
                   <section>
-                     <x-pet-owner.card title='Vaksinasi'
+                     <x-pet-owner.card title='Vaccination'
                         titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3]) }}"
                         :totalAllergy="$pet?->petVaccination->count()">
                         <div
@@ -188,7 +187,7 @@
                         <div class="card-body p-4 bg-white/35 shadow-xl rounded-xl">
                            <div class="flex justify-between items-center mb-2 w-full">
                               <div class="text-gray-600">
-                                 <span class="me-1 font-bold">Pertumbuhan Berat (Kg)</span>
+                                 <span class="me-1 font-bold">Weight Chart (Kg)</span>
                               </div>
                            </div>
                            <div class="w-full overflow-x-auto h-full">
@@ -204,11 +203,7 @@
 
             <section class="pt-5">
                <div class="flex justify-between items-center mb-5 w-full">
-                  <span class="font-bold text-xl">Janji Mendatang</span>
-                  <a class="text-primary font-bold border-primary hover:border-b" href="#">
-                     <span class="me-1 text-sm">Lihat Semua</span>
-                     <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
-                  </a>
+                  <span class="font-bold text-xl">Future Appointment</span>
                </div>
 
                <div class="grid grid-rows-3 gap-5">
@@ -255,10 +250,11 @@
    <script>
       (async function() {
          const petWeight = @json(@$pet->petWeight);
+         const pet = @json($pet);
          const labels = [];
          const weight = [];
-         const upperBoundValue = 15;
-         const lowerBoundValue = 0.5
+         const upperBoundValue = pet.breed.maximum_weight;
+         const lowerBoundValue = pet.breed.minimum_weight;
 
          petWeight.forEach(function(data) {
             labels.push(new Date(data.created_at).toLocaleDateString("en-US"));
@@ -274,7 +270,7 @@
                   labels,
                   datasets: [{
                         data: Array(labels.length).fill(upperBoundValue),
-                        label: "Batas Atas",
+                        label: "Upper Bound",
                         borderColor: "#7D7D7D",
                         backgroundColor: '#7D7D7D',
                         fill: false,
@@ -290,7 +286,7 @@
                      },
                      {
                         data: Array(labels.length).fill(lowerBoundValue),
-                        label: "Batas Bawah",
+                        label: "Lower Bound",
                         borderColor: "#C0C0C0",
                         backgroundColor: '#C0C0C0',
                         fill: false,
