@@ -1,16 +1,19 @@
-<div class="navbar z-10 bg-primary rounded-3xl px-6">
+<div class="navbar z-20 bg-primary rounded-3xl px-6 absolute">
    <div class="navbar-start">
-      <a href="{{ route('home') }}" class="w-28">
+      <a href="{{ route('home') }}" class="w-28 hidden xl:block">
          <img src="{{ asset('assets/logo-square-white.png') }}" alt="logo">
       </a>
+      <label for="my-drawer" class="btn btn-primary drawer-button block xl:hidden">
+         <i class="fa-regular fa-bars"></i>
+      </label>
    </div>
 
-   <div class="navbar-center hidden lg:flex">
+   <div class="navbar-center flex">
       <ul class="menu menu-lg menu-horizontal px-1 text-white text-opacity-70">
          <li>
             <a class="gap-3 text-lg" href="{{ route('home') }}">
                <i class="fa fa-solid fa-home"></i>
-               <span class="hidden md:block">
+               <span class="hidden xl:block">
                   Home
                </span>
             </a>
@@ -19,7 +22,7 @@
             <li>
                <a class="gap-3" href="{{ route($menu['route_name']) }}">
                   <i class="fa {{ @$menu['icon'] }}"></i>
-                  {{ @$menu['label'] }}
+                  <span class="hidden xl:block">{{ @$menu['label'] }}</span>
                </a>
             </li>
          @endforeach
@@ -47,7 +50,8 @@
                      class="bg-white font-bold text-primary rounded-full w-5 h-5 text-[0.9rem] flex items-center justify-center bg-opacity-70">
                      {{ $pets->count() }}
                   </div>
-                  <img class="w-12 h-12 rounded-full bg-gray-200" alt="user" src="{{ asset($pet?->thumbnail_image) }}" />
+                  <img class="w-12 h-12 rounded-full bg-gray-200 hidden md:block" alt="user"
+                     src="{{ asset($pet?->thumbnail_image) }}" />
                </div>
                <span class="tracking-wider">Profile</span>
                <i class="fa-solid fa-chevron-down"></i>
@@ -59,7 +63,8 @@
                   <a class="block" href="{{ route('pet-owner.pet.switch-pet-profile', $pet->id) }}">
                      <div class="flex gap-3 items-center w-full">
                         <div class="w-12">
-                           <img alt="pet image" src="{{ asset($pet->thumbnail_image) }}" class="w-12 h-12 rounded-full border border-gray-200" />
+                           <img alt="pet image" src="{{ asset($pet->thumbnail_image) }}"
+                              class="w-12 h-12 rounded-full border border-gray-200" />
                         </div>
                         <div class="font-semibold max-w-32">{{ $pet->name }}</div>
                      </div>

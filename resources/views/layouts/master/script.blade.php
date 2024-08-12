@@ -10,15 +10,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <script>
-   $('form').submit(function(e) {
-      e.preventDefault();
-      const formIsValid = $(this).valid();
-
-      if (!formIsValid) return;
-
-      this.submit();
-   })
-
    $(document).ready(function() {
       $.ajaxSetup({
          headers: {
@@ -28,6 +19,14 @@
 
       $('.select-2').select2();
    })
+
+   function convertToRupiah(angka) {
+      let rupiah = '';
+      const angkarev = angka.toString().split('').reverse().join('');
+      for (let i = 0; i < angkarev.length; i++)
+         if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
+      return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
+   }
 
    function previewImageWithSelector(input, previewImageSelector, defaultImage) {
       const url = $(input).val();

@@ -8,31 +8,31 @@
          <h2 class="text-primary text-2xl font-bold">Edit Hewan Peliharaan</h2>
       </div>
 
-      <div class="flex items-center gap-10 bg-base-100 shadow-2xl p-9">
+      <div class="flex items-center gap-10">
          <div class="bs-stepper w-full">
             <div class="bs-stepper-header justify-center !mb-10" role="tablist">
                <!-- your steps here -->
                <div class="step" data-target="#pet-basic-detail-part">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="pet-basic-detail-part"
-                     id="pet-basic-detail-part-trigger">
+                  <button type="button" class="step-trigger flex flex-col" role="tab"
+                     aria-controls="pet-basic-detail-part" id="pet-basic-detail-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-paw"></i></span>
-                     {{-- <span class="bs-stepper-label">Informasi Hewan</span> --}}
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Informasi Hewan</span>
                   </button>
                </div>
-               {{-- <div class="line"></div> --}}
+               <div class="line"></div>
                <div class="step" data-target="#pet-allergy-part">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="pet-allergy-part"
+                  <button type="button" class="step-trigger flex flex-col" role="tab" aria-controls="pet-allergy-part"
                      id="pet-allergy-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i></span>
-                     {{-- <span class="bs-stepper-label">Alergi</span> --}}
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Informasi Alergi</span>
                   </button>
                </div>
-               {{-- <div class="line"></div> --}}
+               <div class="line"></div>
                <div class="step" data-target="#pet-vaccination-part">
-                  <button type="button" class="step-trigger" role="tab" aria-controls="pet-vaccination-part"
-                     id="pet-vaccination-part-trigger">
+                  <button type="button" class="step-trigger flex flex-col" role="tab"
+                     aria-controls="pet-vaccination-part" id="pet-vaccination-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-syringe"></i></span>
-                     {{-- <span class="bs-stepper-label">Riwayat Vaksinasi</span> --}}
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Informasi Vaksinasi</span>
                   </button>
                </div>
             </div>
@@ -81,14 +81,8 @@
                               <span class="label-text font-semibold">Tipe</span>
                            </div>
                            <div>
-                              <select id="pet_type_id" name="pet_type_id"
-                                 class="select select-2 select-bordered w-full form-control flex-row"
-                                 data-placeholder="Pilih Tipe">
-                                 <option value="" hidden></option>
-                                 @foreach ($petTypes as $petType)
-                                    <option value="{{ $petType->id }}">{{ $petType->name }}</option>
-                                 @endforeach
-                              </select>
+                              <input value="{{ $selectedPet->breed->petType->name }}"
+                                 class="input input-bordered w-full bg-gray-200" readonly />
                            </div>
                         </label>
 
@@ -105,7 +99,7 @@
                            <div class="label">
                               <span class="label-text font-semibold">Tanggal Lahir</span>
                            </div>
-                           <input type="text" name="birth_date" value="{{ $selectedPet->birth_date->format('d/m/Y') }}"
+                           <input type="text" name="birth_date" value="{{ $selectedPet->birth_date?->format('d-m-Y') }}"
                               class="input input-bordered w-full date-picker" />
                         </label>
 
@@ -114,7 +108,7 @@
                               <span class="label-text font-semibold">Berat</span>
                            </div>
                            <label class="input input-bordered flex items-center gap-2">
-                              <input type="text" value="{{ $selectedPet->petWeight->first()->weight }}"
+                              <input type="text" value="{{ $selectedPet->petWeight->first()?->weight }}"
                                  class="grow weight" />
                               Kg
                            </label>
@@ -144,7 +138,7 @@
                      <input type="hidden" class="pet_allergy_id" name="id">
                      <input type="hidden" name="pet_id" value="{{ $selectedPet->id }}">
 
-                     <div class="grid grid-cols-3 gap-2">
+                     <div class="grid lg:grid-cols-3 gap-2">
                         <label class="form-control">
                            <div class="label">
                               <span class="label-text font-semibold">Alergi</span>
@@ -220,7 +214,7 @@
                         </div>
 
                         <select class="select select-2 select-bordered w-full form-control flex-row vaccination_select"
-                           data-placeholder="Pilih Vaksinasi" name="vaccination_id">
+                           data-placeholder="" name="vaccination_id">
                         </select>
                      </label>
 
@@ -235,7 +229,8 @@
                         <div class="label">
                            <span class="label-text font-semibold">Diberikan Pada</span>
                         </div>
-                        <input type="date" class="input input-bordered w-full date-picker" name="given_at" />
+                        <input type="text" class="input input-bordered w-full date-picker" name="given_at"
+                           readonly />
                      </label>
 
                      <div class="flex justify-end">
@@ -354,7 +349,8 @@
                },
                {
                   data: 'given_at',
-                  name: 'given_at'
+                  name: 'given_at',
+                  type: 'string',
                },
                {
                   data: 'action',
@@ -387,57 +383,52 @@
             minimumResultsForSearch: -1
          });
 
-         $('#pet_type_id').change(function() {
-            const getBreedTemplateUrl = "{{ route('master.breed', ':PET_TYPE_ID:') }}";
-            const getVaccinationTemplateUrl = "{{ route('master.vaccination', ':PET_TYPE_ID:') }}";
+         const getBreedTemplateUrl = "{{ route('master.breed', ':PET_TYPE_ID:') }}";
+         const getVaccinationTemplateUrl = "{{ route('master.vaccination', ':PET_TYPE_ID:') }}";
 
-            $('#breed_id').val('').trigger('change');
-
-            $('#breed_id').select2({
-               placeholder: '',
-               ajax: {
-                  delay: 500,
-                  cache: true,
-                  url: getBreedTemplateUrl.replace(':PET_TYPE_ID:', $(this).val()),
-                  data: function(params) {
-                     return {
-                        q: params.term,
-                        page: params.page || 1,
-                     };
-                  },
-                  processResults: function(res, params) {
-                     params.page = params.page || 1;
-
-                     const map = res.result.map((itm) => {
-                        return {
-                           id: itm.id,
-                           text: itm.text,
-                        }
-                     });
-
-                     const results = map || [];
-
-                     return {
-                        results: results,
-                        pagination: {
-                           more: results.length >= 10,
-                        },
-                     };
-                  },
-               }
-            });
-
-            $.get({
-               url: getVaccinationTemplateUrl.replace(':PET_TYPE_ID:', $(this).val()),
-               beforeSend: function() {
-                  $('.vaccination_select').empty().trigger("change");
+         $('#breed_id').select2({
+            placeholder: '',
+            ajax: {
+               delay: 500,
+               cache: true,
+               url: getBreedTemplateUrl.replace(':PET_TYPE_ID:', pet.breed.pet_type_id),
+               data: function(params) {
+                  return {
+                     q: params.term,
+                     page: params.page || 1,
+                  };
                },
-               success: function(data) {
-                  console.log(data)
-                  $('.vaccination_select').prepend(new Option('', ''));
-                  data.map((d) => $('.vaccination_select').append(new Option(d.text, d.id)));
-               }
-            });
+               processResults: function(res, params) {
+                  params.page = params.page || 1;
+
+                  const map = res.result.map((itm) => {
+                     return {
+                        id: itm.id,
+                        text: itm.text,
+                     }
+                  });
+
+                  const results = map || [];
+
+                  return {
+                     results: results,
+                     pagination: {
+                        more: results.length >= 10,
+                     },
+                  };
+               },
+            }
+         });
+
+         $.get({
+            url: getVaccinationTemplateUrl.replace(':PET_TYPE_ID:', pet.breed.pet_type_id),
+            beforeSend: function() {
+               $('.vaccination_select').empty().trigger("change");
+            },
+            success: function(data) {
+               $('.vaccination_select').prepend(new Option('', ''));
+               data.map((d) => $('.vaccination_select').append(new Option(d.text, d.id)));
+            }
          });
 
          $('#pet_type_id').val(pet.breed.pet_type_id).trigger('change');
@@ -452,7 +443,7 @@
 
          console.log(jumpToStep)
 
-         if(jumpToStep){
+         if (jumpToStep) {
             stepper.to(jumpToStep);
          }
 

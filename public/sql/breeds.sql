@@ -11514,4 +11514,3 @@ INSERT INTO breeds (pet_type_id, name) VALUES
 (3, 'Paradise Tanager'),
 (3, 'Opal-crowned Tanager'),
 (3, 'Opal-rumped Tanager');
-

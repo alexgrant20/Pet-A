@@ -7,29 +7,35 @@
 
       <div class="bs-stepper w-full h-full flex flex-col relative">
          <div class="bs-stepper-content flex-1 flex flex-col">
-            <!-- your steps content here -->
             <div id="pet-name-part" class="content h-full" role="tabpanel" aria-labelledby="pet-name-part-trigger">
                <div class="h-full flex flex-col justify-between items-center">
-                  <div class="lg:w-1/2">
+                  <div class="lg:w-1/2 flex-1 justify-center flex flex-col">
                      <div class="text-center">
                         <h2 class="text-gray-700 text-3xl font-bold mb-10">
-                           Siapa Nama hewan Peliharaan Anda?
+                           What's your pet's name?
                         </h2>
                      </div>
-                     <input type="text" name="name" placeholder="Masukan nama peliharaan"
+                     <input type="text" name="name" placeholder="Enter your pet's name"
                         class="p-3 border-grayZ bg-transparent border-b w-full outline-none pet_name text-2xl" />
                   </div>
                   <div class="text-end ms-auto">
-                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
+                     <button class="btn btn-primary btn-padding stepper_next next_pet_name_btn" disabled>Continue</button>
                   </div>
                </div>
             </div>
 
             <div id="pet-type-part" class="content h-full" role="tabpanel" aria-labelledby="pet-type-part-trigger">
                <div class="h-full flex flex-col justify-between items-center gap-11">
+                  <div class="me-auto">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
                   <div class="lg:w-1/2">
                      <div class="text-center">
-                        <h2 class="text-gray-700 text-3xl font-bold mb-10">Apa jenis hewan peliharaan anda?
+                        <h2 class="text-gray-700 text-3xl font-bold mb-10">
+                           What kind of pet do you have?
                         </h2>
                      </div>
                      <div class="grid grid-cols-2 gap-4 pet_type_select">
@@ -47,42 +53,36 @@
                      </div>
                   </div>
 
-                  <div class="absolute top-0 left-0">
-                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
-                        <i class="fa-light fa-chevron-left"></i>
-                     </button>
-                  </div>
-
                   <div class="text-end ms-auto">
-                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
+                     <button class="btn btn-primary btn-padding stepper_next next_pet_type_btn" disabled>Continue</button>
                   </div>
                </div>
             </div>
 
             <div id="pet-breed-part" class="content h-full" role="tabpanel" aria-labelledby="pet-breed-part-trigger">
                <div class="h-full flex flex-col justify-between items-center">
-                  <div class="lg:w-1/2">
-                     <div class="text-center">
-                        <h2 class="text-gray-700 text-3xl font-bold mb-10">
-                           Sebutkan jenis <span class="pet_name_display"></span> ?
-                        </h2>
-                     </div>
-
-                     <select id="breed_id" name="breed_id"
-                        class="select select-2 select-bordered bg-transparent w-full form-control flex-row text-2xl"
-                        data-placeholder="Cari jenis">
-                        <option value=""></option>
-                     </select>
-                  </div>
-
-                  <div class="absolute top-0 left-0">
+                  <div class="me-auto">
                      <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
                         <i class="fa-light fa-chevron-left"></i>
                      </button>
                   </div>
 
+                  <div class="lg:w-1/2">
+                     <div class="text-center">
+                        <h2 class="text-gray-700 text-3xl font-bold mb-10">
+                           Tell us <span class="pet_name_display text-primary"></span> breed!
+                        </h2>
+                     </div>
+
+                     <select id="breed_id" name="breed_id"
+                        class="select select-2 select-bordered bg-transparent w-full form-control flex-row text-2xl"
+                        data-placeholder="Find Breed">
+                        <option value=""></option>
+                     </select>
+                  </div>
+
                   <div class="text-end ms-auto">
-                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
+                     <button class="btn btn-primary btn-padding stepper_next next_breed_btn">Continue</button>
                   </div>
                </div>
             </div>
@@ -90,29 +90,35 @@
             <div id="pet-more-information-part" class="content h-full" role="tabpanel"
                aria-labelledby="pet-more-information-part-trigger">
                <div class="h-full flex flex-col justify-between items-center">
+                  <div class="me-auto">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
                   <div class="lg:w-1/2">
                      <div class="text-center">
                         <h2 class="text-gray-700 text-3xl font-bold mb-10">
-                           Beri tahu kami lebih mengenai <span class="pet_name_display"></span> ?
+                           Share more about <span class="pet_name_display"></span>
                         </h2>
                      </div>
 
                      <div class="grid grid-cols-2 gap-5">
                         <div class="form-control w-full">
-                           <input type="text" name="weight" placeholder="Masukan berat hewan"
+                           <input type="text" name="weight" placeholder="Enter weight"
                               class="input input-bordered w-full bg-transparent hover:outline-none focus-visible:outline-none" />
                            <div class="label">
-                              <span class="ms-auto label-text-alt">Dalam bentuk Kg</span>
+                              <span class="ms-auto label-text-alt">In Kg</span>
                            </div>
                         </div>
                         <div class="form-control w-full">
-                           <input type="text" name="birth_date" placeholder="Masukan tanggal lahir"
+                           <input type="text" name="birth_date" placeholder="Enter date of birth"
                               class="input input-bordered w-full bg-transparent hover:outline-none focus-visible:outline-none date-picker"
                               readonly />
                         </div>
 
                         <div class="flex flex-col items-center gap-4 col-span-2">
-                           <label class="text-2xl" for="">Jenis Kelamin</label>
+                           <label class="text-2xl" for="">Sex</label>
                            <div class="d-flex fa-5x text-gray-400">
                               <input class="hidden" type="radio" name="gender" value="m" id="male">
                               <input class="hidden" type="radio" name="gender" value="f" id="female">
@@ -127,24 +133,24 @@
                      </div>
                   </div>
 
-                  <div class="absolute top-0 left-0">
-                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
-                        <i class="fa-light fa-chevron-left"></i>
-                     </button>
-                  </div>
-
                   <div class="text-end ms-auto">
-                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
+                     <button class="btn btn-primary btn-padding stepper_next">Continue</button>
                   </div>
                </div>
             </div>
 
             <div id="pet-image-part" class="content h-full" role="tabpanel" aria-labelledby="pet-image-part-trigger">
                <div class="h-full flex flex-col justify-between items-center">
+                  <div class="me-auto">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
                   <div class="lg:w-1/2">
                      <div class="text-center">
                         <h2 class="text-gray-700 text-3xl font-bold mb-10">
-                           Tambahkan Gambar
+                           Add a cute picture!
                         </h2>
                      </div>
 
@@ -164,14 +170,8 @@
                      </div>
                   </div>
 
-                  <div class="absolute top-0 left-0">
-                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
-                        <i class="fa-light fa-chevron-left"></i>
-                     </button>
-                  </div>
-
                   <div class="text-end ms-auto">
-                     <button class="btn btn-primary btn-padding stepper_next">Lanjutkan</button>
+                     <button class="btn btn-primary btn-padding stepper_next next_pet_image_btn" disabled>Continue</button>
                   </div>
                </div>
             </div>
@@ -179,30 +179,39 @@
             <div id="pet-allergy-part" class="content h-full" role="tabpanel"
                aria-labelledby="pet-allergy-part-trigger">
                <div class="h-full flex flex-col justify-between items-center gap-11">
+                  <div class="me-auto">
+                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
+                        <i class="fa-light fa-chevron-left"></i>
+                     </button>
+                  </div>
+
                   <div class="lg:w-1/2">
                      <div class="text-center mb-5">
-                        <h2 class="text-gray-700 text-3xl font-bold mb-10">Apakah Hewan Anda Memiliki Alergi?
+                        <h2 class="text-gray-700 text-3xl font-bold mb-10">
+                           Does your pet have any allergies?
                         </h2>
 
-                        <div
-                           class="border border-gray-400 p-4 rounded-xl flex items-center justify-center gap-5 w-full mx-auto">
-                           <div class="tooltip tooltip-bottom tooltip-info" data-tip="click to change severity">
-                              <button class="text-primary"><i class="fa-light fa-circle-info text-lg"></i></button>
+                        <div class="border border-gray-400 p-4 rounded-xl ">
+                           <div class="flex items-center justify-center gap-5 w-full mx-auto">
+                              <h3 class="font-bold">
+                                 Allergy Severity
+                              </h3>
+                              <div class="flex gap-2 items-center">
+                                 <div class="w-3 h-3 rounded-full bg-secondary"></div>
+                                 <span class="font-bold">Mild</span>
+                              </div>
+                              <div class="flex gap-2 items-center">
+                                 <div class="w-3 h-3 rounded-full bg-accent"></div>
+                                 <span class="font-bold">Medium</span>
+                              </div>
+                              <div class="flex gap-2 items-center">
+                                 <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                 <span class="font-bold">Severe</span>
+                              </div>
                            </div>
-                           <h3 class="font-bold">
-                              Allergy Severity
-                           </h3>
-                           <div class="flex gap-2 items-center">
-                              <div class="w-3 h-3 rounded-full bg-secondary"></div>
-                              <span class="font-bold">Mild</span>
-                           </div>
-                           <div class="flex gap-2 items-center">
-                              <div class="w-3 h-3 rounded-full bg-accent"></div>
-                              <span class="font-bold">Medium</span>
-                           </div>
-                           <div class="flex gap-2 items-center">
-                              <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                              <span class="font-bold">Severe</span>
+                           <div class="flex items-center justify-center mt-3 gap-1 text-gray-400">
+                              <i class="fa-light fa-circle-info text-lg"></i>
+                              Tap to toggle severity
                            </div>
                         </div>
                      </div>
@@ -221,14 +230,8 @@
                      </div>
                   </div>
 
-                  <div class="absolute top-0 left-0">
-                     <button type="submit" class="btn btn-primary py-3 px-4 stepper_previous">
-                        <i class="fa-light fa-chevron-left"></i>
-                     </button>
-                  </div>
-
                   <div class="text-end ms-auto">
-                     <button class="btn btn-primary btn-padding stepper_finish">Selesaikan</button>
+                     <button class="btn btn-primary btn-padding stepper_finish">Finish</button>
                   </div>
                </div>
             </div>
@@ -302,8 +305,6 @@
             $('.pet_name_display').text($(this).val())
          });
 
-         console.log(defaultPetAllergy)
-
          $('.pet_allergy_select .item').click(function() {
             const mildColor = 'bg-secondary';
             const mediumColor = 'bg-accent';
@@ -335,8 +336,27 @@
             }
          });
 
+         $('[name="name"]').on('input', function(e) {
+            const val = e.target.value;
+
+            if (val.length > 0) {
+               $('.next_pet_name_btn').prop('disabled', false);
+            } else {
+               $('.next_pet_name_btn').prop('disabled', true);
+            }
+         });
+
+         $('[name="pet_image"]').on('change', function(e) {
+            $('.next_pet_image_btn').prop('disabled', false);
+         });
+
          $('.pet_type_id').change(function() {
             const getBreedTemplateUrl = "{{ route('master.breed', ':PET_TYPE_ID:') }}";
+
+            $('#breed_id').val('').trigger('select2:select');
+
+            $('.next_breed_btn').prop('disabled', true);
+            $('.next_pet_type_btn').prop('disabled', false);
 
             $('#breed_id').select2({
                placeholder: '',
@@ -370,6 +390,8 @@
                      };
                   },
                }
+            }).on('select2:select', function() {
+               $('.next_breed_btn').prop('disabled', false);
             });
          });
 
@@ -445,12 +467,4 @@
          })
       });
    </script>
-
-   {!! JsValidator::formRequest(
-       'App\Http\Requests\PetOwner\StorePetRequest',
-       Crypt::encrypt([
-           'selector' => '.pet_basic_detail_form',
-           'ignore' => '',
-       ]),
-   ) !!}
 @endsection

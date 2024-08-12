@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Appointment;
 use App\Services\PetService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,12 @@ class ViewPetOwnerServiceProvider extends ServiceProvider
          });
 
          $view->with('pets', $pets);
+      });
+
+      View::composer(['layouts.public.footer'], function ($view) {
+         $count = Appointment::count();
+
+         $view->with('totalPetSaved', $count);
       });
 
       View::composer(['app.pet-owner.*'], function ($view) {

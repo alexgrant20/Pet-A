@@ -4,51 +4,48 @@
 
 @section('content')
    <div class="h-full">
-      <div class="flex flex-col h-full gap-5 justify-start items-start xl:flex-row">
-         <section class="flex justify-stretch bg-white bg-opacity-25 h-fit w-full xl:w-fit xl:h-full">
+      <div class="flex flex-col h-full gap-5 justify-start items-start lg:flex-row">
+         <section class="flex justify-stretch bg-white bg-opacity-25 h-fit w-full xl:w-fit lg:h-full">
             <div class="card flex-1">
                <div class="card-body rounded shadow-2xl pet_detail_container w-full">
                   <div class="container_pet_detail w-full flex flex-col items-center relative">
                      <div class="absolute right-0">
-                        <a href="{{ route('pet-owner.pet.edit', $pet?->id) }}" class="cursor-pointer">
+                        <a href="{{ route('pet-owner.pet.edit', $pet->id) }}" class="cursor-pointer">
                            <i class="fa-solid fa-pen-circle fa-2x text-primary"></i>
                         </a>
                      </div>
                      <img class="rounded-full w-36 h-36 pet_image border border-gray-400 mb-5"
                         src="{{ asset($pet?->thumbnail_image) }}" alt="">
                      <div>
-                        <h1 class="text-3xl font-bold pet_name text-center">{{ $pet?->name }}</h1>
-                        <h2 class="pet_breed text-2xl text-gray-400 text-center">{{ $pet?->breed->name }}</h2>
+                        <h1 class="text-3xl font-bold pet_name text-center">{{ $pet->name }}</h1>
+                        <h2 class="pet_breed text-2xl text-gray-400 text-center">{{ $pet->breed->name }}</h2>
                      </div>
 
                      <div class="mt-8 flex flex-row justify-center gap-3 text-lg">
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
-                           <span class="text-primary font-bold">Umur</span>
-                           <span class="text-gray-900 font-bold">{{ $pet?->age }}</span>
+                           <span class="text-primary font-bold">Age</span>
+                           <span class="text-gray-900 font-bold">{{ $pet->getAge() }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
-                           <span class="text-primary font-bold">Berat</span>
-                           <span class="text-gray-900 font-bold pet_weight">{{ $pet?->weight }}</span>
+                           <span class="text-primary font-bold">Weight</span>
+                           <span class="text-gray-900 font-bold pet_weight">{{ $pet->weight }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
                            <span class="text-primary font-bold">Sex</span>
-                           <span class="text-gray-900 font-bold pet_gender">{{ $pet?->gender }}</span>
+                           <span class="text-gray-900 font-bold pet_gender">{{ $pet->gender }}</span>
                         </div>
                      </div>
 
                      <div class="w-full mt-12">
                         <div class="flex justify-between items-center mb-5 w-full">
-                           <span class="font-bold">Janji Temu Terahkir</span>
-                           <a class="text-primary font-bold border-b border-transparent hover:border-primary"
-                              href="#">
-                              <span class="me-1 text-sm">Lihat Semua</span>
-                              <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
-                           </a>
+                           <span class="font-bold">Appointment History</span>
                         </div>
 
                         <div class="grid grid-rows-{{ $pet?->history_appointment->count() }}">
-                           @forelse ($pet->history_appointment->toArray() as $appointment)
-                              <div class="border-b-2 flex py-4 px-2 gap-6 items-center justify-evenly hover:border-secondary transition-colors duration-300">
+                           @forelse ($pet?->history_appointment->all() ?? [] as $appointment)
+                              <a
+                                 href="{{ route('pet-owner.appointment.show', $appointment->id) }}"
+                                 class="border-b-2 flex py-4 px-2 gap-6 items-center justify-evenly hover:border-secondary transition-colors duration-300">
                                  <div>
                                     <i
                                        class="fa-solid fa-syringe p-3 bg-secondary rounded-full text-white text-opacity-95"></i>
@@ -63,8 +60,12 @@
                                  <div class="text-gray-400 text-sm">
                                     {{ $appointment->appointment_date->format('d-m-Y') }}
                                  </div>
-                              </div>
+                              </a>
                            @empty
+                           <a href="{{ route('pet-owner.appointment.index') }}" class="border border-gray-400 hover:border-primary hover:text-primary cursor-pointer shadow rounded-full flex py-4 px-2 items-center justify-evenly">
+                              <i class="fa-light fa-shield-dog fa-2x"></i>
+                              <div>Meet Our Professional Veterinarian</div>
+                           </a>
                            @endforelse
                         </div>
                      </div>
@@ -73,17 +74,20 @@
             </div>
          </section>
 
-         <div class="w-full px-5 pt-10 xl:ps-0">
+         <div class="w-full px-5 py-10 xl:ps-0">
             <div>
                <div class="mb-5 w-full">
-                  <span class="font-bold text-2xl">Kondisi Kesehatan</span>
+                  <span class="font-bold text-2xl">Pet Health Condition</span>
                </div>
-               <div class="grid grid-cols-1 xl:grid-cols-2 xl:grid-rows-2 gap-5">
+               <div class="grid grid-cols-1 2xl:grid-cols-2 2xl:grid-rows-2 gap-5">
                   <section>
-                     <x-pet-owner.card titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id, 'step' => 2]) }}" title='Informasi Alergi' :totalAllergy="$pet?->petAllergy->count()">
-                        <div class="grid grid-rows-3 gap-2 h-full">
-                           @forelse ($pet?->petAllergy->take(3) as $petAllergy)
-                              <div class="card">
+                     <x-pet-owner.card
+                        titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 2]) }}"
+                        title='Allergy Information' :totalAllergy="$pet?->petAllergy->count()">
+                        <div
+                           class="grid grid-flow-row gap-y-4 {{ $pet?->petAllergy->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-48 no-scrollbar">
+                           @forelse ($pet?->petAllergy->all() ?? [] as $petAllergy)
+                              <div class="card row-span-1">
                                  <div class="card-body flex-row p-0 gap-4 items-center justify-start">
                                     <div
                                        class="bg-secondary rounded-full text-white flex items-center justify-center w-10 h-10">
@@ -103,7 +107,7 @@
                            @empty
                               <div class="row-span-3 flex flex-col items-center justify-end gap-2">
                                  <img class="max-h-40" src="{{ asset('assets/no-disease.svg') }}" alt="healthy">
-                                 <div class="font-semibold">{{ $pet?->name }} tidak ada alergi</div>
+                                 <div class="font-semibold">{{ $pet?->name }} has no allergy</div>
                               </div>
                            @endforelse
                         </div>
@@ -111,10 +115,13 @@
                   </section>
 
                   <section>
-                     <x-pet-owner.card  titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id, 'step' => 3]) }}" title='Riwayat Penyakit' :totalAllergy="$pet?->medicalRecord->count()">
-                        <div class="grid grid-rows-3 gap-2 h-full">
-                           @forelse ($pet?->medicalRecord->take(3) ?? [] as $medicalRecord)
-                              <div class="card">
+                     <x-pet-owner.card
+                        titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3]) }}"
+                        title='Medical Record' :totalAllergy="$pet?->medicalRecord->count()">
+                        <div
+                           class="grid grid-flow-row gap-y-4 {{ $pet?->medicalRecord->count() > 3 ?: 'grid-rows-3' }}  overflow-y-auto h-48 no-scrollbar">
+                           @forelse ($pet?->medicalRecord->all() ?? [] as $medicalRecord)
+                              <div class="card row-span-1">
                                  <div
                                     class="card-body flex-row p-0 gap-4 items-center justify-start border-l-4 border-primary ps-2">
                                     <div class="flex flex-col">
@@ -134,7 +141,7 @@
                            @empty
                               <div class="row-span-3 flex flex-col items-center justify-end gap-2">
                                  <img class="max-h-40" src="{{ asset('assets/no-disease.svg') }}" alt="healthy">
-                                 <div class="font-semibold">{{ $pet?->name }} tidak ada riwayat penyakit</div>
+                                 <div class="font-semibold">{{ $pet?->name }} has no medical record</div>
                               </div>
                            @endforelse
                         </div>
@@ -143,9 +150,12 @@
                   </section>
 
                   <section>
-                     <x-pet-owner.card title='Vaksinasi'  titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id, 'step' => 3]) }}" :totalAllergy="$pet?->petVaccination->count()">
-                        <div class="grid grid-rows-3 gap-2 h-full">
-                           @forelse ($pet?->petVaccination->take(3) ?? [] as $petVaccination)
+                     <x-pet-owner.card title='Vaccination'
+                        titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 3]) }}"
+                        :totalAllergy="$pet?->petVaccination->count()">
+                        <div
+                           class="grid grid-flow-row gap-y-2 {{ $pet?->petVaccination->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-48 no-scrollbar">
+                           @forelse ($pet?->petVaccination->all() ?? [] as $petVaccination)
                               <div class="card">
                                  <div
                                     class="card-body flex-row p-0 gap-4 items-center justify-start border-l-4 border-primary ps-2">
@@ -163,7 +173,7 @@
                                  </div>
                               </div>
                            @empty
-                              <div class="row-span-3 flex flex-col items-center justify-end gap-2">
+                              <div class="flex flex-col items-center justify-end gap-2 row-span-3">
                                  <img class="max-h-40" src="{{ asset('assets/no-vaccination.svg') }}" alt="healthy">
                                  <div class="font-semibold">{{ $pet?->name }} belum vaksin nih</div>
                               </div>
@@ -177,29 +187,28 @@
                         <div class="card-body p-4 bg-white/35 shadow-xl rounded-xl">
                            <div class="flex justify-between items-center mb-2 w-full">
                               <div class="text-gray-600">
-                                 <span class="me-1 font-bold">Pertumbuhan Berat</span>
+                                 <span class="me-1 font-bold">Weight Chart (Kg)</span>
                               </div>
                            </div>
-                           <div class="w-full h-full"><canvas id="acquisitions"></canvas></div>
+                           <div class="w-full overflow-x-auto h-full">
+                              <div class="w-full h-full">
+                                 <canvas class="w-0 h-full max-h-52" id="acquisitions"></canvas>
+                              </div>
+                           </div>
                         </div>
                      </div>
-
                   </section>
                </div>
             </div>
 
             <section class="pt-5">
                <div class="flex justify-between items-center mb-5 w-full">
-                  <span class="font-bold text-xl">Janji Mendatang</span>
-                  <a class="text-primary font-bold border-primary hover:border-b" href="#">
-                     <span class="me-1 text-sm">Lihat Semua</span>
-                     <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
-                  </a>
+                  <span class="font-bold text-xl">Future Appointment</span>
                </div>
 
                <div class="grid grid-rows-3 gap-5">
-                  @forelse ($pet->future_appointment->toArray() as $appointment)
-                     <div class="card">
+                  @forelse ($pet?->future_appointment->all() ?? [] as $appointment)
+                     <a href="{{ route('pet-owner.appointment.show', $appointment->id) }}" class="card">
                         <div
                            class="card-body bg-white/65 shadow-xl rounded-xl flex-row p-0 gap-5 items-center justify-start border-2 border-transparent hover:border-primary group transition-all duration-300">
                            <div class="px-8 py-4 flex flex-col font-bold items-center justify-center border-r-2 h-full">
@@ -213,21 +222,21 @@
                               <div class="flex items-center gap-2">
                                  <i class="fa-solid fa-clock text-gray-400"></i>
                                  <span
-                                    class="text-gray-900">{{ $appointment->appointmentSchedule->start_time->format('H:i') }}</span>
+                                    class="text-gray-900">{{ $appointment->appointmentSchedule->start_time }}</span>
                               </div>
                            </div>
                            <div class="ms-auto pe-4 text-transparent group-hover:text-primary duration-500">
                               <i class="fa-solid fa-arrow-right text-lg"></i>
                            </div>
                         </div>
-                     </div>
+                     </a>
                   @empty
                      <div class="card">
-                        <div
+                        <a href="{{ route('pet-owner.appointment.index') }}"
                            class="card-body border-2 border-primary border-dashed shadow rounded-xl gap-5 items-center justify-center p-5">
                            <i class="fa-solid fa-plus bg-primary bg-opacity-70 p-4 rounded-full text-white"></i>
                            <span class="font-bold text-gray-700">Adakan Pertemuan Dengan Dokter Kami</span>
-                        </div>
+                        </a>
                      </div>
                   @endforelse
                </div>
@@ -241,10 +250,11 @@
    <script>
       (async function() {
          const petWeight = @json(@$pet->petWeight);
+         const pet = @json($pet);
          const labels = [];
          const weight = [];
-         const upperBoundValue = 15;
-         const lowerBoundValue = 0.5
+         const upperBoundValue = pet.breed.maximum_weight;
+         const lowerBoundValue = pet.breed.minimum_weight;
 
          petWeight.forEach(function(data) {
             labels.push(new Date(data.created_at).toLocaleDateString("en-US"));
@@ -260,7 +270,7 @@
                   labels,
                   datasets: [{
                         data: Array(labels.length).fill(upperBoundValue),
-                        label: "Batas Atas",
+                        label: "Upper Bound",
                         borderColor: "#7D7D7D",
                         backgroundColor: '#7D7D7D',
                         fill: false,
@@ -276,7 +286,7 @@
                      },
                      {
                         data: Array(labels.length).fill(lowerBoundValue),
-                        label: "Batas Bawah",
+                        label: "Lower Bound",
                         borderColor: "#C0C0C0",
                         backgroundColor: '#C0C0C0',
                         fill: false,
@@ -294,7 +304,7 @@
                            usePointStyle: true,
 
                         }
-                    },
+                     },
                   },
                }
             }

@@ -148,7 +148,7 @@ class PetController extends Controller
 
       DB::commit();
 
-      // return to_route('pet-owner.index')->with('success-toast', 'Pet Successfully Created');
+      return to_route('pet-owner.index')->with('success-toast', 'Pet Successfully Created');
    }
 
    public function show($petId)
@@ -172,7 +172,7 @@ class PetController extends Controller
             $q->with('icon', 'allergyCategory');
          },
          'breed',
-         'petWeight'
+         'petWeight' => fn($q) => $q->latest()
       ])->firstOrFail();
 
       $jumpToStep = $request->step;

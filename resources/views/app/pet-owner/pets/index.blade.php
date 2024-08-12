@@ -8,9 +8,9 @@
       <h2 class="text-primary text-2xl font-bold">Pet Family</h2>
       <a href="{{ route('pet-owner.pet.create') }}" class="btn btn-primary btn-padding">Add Pet <i class="fa fa-solid fa-plus"></i></a>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 max-h-128 gap-4 overflow-auto w-full bg-base-200 rounded-2xl mb-3 p-3 shadow-xl no-scrollbar">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 max-h-128 gap-4 overflow-auto w-full mb-3 p-3 no-scrollbar">
       @forelse ($pets as $pet)
-        <div class="card card-compact bg-white shadow-xl">
+        <div class="card card-compact border-2 border-gray-300 overflow-hidden">
           <figure class="w-full h-32">
             <img src="{{ asset( $pet->attachment->first() ? $pet->attachment->first()->path :'assets/default-pet.jpg') }}" alt="pet image" />
           </figure>
@@ -19,7 +19,7 @@
           </div>
           <div class="flex">
             <div class="flex-grow flex items-center justify-center">
-              <a href="{{ route('pet-owner.pet.show', $pet->id) }}" class="btn no-animation btn-primary btn-padding w-full rounded-sm" href="#">Pet Details</a>
+              <a href="{{ route('pet-owner.pet.edit', $pet->id) }}" class="btn no-animation btn-primary btn-padding w-full rounded-sm" href="#">Pet Details</a>
             </div>
           </div>
         </div>

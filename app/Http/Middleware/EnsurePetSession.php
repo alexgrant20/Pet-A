@@ -6,6 +6,7 @@ use App\Services\PetService;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsurePetSession
@@ -17,7 +18,9 @@ class EnsurePetSession
     */
    public function handle(Request $request, Closure $next): Response
    {
-      $this->checkPetSession();
+      $validationResult = $this->checkPetSession();
+
+      if(!$validationResult) return to_route('pet-owner.pet.create');
 
       return $next($request);
    }
@@ -27,8 +30,15 @@ class EnsurePetSession
       $pets = Auth::user()->profile->pet;
 
       if($pets->count() == 0) {
-         session()->delete('session_pet');
-         return null;
+         if(session()->has('session_pet')) {
+            session()->forget('session_pet');
+         }
+
+         if(Route::current()->action['as'] == 'pet-owner.index') {
+            return false;
+         };
+
+         return true;
       }
 
       $petService = new PetService();
@@ -39,5 +49,7 @@ class EnsurePetSession
       $pet = $petService->transformData($pet);
       session()->put('session_pet', $pet);
       session()->save();
+
+      return true;
    }
 }

@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
             FieldSeeder::class,
             IconSeeder::class,
             PetMasterSeeder::class,
-            Locationseeder::class,
+            LocationSeeder::class,
             UserSeeder::class,
             PetSeeder::class,
             MedicationTypeSeeder::class,
