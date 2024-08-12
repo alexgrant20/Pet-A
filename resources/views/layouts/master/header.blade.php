@@ -65,6 +65,13 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js.mapH"></script>
 
+   <script src="
+https://cdn.jsdelivr.net/npm/air-datepicker/air-datepicker.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/air-datepicker/air-datepicker.min.css
+" rel="stylesheet">
+
    <link rel="stylesheet" href="{{ asset('assets/custom.css') }}">
 
    @yield('css-extra')

@@ -51,7 +51,8 @@
                   <span class="label-text font-semibold">Tanggal Pertemuan</span>
                </div>
 
-               <input type="text" name="appointment_date" class="input input-bordered w-full date-picker" readonly />
+               <input type="text" name="appointment_date" class="input input-bordered w-full appointment_date"
+                  readonly />
             </label>
 
             <div>
@@ -118,6 +119,50 @@
 @section('js-footer')
    <script>
       const veterinarian = @json($veterinarian);
+      const veterinarianActiveDate = @json($veterinarianActiveDate);
+
+      console.log(veterinarianActiveDate)
+
+      const el = document.querySelector('.appointment_date');
+      new AirDatepicker(el, {
+         locale: {
+            days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+               'September', 'October', 'November', 'December'
+            ],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+               'Nov', 'Dec'
+            ],
+            today: 'Today',
+            clear: 'Clear',
+            dateFormat: 'dd-MM-yyyy',
+            timeFormat: 'hh:mm aa',
+            firstDay: 0
+         },
+         autoClose: true,
+         onSelect({
+            formattedDate,
+            date,
+            inst
+         }) {
+            const event = new Event("change", {
+               bubbles: true
+            });
+            el.dispatchEvent(event);
+         },
+
+         minDate: new Date(),
+         // Disable Monday and Sunday
+         onRenderCell: ({date}) => {
+            if (!(veterinarianActiveDate.includes(date.getDay().toString()))) {
+               return {
+                  disabled: true
+               }
+            }
+         }
+      });
 
       $('[name="appointment_date"]').on('change', function() {
 

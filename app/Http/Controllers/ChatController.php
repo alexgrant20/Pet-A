@@ -23,7 +23,7 @@ class ChatController extends Controller
 
    public function index()
    {
-      $adminId = User::role('admin')->pluck('id');
+      $adminId = User::withoutRole('pet-owner')->pluck('id');
 
       $user = Message::with('user')
          ->groupBy('user_id')->whereNotIn('user_id', $adminId->toArray())

@@ -175,7 +175,7 @@
                            @empty
                               <div class="flex flex-col items-center justify-end gap-2 row-span-3">
                                  <img class="max-h-40" src="{{ asset('assets/no-vaccination.svg') }}" alt="healthy">
-                                 <div class="font-semibold">{{ $pet?->name }} belum vaksin nih</div>
+                                 <div class="font-semibold">{{ $pet?->name }} not vaccinated yet</div>
                               </div>
                            @endforelse
                         </div>
