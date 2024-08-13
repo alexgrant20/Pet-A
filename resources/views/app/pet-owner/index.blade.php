@@ -24,7 +24,7 @@
                      <div class="mt-8 flex flex-row justify-center gap-3 text-lg">
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
                            <span class="text-primary font-bold">Age</span>
-                           <span class="text-gray-900 font-bold">{{ $pet->getAge() }}</span>
+                           <span class="text-gray-900 font-bold">{{ $pet->age }}</span>
                         </div>
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
                            <span class="text-primary font-bold">Weight</span>

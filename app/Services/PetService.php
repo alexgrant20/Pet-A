@@ -29,8 +29,11 @@ class PetService
          return $appointment->appointment_date > now();
       });
 
-      $pet->gender = filled($pet->gender) == 'm' ? 'Jantan' : 'Betina';
-      $pet->age = Carbon::parse($pet->birth_date)->age;
+      if(filled($pet->gender)) {
+         $pet->gender = $pet->gender == 'm' ? 'Male' : 'Female';
+      }
+
+      $pet->age = $pet->getAge() ?? 'N/A';
       $pet->thumbnail_image = $pet->attachment->first()?->path;
       $pet->weight = $pet->petWeight->first()?->weight . ' Kg';
       $pet->future_appointment = $futureAppointment->take(3);

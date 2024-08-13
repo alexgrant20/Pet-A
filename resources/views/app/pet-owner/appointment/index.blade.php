@@ -76,6 +76,7 @@
             </div>
          @endforeach
       </div>
+      {{ $veterinarians->links() }}
    </div>
 @endsection
 

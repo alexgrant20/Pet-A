@@ -30,7 +30,7 @@ class AppointmentController extends Controller
          $q->whereRaw("LOWER(name) LIKE '%$name%'");
       })
       ->when($petTypeId, fn($q) => $q->whereRelation('petType', 'pet_types.id', $petTypeId))
-      ->get();
+      ->paginate(6);
 
       $petTypes = PetType::all();
 
@@ -53,9 +53,10 @@ class AppointmentController extends Controller
     */
    public function create(Veterinarian $veterinarian)
    {
-      $veterinarian->load('user', 'servicePrice.serviceType', 'appointmentSchedule');
+      $veterinarian->load('user', 'serviceVeterinarianType.serviceType', 'appointmentSchedule');
 
-      $serviceTypes = $veterinarian->servicePrice->pluck('serviceType.name', 'serviceType.id');
+      $serviceTypes = $veterinarian->serviceVeterinarianType->pluck('serviceType')->pluck('name', 'id');
+
       $veterinarianActiveDate = $veterinarian->appointmentSchedule->pluck('day')->unique()->values();
 
       $pets = Auth::user()->profile->pet;
@@ -99,10 +100,6 @@ class AppointmentController extends Controller
    {
       $appointment->load('serviceType', 'veterinarian', 'appointmentSchedule', 'pet');
 
-      $servicePrice = ServicePrice::where([
-         ['veterinarian_id', $appointment->veterinarian_id],
-         ['service_type_id', $appointment->service_type_id]
-      ])->first();
 
       return view('app.pet-owner.appointment.show', compact('appointment', 'servicePrice'));
    }

@@ -28,16 +28,6 @@
          firstDay: 0
       },
       autoClose: true,
-      onSelect({
-         formattedDate,
-         date,
-         inst
-      }) {
-         const event = new Event("change", {
-            bubbles: true
-         });
-         inst.el.dispatchEvent(event);
-      },
    }
 
    $(document).ready(function() {
