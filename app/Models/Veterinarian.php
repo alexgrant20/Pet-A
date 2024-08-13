@@ -18,9 +18,9 @@ class Veterinarian extends Model
       return $this->belongsTo(Clinic::class);
    }
 
-   public function serviceVeterinarianType()
+   public function veterinarianServiceType()
    {
-      return $this->hasMany(ServiceVeterinarianType::class);
+      return $this->hasMany(VeterinarianServiceType::class);
    }
 
    public function appointmentSchedule()

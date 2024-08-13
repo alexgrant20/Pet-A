@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             FieldAttachmentUploadSeeder::class,
             ModelHasRoleSeeder::class,
             VeterinarianPetTypeSeeder::class,
-            ServiceVeterinarianTypeSeeder::class
+            VeterinarianServiceTypeSeeder::class
         ]);
     }
 }

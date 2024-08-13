@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
          User::create([
             'id' => Str::uuid()->toString(),
             'name' => 'Clinic User-' . $i,
-            'email' => 'clinicuser' . $i . '@example.com',
+            'email' => 'clinic' . $i . '@dev.io',
             'password' => Hash::make('password'),
             'profile_type' => 'App\Models\Clinic',
             'profile_id' => $i,

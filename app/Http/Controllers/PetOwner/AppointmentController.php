@@ -53,9 +53,9 @@ class AppointmentController extends Controller
     */
    public function create(Veterinarian $veterinarian)
    {
-      $veterinarian->load('user', 'serviceVeterinarianType.serviceType', 'appointmentSchedule');
+      $veterinarian->load('user', 'veterinarianServiceType.serviceType', 'appointmentSchedule');
 
-      $serviceTypes = $veterinarian->serviceVeterinarianType->pluck('serviceType')->pluck('name', 'id');
+      $serviceTypes = $veterinarian->veterinarianServiceType->pluck('serviceType')->pluck('name', 'id');
 
       $veterinarianActiveDate = $veterinarian->appointmentSchedule->pluck('day')->unique()->values();
 
