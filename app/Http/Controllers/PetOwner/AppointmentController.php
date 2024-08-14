@@ -7,6 +7,7 @@ use App\Http\Requests\PetOwner\StoreAppointmentRequest;
 use App\Models\Appointment;
 use App\Models\AppointmentSchedule;
 use App\Models\Notification;
+use App\Models\PetType;
 use App\Models\ServicePrice;
 use App\Models\ServiceType;
 use App\Models\Veterinarian;
@@ -19,11 +20,21 @@ class AppointmentController extends Controller
    /**
     * Display a listing of the resource.
     */
-   public function index()
+   public function index(Request $request)
    {
-      $veterinarians = Veterinarian::with('user', 'petType', 'attachment')->get();
+      $name = strtolower($request->name);
+      $petTypeId = $request->pet_type_id;
 
-      return view('app.pet-owner.appointment.index', compact('veterinarians'));
+      $veterinarians = Veterinarian::with('user', 'petType', 'attachment')
+      ->whereRelation('user', function ($q) use($name) {
+         $q->whereRaw("LOWER(name) LIKE '%$name%'");
+      })
+      ->when($petTypeId, fn($q) => $q->whereRelation('petType', 'pet_types.id', $petTypeId))
+      ->paginate(6);
+
+      $petTypes = PetType::all();
+
+      return view('app.pet-owner.appointment.index', compact('veterinarians', 'petTypes'));
    }
 
    public function getList()
@@ -42,12 +53,14 @@ class AppointmentController extends Controller
     */
    public function create(Veterinarian $veterinarian)
    {
-      $veterinarian->load('user', 'servicePrice.serviceType');
+      $veterinarian->load('user', 'veterinarianServiceType.serviceType', 'appointmentSchedule');
 
-      $serviceTypes = $veterinarian->servicePrice->pluck('serviceType.name', 'serviceType.id');
+      $serviceTypes = $veterinarian->veterinarianServiceType->pluck('serviceType')->pluck('name', 'id');
+
+      $veterinarianActiveDate = $veterinarian->appointmentSchedule->pluck('day')->unique()->values();
 
       $pets = Auth::user()->profile->pet;
-      return view('app.pet-owner.appointment.create', compact('serviceTypes', 'pets', 'veterinarian'));
+      return view('app.pet-owner.appointment.create', compact('serviceTypes', 'pets', 'veterinarian', 'veterinarianActiveDate'));
    }
 
    /**
@@ -87,10 +100,6 @@ class AppointmentController extends Controller
    {
       $appointment->load('serviceType', 'veterinarian', 'appointmentSchedule', 'pet');
 
-      $servicePrice = ServicePrice::where([
-         ['veterinarian_id', $appointment->veterinarian_id],
-         ['service_type_id', $appointment->service_type_id]
-      ])->first();
 
       return view('app.pet-owner.appointment.show', compact('appointment', 'servicePrice'));
    }

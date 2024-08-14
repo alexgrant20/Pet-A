@@ -15,7 +15,9 @@ class DatabaseSeeder extends Seeder
             IconSeeder::class,
             PetMasterSeeder::class,
             LocationSeeder::class,
+            ClinicSeeder::class,
             UserSeeder::class,
+            VeterinarianSeeder::class,
             PetSeeder::class,
             MedicationTypeSeeder::class,
             VaccinationSeeder::class,
@@ -23,7 +25,11 @@ class DatabaseSeeder extends Seeder
             ServicePriceSeeder::class,
             AppointmentScheduleSeeder::class,
             AppointmentSeeder::class,
-            AllergyCategorySeeder::class
+            AllergyCategorySeeder::class,
+            FieldAttachmentUploadSeeder::class,
+            ModelHasRoleSeeder::class,
+            VeterinarianPetTypeSeeder::class,
+            VeterinarianServiceTypeSeeder::class
         ]);
     }
 }

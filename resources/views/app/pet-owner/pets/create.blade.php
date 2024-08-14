@@ -105,7 +105,7 @@
 
                      <div class="grid grid-cols-2 gap-5">
                         <div class="form-control w-full">
-                           <input type="text" name="weight" placeholder="Enter weight"
+                           <input type="number" name="weight" placeholder="Enter weight"
                               class="input input-bordered w-full bg-transparent hover:outline-none focus-visible:outline-none" />
                            <div class="label">
                               <span class="ms-auto label-text-alt">In Kg</span>
@@ -113,7 +113,7 @@
                         </div>
                         <div class="form-control w-full">
                            <input type="text" name="birth_date" placeholder="Enter date of birth"
-                              class="input input-bordered w-full bg-transparent hover:outline-none focus-visible:outline-none date-picker"
+                              class="input input-bordered w-full bg-transparent hover:outline-none focus-visible:outline-none"
                               readonly />
                         </div>
 
@@ -171,7 +171,8 @@
                   </div>
 
                   <div class="text-end ms-auto">
-                     <button class="btn btn-primary btn-padding stepper_next next_pet_image_btn" disabled>Continue</button>
+                     <button class="btn btn-primary btn-padding stepper_next next_pet_image_btn"
+                        disabled>Continue</button>
                   </div>
                </div>
             </div>
@@ -282,6 +283,12 @@
    <script>
       $(function() {
          const defaultPetAllergy = @json($allergyTemplate);
+
+         const el = document.querySelector('[name="birth_date"]');
+         new AirDatepicker(el, {
+            ...airDatePickerDefaultConfiguration,
+            maxDate: new Date(),
+         });
 
          $('#pet_image').change(function() {
             previewImageWithSelector(
@@ -395,9 +402,7 @@
             });
          });
 
-         const stepper = new Stepper($('.bs-stepper')[0], {
-            linear: false
-         });
+         const stepper = new Stepper($('.bs-stepper')[0]);
 
          $('.stepper_next').click(function(e) {
             e.preventDefault();

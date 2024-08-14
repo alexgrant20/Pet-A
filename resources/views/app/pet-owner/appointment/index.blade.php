@@ -13,7 +13,21 @@
          </svg>
       </label>
 
-      <div class="grid gap-5 grid-cols-1 xl:grid-cols-3 w-full">
+      <div class="grid grid-cols-3 gap-4 pet_type_select">
+         @foreach ($petTypes as $petType)
+            <input class="hidden pet_type_id" type="radio" name="pet_type_id" value="{{ $petType->id }}"
+               id="pet_type_{{ $petType->id }}">
+            <label for="pet_type_{{ $petType->id }}">
+               <div
+                  class="bg-primary text-white bg-opacity-75 border-orange-800 flex flex-col gap-4 items-center justify-center cursor-pointer rounded-xl item py-3">
+                  <i class="{{ $petType->icon->name }} fa-2x"></i>
+                  <span class="text-xl font-bold">{{ ucwords($petType->name) }}</span>
+               </div>
+            </label>
+         @endforeach
+      </div>
+
+      <div class="grid gap-5 grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 w-full">
          @foreach ($veterinarians as $veterinarian)
             <div class="card h-fit bg-orange-50 shadow-2xl">
                <div class="card-body px-2 py-3">
@@ -62,6 +76,7 @@
             </div>
          @endforeach
       </div>
+      {{ $veterinarians->links() }}
    </div>
 @endsection
 

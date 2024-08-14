@@ -51,7 +51,8 @@
                   <span class="label-text font-semibold">Tanggal Pertemuan</span>
                </div>
 
-               <input type="text" name="appointment_date" class="input input-bordered w-full date-picker" readonly />
+               <input type="text" name="appointment_date" class="input input-bordered w-full appointment_date"
+                  readonly />
             </label>
 
             <div>
@@ -118,6 +119,30 @@
 @section('js-footer')
    <script>
       const veterinarian = @json($veterinarian);
+      const veterinarianActiveDate = @json($veterinarianActiveDate);
+
+      const el = document.querySelector('.appointment_date');
+      new AirDatepicker(el, {
+         ...airDatePickerDefaultConfiguration,
+         onSelect({
+            formattedDate,
+            date,
+            inst
+         }) {
+            const event = new Event("change", {
+               bubbles: true
+            });
+            el.dispatchEvent(event);
+         },
+         minDate: new Date(),
+         onRenderCell: ({date}) => {
+            if (!(veterinarianActiveDate.includes(date.getDay().toString()))) {
+               return {
+                  disabled: true
+               }
+            }
+         }
+      });
 
       $('[name="appointment_date"]').on('change', function() {
 

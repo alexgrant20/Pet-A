@@ -106,6 +106,11 @@ return new class extends Migration
             $table->foreign('payment_type_id')->references('id')->on('payment_types')->cascadeOnUpdate()->restrictOnDelete();
         });
 
+        Schema::table('veterinarian_service_types', function (Blueprint $table) {
+            $table->foreign('service_type_id')->references('id')->on('service_types')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreign('veterinarian_id')->references('id')->on('veterinarians')->cascadeOnUpdate()->restrictOnDelete();
+        });
+
         Schema::table('online_consultation_requests', function (Blueprint $table) {
             $table->foreign('pet_owner_id')->references('id')->on('pet_owners')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreign('veterinarian_id')->references('id')->on('veterinarians')->cascadeOnUpdate()->restrictOnDelete();

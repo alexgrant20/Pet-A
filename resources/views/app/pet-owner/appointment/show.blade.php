@@ -63,7 +63,6 @@
          </div>
       </div>
 
-
       <div class="card mb-5">
          <div class="card-body bg-base-100 shadow-xl p-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
@@ -98,7 +97,5 @@
 
 @section('js-footer')
    <script>
-      const price = "{{ $servicePrice->price }}";
-      $('#price').text(convertToRupiah(price));
    </script>
 @endsection

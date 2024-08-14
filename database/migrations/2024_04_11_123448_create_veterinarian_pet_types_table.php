@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('veterinarian_id');
             $table->unsignedBigInteger('pet_type_id');
+            $table->unique(['pet_type_id', 'veterinarian_id'], 'vet_pet_type_unique');
 
             $table->timestamps();
             $table->string('created_by')->nullable();

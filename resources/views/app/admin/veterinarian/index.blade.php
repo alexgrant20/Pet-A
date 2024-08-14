@@ -23,6 +23,7 @@
           <tr>
             <th class="w-1/12">Picture</th>
             <th>Name</th>
+            <th>Clinic</th>
             <th class="w-3/12">Doctor Speciality</th>
             <th class="w-2/12"></th>
           </tr>
@@ -53,6 +54,10 @@
           {
             data: 'user.name',
             name: 'user.name'
+          },
+          {
+            data: 'clinic.name',
+            name: 'clinic.name'
           },
           {
             data: 'doctor_speciality',
