@@ -33,7 +33,7 @@ class PetService
          $pet->gender = $pet->gender == 'm' ? 'Male' : 'Female';
       }
 
-      $pet->age = $pet->getAge() ?? 'N/A';
+      $pet->age = $pet->getAge(true) ?? 'N/A';
       $pet->thumbnail_image = $pet->attachment->first()?->path;
       $pet->weight = $pet->petWeight->first()?->weight . ' Kg';
       $pet->future_appointment = $futureAppointment->take(3);

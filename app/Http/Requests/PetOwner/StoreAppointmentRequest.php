@@ -19,7 +19,7 @@ class StoreAppointmentRequest extends FormRequest
          'veterinarian_id' => 'required',
          'appointment_schedule_id' => 'required',
          'appointment_note' => 'required',
-         'appointment_date' => 'required|date'
+         'appointment_date' => 'required|date_format:d-m-Y'
 		];
 	}
 }

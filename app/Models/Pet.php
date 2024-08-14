@@ -61,14 +61,14 @@ class Pet extends Model
       return $this->hasMany(Appointment::class);
    }
 
-   public function getAge()
+   public function getAge($shortened = false)
    {
       $age = null;
       $birthDate = new Carbon($this->birth_date);
       $ageYear = date_diff($birthDate, now())->format("%y");
       $ageMonth = date_diff($birthDate, now())->format("%m");
 
-      if ($ageYear > 0 && $ageMonth > 0) $age = "$ageYear tahun $ageMonth bulan";
+      if ($ageYear > 0 && $ageMonth > 0) $age = $shortened ? "$ageYear,$ageMonth tahun" :"$ageYear tahun $ageMonth bulan";
       else if ($ageYear > 0) $age = $ageYear  . " tahun";
       else if ($ageMonth > 0) $age = $ageMonth . " bulan";
 

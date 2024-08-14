@@ -95,7 +95,7 @@ class AppointmentController extends Controller
       } catch (\Exception $e) {
          DB::rollBack();
 
-         return back()->withInput()->with('error-swal', 'Something went wrong');
+         return back()->with('error-swal', 'Something went wrong');
       }
 
       DB::commit();

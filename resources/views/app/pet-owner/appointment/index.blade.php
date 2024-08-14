@@ -27,7 +27,7 @@
             @endforeach
          </div>
 
-         <div class="grid gap-5 grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 w-full">
+         <div class="grid gap-5 grid-cols-1 lg:grid-cols-2 2xl:grid-cols-2 w-full">
             @foreach ($veterinarians as $veterinarian)
                <div class="card h-fit bg-black/10 shadow-xl overflow-hidden">
                   <div class="card-body pt-3 p-0">
@@ -134,8 +134,6 @@
       $(document).ready(function() {
          const appointment = @json($appointment);
 
-         console.log(appointment);
-
          $('#appointment_history').DataTable({
             autoWidth: false,
             data: appointment,
@@ -151,6 +149,10 @@
                   data: 'appointment_date',
                   name: 'appointment_date',
                   type: 'string',
+                  render: function (d) {
+                     const date = d.split('T')[0];
+                     return date;
+                  }
                },
                {
                   data: 'status',
@@ -168,14 +170,14 @@
                   }
                },
                {
-                  data: 'appointment_date',
-                  name: 'appointment_date',
+                  data: 'rating.rating',
+                  name: 'rating.rating.',
                   type: 'string',
                   render: function(data, index, row) {
                      return `
                         <div>
                            <i class='fa-solid fa-star text-warning'></i>
-                           <span class="font-bold text-sm">${row.rating.rating ?? 'N/A'}</span>
+                           <span class="font-bold text-sm">${data ?? 'N/A'}</span>
                         </div>
                      `
                   }

@@ -17,7 +17,7 @@
             Keep your pet's well-being in check with just a tap, ensuring they lead a happy, healthy life by your side.
           </p>
           <div class="pt-6 flex items-center gap-2">
-            <a href="#" class="btn btn-primary rounded-full text-lg btn-padding">Get Started</a>
+            <a href="{{ route('login') }}" class="btn btn-primary rounded-full text-lg btn-padding">Get Started</a>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
             No more concerns about losing track about your medical record!
           </p>
           <div class="pt-6 flex items-center gap-2">
-            <a href="#" class="btn btn-primary rounded-full text-lg btn-padding">Get Started</a>
+            <a href="{{ route('login') }}" class="btn btn-primary rounded-full text-lg btn-padding">Get Started</a>
           </div>
         </div>
       </div>
@@ -72,13 +72,16 @@
             </label>
           </div>
           <div class="pt-6 flex items-center gap-2">
-            <a href="#" class="btn btn-primary rounded-full text-lg btn-padding">Try Out Now</a>
+            <a href="{{ route('login') }}" class="btn btn-primary rounded-full text-lg btn-padding">Try Out Now</a>
           </div>
         </div>
       </div>
     </section>
 
-    @include('layouts.public.footer')
+    <div class="bg-primary">
+
+       @include('layouts.public.footer')
+    </div>
 
     <script>
       AOS.init({

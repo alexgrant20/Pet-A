@@ -15,7 +15,7 @@ class Appointment extends Model
    protected $casts = [
       'created_at' => 'datetime',
       'updated_at' => 'datetime',
-      'appointment_date' => 'datetime:Y-m-d',
+      'appointment_date' => 'datetime',
    ];
 
    public function medicalRecord()
@@ -56,11 +56,6 @@ class Appointment extends Model
    public function serviceType()
    {
       return $this->belongsTo(ServiceType::class);
-   }
-
-   public function getAppointmentDate()
-   {
-      return (new Carbon($this->appointment_date))->translatedFormat("l, d F Y");
    }
 
    public function rating()

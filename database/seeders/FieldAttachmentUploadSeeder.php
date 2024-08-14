@@ -26,6 +26,9 @@ class FieldAttachmentUploadSeeder extends Seeder
          ['field_id' => 2, 'path' => 'storage/assets/veterinarian/14.jpg', 'attachment_type' => 'App\Models\Veterinarian', 'attachment_id' => 14],
          ['field_id' => 2, 'path' => 'storage/assets/veterinarian/15.jpg', 'attachment_type' => 'App\Models\Veterinarian', 'attachment_id' => 15],
          ['field_id' => 2, 'path' => 'storage/assets/veterinarian/16.jpg', 'attachment_type' => 'App\Models\Veterinarian', 'attachment_id' => 16],
+         ['field_id' => 1, 'path' => 'storage/assets/pet/dog-1.jpg', 'attachment_type' => 'App\Models\Pet', 'attachment_id' => 1],
+         ['field_id' => 1, 'path' => 'storage/assets/pet/dog-2.jpg', 'attachment_type' => 'App\Models\Pet', 'attachment_id' => 2],
+         ['field_id' => 1, 'path' => 'storage/assets/pet/dog-3.jpg', 'attachment_type' => 'App\Models\Pet', 'attachment_id' => 3],
      ]);
    }
 }

@@ -50,7 +50,6 @@
 
       <form method="POST" action="{{ route('pet-owner.appointment.store') }}">
          @csrf
-
          <input type="hidden" name="veterinarian_id" value="{{ $veterinarian->id }}">
 
          <div class="card mb-5">
