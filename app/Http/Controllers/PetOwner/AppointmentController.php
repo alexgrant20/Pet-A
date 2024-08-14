@@ -8,11 +8,14 @@ use App\Models\Appointment;
 use App\Models\AppointmentSchedule;
 use App\Models\Notification;
 use App\Models\PetType;
+use App\Models\Rating;
 use App\Models\ServicePrice;
 use App\Models\ServiceType;
 use App\Models\Veterinarian;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class AppointmentController extends Controller
@@ -26,15 +29,18 @@ class AppointmentController extends Controller
       $petTypeId = $request->pet_type_id;
 
       $veterinarians = Veterinarian::with('user', 'petType', 'attachment')
-      ->whereRelation('user', function ($q) use($name) {
-         $q->whereRaw("LOWER(name) LIKE '%$name%'");
-      })
-      ->when($petTypeId, fn($q) => $q->whereRelation('petType', 'pet_types.id', $petTypeId))
-      ->paginate(6);
+         ->whereRelation('user', function ($q) use ($name) {
+            $q->whereRaw("LOWER(name) LIKE '%$name%'");
+         })
+         ->when($petTypeId, fn($q) => $q->whereRelation('petType', 'pet_types.id', $petTypeId))
+         ->paginate(6);
 
       $petTypes = PetType::all();
+      $appointment = Appointment::with('pet', 'veterinarian.user', 'appointmentSchedule', 'rating')
+         ->where('pet_owner_id', auth()->user()->profile->id)
+         ->get();
 
-      return view('app.pet-owner.appointment.index', compact('veterinarians', 'petTypes'));
+      return view('app.pet-owner.appointment.index', compact('veterinarians', 'petTypes', 'name', 'appointment'));
    }
 
    public function getList()
@@ -48,9 +54,6 @@ class AppointmentController extends Controller
          ->make();
    }
 
-   /**
-    * Show the form for creating a new resource.
-    */
    public function create(Veterinarian $veterinarian)
    {
       $veterinarian->load('user', 'veterinarianServiceType.serviceType', 'appointmentSchedule');
@@ -63,76 +66,80 @@ class AppointmentController extends Controller
       return view('app.pet-owner.appointment.create', compact('serviceTypes', 'pets', 'veterinarian', 'veterinarianActiveDate'));
    }
 
-   /**
-    * Store a newly created resource in storage.
-    */
    public function store(StoreAppointmentRequest $request)
    {
       $veterinarian = Veterinarian::find($request->veterinarian_id);
 
-      Notification::create([
-         'user_id' => Auth::id(),
-         'pet_id' => $request->pet_id,
-         'title' => "Appointment with {$veterinarian->user->name}",
-         'date_start' => $request->appointment_date
-      ]);
+      DB::beginTransaction();
 
-      $petOwnerId = Auth::user()->profile_id;
+      try {
+         Notification::create([
+            'user_id' => Auth::id(),
+            'pet_id' => $request->pet_id,
+            'title' => "Appointment with {$veterinarian->user->name}",
+            'date_start' => $request->appointment_date
+         ]);
 
-      Appointment::create([
-         'pet_owner_id' => $petOwnerId,
-         'pet_id' => $request->pet_id,
-         'clinic_id' => $veterinarian->clinic_id,
-         'service_type_id' => $request->service_type_id,
-         'veterinarian_id' => $request->veterinarian_id,
-         'appointment_schedule_id' => $request->appointment_schedule_id,
-         'appointment_note' => $request->appointment_note,
-         'appointment_date' => $request->appointment_date
-      ]);
+         $petOwnerId = Auth::user()->profile_id;
 
-      return response()->json();
+         Appointment::create([
+            'pet_owner_id' => $petOwnerId,
+            'pet_id' => $request->pet_id,
+            'clinic_id' => $veterinarian->clinic_id,
+            'service_type_id' => $request->service_type_id,
+            'veterinarian_id' => $request->veterinarian_id,
+            'appointment_schedule_id' => $request->appointment_schedule_id,
+            'appointment_note' => $request->appointment_note,
+            'appointment_date' => $request->appointment_date
+         ]);
+      } catch (\Exception $e) {
+         DB::rollBack();
+
+         return back()->withInput()->with('error-swal', 'Something went wrong');
+      }
+
+      DB::commit();
+
+      return to_route('pet-owner.index')->with('success-swal', 'Appointment successfully created!');
    }
 
-   /**
-    * Display the specified resource.
-    */
    public function show(Appointment $appointment)
    {
       $appointment->load('serviceType', 'veterinarian', 'appointmentSchedule', 'pet');
 
-
-      return view('app.pet-owner.appointment.show', compact('appointment', 'servicePrice'));
+      return view('app.pet-owner.appointment.show', compact('appointment'));
    }
 
-   /**
-    * Show the form for editing the specified resource.
-    */
-   public function edit(Appointment $medicalRecord)
+   public function getAppointmentSchedule($veterinarianId, $date)
    {
-      //
-   }
+      $date = Carbon::parse($date);
 
-   /**
-    * Update the specified resource in storage.
-    */
-   public function update(Request $request, Appointment $medicalRecord)
-   {
-      //
-   }
-
-   /**
-    * Remove the specified resource from storage.
-    */
-   public function destroy(Appointment $medicalRecord)
-   {
-      //
-   }
-
-   public function getAppointmentSchedule($veterinarianId, $day)
-   {
-      return AppointmentSchedule::where([
+      $appointmentSchedule =  AppointmentSchedule::where([
          ['veterinarian_id', $veterinarianId],
-         ['day', $day]
+         ['day', $date->dayOfWeek + 1]
       ])->get();
+
+      $appointmentDateFilter = Appointment::where('veterinarian_id', $veterinarianId)
+         ->whereDate('appointment_date', $date)
+         ->whereIn('appointment_schedule_id', $appointmentSchedule->pluck('id')->toArray())
+         ->pluck('appointment_schedule_id')
+         ->toArray();
+
+      return $appointmentSchedule->reject(fn($el) => in_array($el->id, $appointmentDateFilter));
+   }
+
+   public function giveRating(Request $request)
+   {
+      $appointment = Appointment::with('rating')->findOrFail($request->appointment_id);
+
+      if(isset($appointment->rating)) abort(403);
+
+      Rating::create([
+         'appointment_id' => $appointment->id,
+         'veterinarian_id' => $appointment->veterinarian_id,
+         'rating' => $request->rating
+      ]);
+
+      return back()->with('success-swal', 'Berhasil Membuat Rating');
    }
 }

@@ -15,7 +15,7 @@ class Appointment extends Model
    protected $casts = [
       'created_at' => 'datetime',
       'updated_at' => 'datetime',
-      'appointment_date' => 'datetime',
+      'appointment_date' => 'datetime:Y-m-d',
    ];
 
    public function medicalRecord()
@@ -37,10 +37,11 @@ class Appointment extends Model
    {
       return $this->belongsTo(Clinic::class);
    }
-    public function veterinarian()
-    {
-        return $this->belongsTo(Veterinarian::class);
-    }
+
+   public function veterinarian()
+   {
+      return $this->belongsTo(Veterinarian::class);
+   }
 
    public function appointmentType()
    {
@@ -52,24 +53,29 @@ class Appointment extends Model
       return $this->belongsTo(AppointmentSchedule::class);
    }
 
-    public function serviceType()
-    {
-        return $this->belongsTo(ServiceType::class);
-    }
+   public function serviceType()
+   {
+      return $this->belongsTo(ServiceType::class);
+   }
 
-    public function getAppointmentDate()
-    {
-        return (new Carbon($this->appointment_date))->translatedFormat("l, d F Y");
-    }
+   public function getAppointmentDate()
+   {
+      return (new Carbon($this->appointment_date))->translatedFormat("l, d F Y");
+   }
 
-    public function getAppointmentTime()
-    {
-        $this->loadMissing('appointmentSchedule');
+   public function rating()
+   {
+      return $this->hasOne(Rating::class);
+   }
 
-        $appointmentSchedule = $this->appointmentSchedule;
-        $startTime= (new Carbon($appointmentSchedule->start_time))->translatedFormat("H:i");
-        $endTime = (new Carbon($appointmentSchedule->end_time))->translatedFormat("H:i");
+   public function getAppointmentTime()
+   {
+      $this->loadMissing('appointmentSchedule');
 
-        return "$startTime - $endTime";
-    }
+      $appointmentSchedule = $this->appointmentSchedule;
+      $startTime = (new Carbon($appointmentSchedule->start_time))->translatedFormat("H:i");
+      $endTime = (new Carbon($appointmentSchedule->end_time))->translatedFormat("H:i");
+
+      return "$startTime - $endTime";
+   }
 }

@@ -37,82 +37,91 @@
                   <i class="fa-solid fa-star text-gray-600"></i>
                </div>
                <div>
+                  @php
+                     $rating = round($veterinarian->ratings()->avg('rating'), 1);
+                  @endphp
+
                   <div class="text-gray-400">Rating</div>
-                  <div class="text-gray-800 font-bold">N\A (0)</div>
+                  <div class="text-gray-800 font-bold">{{ $rating == 0 ? 'N\A' : $rating }} ({{ $veterinarian->ratings()->count() }})</div>
                </div>
             </div>
          </div>
       </div>
 
-      <div class="card mb-5">
-         <div class="card-body p-4 rounded-xl bg-white/35 shadow-xl grid lg:grid-cols-2 gap-3">
-            <label class="form-control w-full">
-               <div class="label">
-                  <span class="label-text font-semibold">Tanggal Pertemuan</span>
-               </div>
+      <form method="POST" action="{{ route('pet-owner.appointment.store') }}">
+         @csrf
 
-               <input type="text" name="appointment_date" class="input input-bordered w-full appointment_date"
-                  readonly />
-            </label>
+         <input type="hidden" name="veterinarian_id" value="{{ $veterinarian->id }}">
 
-            <div>
-               <div class="label">
-                  <span class="label-text font-semibold">Jam</span>
-               </div>
-
-               <select class="select-2" data-placeholder="" id="appointment_schedule_id"
-                  name="appointment_schedule_id"></select>
-            </div>
-         </div>
-      </div>
-
-
-      <div class="card mb-5">
-         <div class="card-body bg-base-100 shadow-xl p-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
+         <div class="card mb-5">
+            <div class="card-body p-4 rounded-xl bg-white/35 shadow-xl grid lg:grid-cols-2 gap-3">
                <label class="form-control w-full">
                   <div class="label">
-                     <span class="label-text font-semibold">Hewan Peliharaan</span>
+                     <span class="label-text font-semibold">Appointment Date</span>
                   </div>
-                  <div>
-                     <select id="pet_id" name="pet_id"
-                        class="select select-2 select-bordered w-full form-control flex-row" data-placeholder="">
-                        <option value="" hidden></option>
-                        @foreach ($pets as $pet)
-                           <option value="{{ $pet->id }}" @selected($pet->id == @session('session_pet')->id)>{{ $pet->name }}</option>
-                        @endforeach
-                     </select>
-                  </div>
+
+                  <input type="text" name="appointment_date" class="input input-bordered w-full appointment_date"
+                     readonly />
                </label>
 
-               <label class="form-control w-full">
+               <div>
                   <div class="label">
-                     <span class="label-text font-semibold">Service</span>
+                     <span class="label-text font-semibold">Hour</span>
                   </div>
-                  <div>
-                     <select id="service_type_id" name="service_type_id"
-                        class="select select-2 select-bordered w-full form-control flex-row" data-placeholder="">
-                        <option value="" hidden></option>
-                        @foreach ($serviceTypes as $serviceTypeId => $serviceTypeName)
-                           <option value="{{ $serviceTypeId }}">{{ $serviceTypeName }}</option>
-                        @endforeach
-                     </select>
-                  </div>
-               </label>
 
-               <label class="form-control w-full lg:col-span-2">
-                  <div class="label">
-                     <span class="label-text font-semibold">Keluhan</span>
-                  </div>
-                  <textarea name="appointment_note" class="textarea textarea-bordered w-full form-validation"></textarea>
-               </label>
+                  <select class="select-2" data-placeholder="" id="appointment_schedule_id"
+                     name="appointment_schedule_id"></select>
+               </div>
             </div>
          </div>
-      </div>
 
-      <div class="flex justify-end">
-         <button type="submit" class="btn btn-primary btn-padding accept" id="submit">Submit</button>
-      </div>
+         <div class="card mb-5">
+            <div class="card-body bg-base-100 shadow-xl p-4">
+               <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
+                  <label class="form-control w-full">
+                     <div class="label">
+                        <span class="label-text font-semibold">Pet</span>
+                     </div>
+                     <div>
+                        <select id="pet_id" name="pet_id"
+                           class="select select-2 select-bordered w-full form-control flex-row" data-placeholder="">
+                           <option value="" hidden></option>
+                           @foreach ($pets as $pet)
+                              <option value="{{ $pet->id }}" @selected($pet->id == @session('session_pet')->id)>{{ $pet->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                  </label>
+
+                  <label class="form-control w-full">
+                     <div class="label">
+                        <span class="label-text font-semibold">Service</span>
+                     </div>
+                     <div>
+                        <select id="service_type_id" name="service_type_id"
+                           class="select select-2 select-bordered w-full form-control flex-row" data-placeholder="">
+                           <option value="" hidden></option>
+                           @foreach ($serviceTypes as $serviceTypeId => $serviceTypeName)
+                              <option value="{{ $serviceTypeId }}">{{ $serviceTypeName }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                  </label>
+
+                  <label class="form-control w-full lg:col-span-2">
+                     <div class="label">
+                        <span class="label-text font-semibold">Note</span>
+                     </div>
+                     <textarea name="appointment_note" class="textarea textarea-bordered w-full form-validation"></textarea>
+                  </label>
+               </div>
+            </div>
+         </div>
+
+         <div class="flex justify-end">
+            <button type="submit" class="btn btn-primary btn-padding accept" id="submit">Submit</button>
+         </div>
+      </form>
    </section>
 @endsection
 
@@ -135,7 +144,9 @@
             el.dispatchEvent(event);
          },
          minDate: new Date(),
-         onRenderCell: ({date}) => {
+         onRenderCell: ({
+            date
+         }) => {
             if (!(veterinarianActiveDate.includes(date.getDay().toString()))) {
                return {
                   disabled: true
@@ -147,14 +158,9 @@
       $('[name="appointment_date"]').on('change', function() {
 
          const dateString = $(this).val();
-         const dateArray = dateString.split("-");
-
-         const newDate = new Date(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
-
-         const day = newDate.getDay();
-         const route = "{{ route('pet-owner.appointment.get-appointment-schedule', [':id', ':day']) }}"
+         const route = "{{ route('pet-owner.appointment.get-appointment-schedule', [':id', ':date']) }}"
             .replace(':id', veterinarian.id)
-            .replace(':day', day);
+            .replace(':date', dateString);
 
          $('#appointment_schedule_id').html('').select2({
             data: [{
@@ -177,36 +183,38 @@
          });
       });
 
-      $('#submit').click(function() {
-         const petId = $('[name="pet_id"]').val();
-         const serviceTypeId = $('[name="service_type_id"]').val();
-         const appointmentScheduleId = $('[name="appointment_schedule_id"]').val();
-         const appointmentNote = $('[name="appointment_note"]').val();
-         const appointmentDate = $('[name="appointment_date"]').val();
+      // $('#submit').click(function() {
+      //    const petId = $('[name="pet_id"]').val();
+      //    const serviceTypeId = $('[name="service_type_id"]').val();
+      //    const appointmentScheduleId = $('[name="appointment_schedule_id"]').val();
+      //    const appointmentNote = $('[name="appointment_note"]').val();
+      //    const appointmentDate = $('[name="appointment_date"]').val();
 
-         const formData = new FormData();
+      //    const formData = new FormData();
 
-         formData.append('pet_id', petId);
-         formData.append('service_type_id', serviceTypeId);
-         formData.append('veterinarian_id', veterinarian.id);
-         formData.append('appointment_schedule_id', appointmentScheduleId);
-         formData.append('appointment_note', appointmentNote);
-         formData.append('appointment_date', appointmentDate);
+      //    formData.append('pet_id', petId);
+      //    formData.append('service_type_id', serviceTypeId);
+      //    formData.append('veterinarian_id', veterinarian.id);
+      //    formData.append('appointment_schedule_id', appointmentScheduleId);
+      //    formData.append('appointment_note', appointmentNote);
+      //    formData.append('appointment_date', appointmentDate);
 
-         $.ajax({
-            url: "{{ route('pet-owner.appointment.store') }}",
-            type: "post",
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: () => $.LoadingOverlay('show'),
-            complete: () => $.LoadingOverlay('hidden'),
-            success: function() {
-               const index = "{{ route('pet-owner.index') }}";
+      //    $.ajax({
+      //       url: "{{ route('pet-owner.appointment.store') }}",
+      //       type: "post",
+      //       data: formData,
+      //       processData: false,
+      //       contentType: false,
+      //       beforeSend: () => $.LoadingOverlay('show'),
+      //       complete: () => $.LoadingOverlay('hidden'),
+      //       success: function() {
+      //          const index = "{{ route('pet-owner.index') }}";
 
-               window.location.href = index;
-            },
-         });
-      });
+      //          window.location.href = index;
+      //       },
+      //    });
+      // });
    </script>
+
+   {!! JsValidator::formRequest('App\Http\Requests\PetOwner\StoreAppointmentRequest', 'form') !!}
 @endsection

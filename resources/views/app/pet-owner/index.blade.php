@@ -278,7 +278,7 @@
                      },
                      {
                         data: weight,
-                        label: "Berat",
+                        label: "Weight",
                         borderColor: "#2ECC71",
                         backgroundColor: '#2ECC71',
                         fill: false,

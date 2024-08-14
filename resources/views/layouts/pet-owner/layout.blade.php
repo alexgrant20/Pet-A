@@ -19,7 +19,7 @@
       </div>
       <div class="drawer-side w-full z-20 mt-20 pb-24">
          <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay xl:hidden"></label>
-         <div class="min-h-full ps-6 bg-primary">
+         <div class="min-h-full ps-6 bg-primary xl:w-128">
             <div class="relative mb-12">
                <div class="flex flex-col gap-3 z-20">
                   <img alt="pet image" src="{{ asset($pet?->thumbnail_image) }}"

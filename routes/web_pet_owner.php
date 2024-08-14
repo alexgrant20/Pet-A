@@ -49,7 +49,8 @@ Route::name('appointment.')
       Route::get('/create/{veterinarian}', 'create')->name('create');
       Route::post('/', 'store')->name('store');
       Route::get('/list/appointment', 'getList')->name('list.appointment');
-      Route::get('/getAppointmentSchedule/{veterinarianId}/{day}', 'getAppointmentSchedule')->name('get-appointment-schedule');
+      Route::post('/rate', 'giveRating')->name('give.rating');
+      Route::get('/getAppointmentSchedule/{veterinarianId}/{date}', 'getAppointmentSchedule')->name('get-appointment-schedule');
       Route::get('/{appointment}', 'show')->name('show');
    });
 

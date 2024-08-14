@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             'name' => 'Pet Owner Dummy',
             'phone_number' => '08123122342',
             'email' => 'pet_owner@dev.io',
-            'password' => Hash::make('petOwner123')
+            'password' => Hash::make('password')
          ])
          ->assignRole('pet-owner');
 
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
          'id' => '91550447-13c6-4b55-8644-452a261350c0',
          'name' => 'pet-a god',
          'email' => 'admin@dev.io',
-         'password' => Hash::make('admin_test123')
+         'password' => Hash::make('password')
       ])
          ->assignRole('admin');
    }

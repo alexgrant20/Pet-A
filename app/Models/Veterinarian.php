@@ -33,11 +33,6 @@ class Veterinarian extends Model
       return $this->hasMany(Appointment::class);
    }
 
-   public function onlineConsultation()
-   {
-      return $this->hasMany(OnlineConsultation::class);
-   }
-
    public function user()
    {
       return $this->morphOne(User::class, 'profile');
@@ -46,6 +41,11 @@ class Veterinarian extends Model
    public function petType()
    {
       return $this->belongsToMany(PetType::class, VeterinarianPetType::class);
+   }
+
+   public function ratings()
+   {
+      return $this->hasManyThrough(Rating::class, Appointment::class);
    }
 
    public function attachment()
