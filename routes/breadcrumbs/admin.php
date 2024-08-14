@@ -191,3 +191,18 @@ Breadcrumbs::for('clinic-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('clinic');
 	$trail->push('Ubah Tempat Praktik');
 });
+
+Breadcrumbs::for('appointment', function (BreadcrumbTrail $trail) {
+	$trail->parent('home-admin');
+	$trail->push('Appointment', route('admin.appointment.index'));
+});
+
+Breadcrumbs::for('appointment-show', function (BreadcrumbTrail $trail) {
+	$trail->parent('appointment');
+	$trail->push('Appointment Detail');
+});
+
+Breadcrumbs::for('appointment-summary', function (BreadcrumbTrail $trail) {
+	$trail->parent('appointment');
+	$trail->push('Appointment Summary');
+});
