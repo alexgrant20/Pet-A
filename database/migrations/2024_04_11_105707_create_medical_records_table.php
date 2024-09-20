@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('disease_name');
             $table->string('medicine_name');
             $table->text('description');
-            $table->dateTime('diagnosed_at');
 
             $table->timestamps();
             $table->string('created_by')->nullable();

@@ -73,9 +73,29 @@
 
          <div class="card mb-5">
             <div class="card-body bg-base-100 shadow-xl p-4">
-               <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+               <h2 class="font-bold text-lg">Result</h2>
+               <div class="overflow-x-auto">
+                  <table class="table border-collapse table-zebra mb-5">
+                     <thead>
+                        <tr>
+                           <th class="w-[25%] border border-gray-400">Disease</th>
+                           <th class="w-[25%] border border-gray-400">Medicine</th>
+                           <th class="w-[50%] border border-gray-400">Description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           @foreach ($appointment->medicalRecord as $medicalRecord)
+                              <td class="border border-gray-400">{{ $medicalRecord->disease_name }}</td>
+                              <td class="border border-gray-400">{{ $medicalRecord->medicine_name }}</td>
+                              <td class="border border-gray-400">{{ $medicalRecord->description }}</td>
+                           @endforeach
+                        </tr>
+                     </tbody>
+                  </table>
+
                   <label class="w-full">
-                     <span class="label-text font-bold mb-2">Kesimpulan</span>
+                     <span class="label-text font-bold mb-2">Note</span>
 
                      <div class="w-full">
                         {{ $appointment->summary ?? 'Tidak Ada Catatan' }}
@@ -89,7 +109,7 @@
       <div class="card mb-5">
          <div class="card-body p-4 rounded-xl bg-white/35 shadow-xl grid lg:grid-cols-2 gap-3">
             <label class="form-control w-full">
-               <span class="label-text font-bold mb-2">Tanggal Pertemuan</span>
+               <span class="label-text font-bold mb-2">Appointment Date</span>
 
                <div class="w-full">
                   {{ $appointment->appointment_date->isoFormat('dddd, D MMMM Y') }}
@@ -97,7 +117,7 @@
             </label>
 
             <div>
-               <span class="label-text font-bold mb-2">Jam</span>
+               <span class="label-text font-bold mb-2">Hour</span>
 
                <div class="w-full">
                   {{ $appointment->appointmentSchedule->start_time }}
@@ -110,7 +130,7 @@
          <div class="card-body bg-base-100 shadow-xl p-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
                <label class="form-control w-full">
-                  <span class="label-text font-bold mb-2">Hewan Peliharaan</span>
+                  <span class="label-text font-bold mb-2">Pet</span>
 
                   <div class="w-full">
                      {{ $appointment->pet->name }}
@@ -126,7 +146,7 @@
                </label>
 
                <label class="form-control w-full lg:col-span-2">
-                  <span class="label-text font-bold mb-2">Keluhan</span>
+                  <span class="label-text font-bold mb-2">Appointment Complain</span>
 
                   <div class="w-full">
                      {{ $appointment->appointment_note }}
@@ -135,6 +155,7 @@
             </div>
          </div>
       </div>
+
    </section>
 @endsection
 
@@ -144,7 +165,7 @@
          const ratingValue = @json($appointment->rating);
          const stars = document.querySelectorAll('.star-icon');
 
-         if(ratingValue) {
+         if (ratingValue) {
             $('form').remove();
             updateStars(ratingValue.rating);
          } else {

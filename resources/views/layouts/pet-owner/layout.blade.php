@@ -39,7 +39,7 @@
             <div class="text-white/90 pe-5 mb-5">
                <h2 class="mb-3 text-xl">Reminder</h2>
                <div
-                  class="grid grid-flow-row gap-y-2 {{ auth()->user()->notification->count() > 3 ?: 'grid-rows-3' }} overflow-y-auto h-96 no-scrollbar">
+                  class="grid grid-flow-row gap-y-2 {{ auth()->user()->notification->count() > 2 ?: 'grid-rows-2' }} overflow-y-auto h-64 no-scrollbar">
                   @forelse (auth()->user()->notification ?? [] as $notif)
                      <div class="card">
                         <div

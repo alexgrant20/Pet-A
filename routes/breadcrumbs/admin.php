@@ -97,21 +97,6 @@ Breadcrumbs::for('medication-type-edit', function (BreadcrumbTrail $trail) {
 	$trail->push('Update');
 });
 
-Breadcrumbs::for('payment-type', function (BreadcrumbTrail $trail) {
-	$trail->parent('home-admin');
-	$trail->push('Payment Type', route('admin.master.payment-type.index'));
-});
-
-Breadcrumbs::for('payment-type-create', function (BreadcrumbTrail $trail) {
-	$trail->parent('payment-type');
-	$trail->push('Create', route('admin.master.payment-type.create'));
-});
-
-Breadcrumbs::for('payment-type-edit', function (BreadcrumbTrail $trail) {
-	$trail->parent('payment-type');
-	$trail->push('Update');
-});
-
 Breadcrumbs::for('vaccination', function (BreadcrumbTrail $trail) {
 	$trail->parent('home-admin');
 	$trail->push('Vaccination', route('admin.master.vaccination.index'));
@@ -129,22 +114,22 @@ Breadcrumbs::for('vaccination-edit', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('user-management', function (BreadcrumbTrail $trail) {
 	$trail->parent('home-admin');
-	$trail->push('Kelola Pengguna', route('admin.user-management.index'));
+	$trail->push('User Management', route('admin.user-management.index'));
 });
 
 Breadcrumbs::for('user-management-create', function (BreadcrumbTrail $trail) {
 	$trail->parent('user-management');
-	$trail->push('Tambah Dokter Hewan', route('admin.user-management.create'));
+	$trail->push('Add Veterinarian', route('admin.user-management.create'));
 });
 
 Breadcrumbs::for('user-management-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('user-management');
-	$trail->push('Ubah Dokter Hewan');
+	$trail->push('Edit Veterinarian');
 });
 
 Breadcrumbs::for('user-management-change-password', function (BreadcrumbTrail $trail) {
 	$trail->parent('user-management');
-	$trail->push('Ubah Kata Sandi');
+	$trail->push('Change Password');
 });
 
 Breadcrumbs::for('service-price', function (BreadcrumbTrail $trail) {
@@ -169,30 +154,35 @@ Breadcrumbs::for('appointment-schedule', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('appointment-schedule-create', function (BreadcrumbTrail $trail) {
 	$trail->parent('appointment-schedule');
-	$trail->push('Tambah Jadwal Dokter Hewan', route('admin.appointment-schedule.create'));
+	$trail->push('Add Veterinarian Schedule', route('admin.appointment-schedule.create'));
 });
 
 Breadcrumbs::for('appointment-schedule-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('appointment-schedule');
-	$trail->push('Ubah Jadwal Dokter Hewan');
+	$trail->push('Edit Veterinarian Schedule');
 });
 
 Breadcrumbs::for('clinic', function (BreadcrumbTrail $trail) {
 	$trail->parent('home-admin');
-	$trail->push('Tempat Praktik', route('admin.clinic.index'));
+	$trail->push('Clinic', route('admin.clinic.index'));
 });
 
 Breadcrumbs::for('clinic-create', function (BreadcrumbTrail $trail) {
 	$trail->parent('clinic');
-	$trail->push('Tambah Tempat Praktik', route('admin.clinic.create'));
+	$trail->push('Add Clinic', route('admin.clinic.create'));
 });
 
 Breadcrumbs::for('clinic-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('clinic');
-	$trail->push('Ubah Tempat Praktik');
+	$trail->push('Edit Clinic');
 });
 
 Breadcrumbs::for('appointment', function (BreadcrumbTrail $trail) {
+	$trail->parent('home-admin');
+	$trail->push('Appointment', route('admin.appointment.index'));
+});
+
+Breadcrumbs::for('appointment-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('home-admin');
 	$trail->push('Appointment', route('admin.appointment.index'));
 });

@@ -16,7 +16,12 @@ class ChatController extends Controller
    {
       $countMessage = Message::where('session_id', $sessionId)->count();
 
-      if($countMessage == 0) abort(404);
+      Message::where([
+         ['session_id', $sessionId],
+         ['is_read', 0]
+      ])->update(['is_read' => 1]);
+
+      if ($countMessage == 0) abort(404);
 
       return view('app.admin.chat.show', compact('sessionId'));
    }
@@ -26,7 +31,8 @@ class ChatController extends Controller
       $adminId = User::withoutRole('pet-owner')->pluck('id');
 
       $user = Message::with('user')
-         ->groupBy('user_id')->whereNotIn('user_id', $adminId->toArray())
+         ->groupBy('user_id')
+         ->whereNotIn('user_id', $adminId->toArray())
          ->get(['user_id'])
          ->pluck('user');
 
@@ -35,7 +41,7 @@ class ChatController extends Controller
 
    public function clientChat($sessionId)
    {
-      if($sessionId !== Auth::id()) abort(404);
+      if ($sessionId !== Auth::id()) abort(404);
 
       return view('app.pet-owner.chat.index', compact('sessionId'));
    }

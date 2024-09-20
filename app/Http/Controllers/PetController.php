@@ -151,16 +151,6 @@ class PetController extends Controller
       return to_route('pet-owner.index')->with('success-toast', 'Pet Successfully Created');
    }
 
-   public function show($petId)
-   {
-      $pet = Pet::where([
-         ['id', $petId],
-         ['pet_owner_id', auth()->user()->profile->id]
-      ])->with('petVaccination.vaccination', 'petAllergy', 'breed.petType')->firstOrFail();
-
-      return view('app.pet-owner.pets.show', compact('pet'));
-   }
-
    public function edit(Request $request, $petId)
    {
       $selectedPet = Pet::where([
@@ -172,7 +162,8 @@ class PetController extends Controller
             $q->with('icon', 'allergyCategory');
          },
          'breed',
-         'petWeight' => fn($q) => $q->latest()
+         'petWeight' => fn($q) => $q->latest(),
+         'medicalRecord'
       ])->firstOrFail();
 
       $jumpToStep = $request->step;

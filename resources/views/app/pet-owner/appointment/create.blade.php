@@ -181,38 +181,6 @@
             });
          });
       });
-
-      // $('#submit').click(function() {
-      //    const petId = $('[name="pet_id"]').val();
-      //    const serviceTypeId = $('[name="service_type_id"]').val();
-      //    const appointmentScheduleId = $('[name="appointment_schedule_id"]').val();
-      //    const appointmentNote = $('[name="appointment_note"]').val();
-      //    const appointmentDate = $('[name="appointment_date"]').val();
-
-      //    const formData = new FormData();
-
-      //    formData.append('pet_id', petId);
-      //    formData.append('service_type_id', serviceTypeId);
-      //    formData.append('veterinarian_id', veterinarian.id);
-      //    formData.append('appointment_schedule_id', appointmentScheduleId);
-      //    formData.append('appointment_note', appointmentNote);
-      //    formData.append('appointment_date', appointmentDate);
-
-      //    $.ajax({
-      //       url: "{{ route('pet-owner.appointment.store') }}",
-      //       type: "post",
-      //       data: formData,
-      //       processData: false,
-      //       contentType: false,
-      //       beforeSend: () => $.LoadingOverlay('show'),
-      //       complete: () => $.LoadingOverlay('hidden'),
-      //       success: function() {
-      //          const index = "{{ route('pet-owner.index') }}";
-
-      //          window.location.href = index;
-      //       },
-      //    });
-      // });
    </script>
 
    {!! JsValidator::formRequest('App\Http\Requests\PetOwner\StoreAppointmentRequest', 'form') !!}

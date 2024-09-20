@@ -22,12 +22,11 @@ class RegisterController extends Controller
 	{
 		DB::beginTransaction();
 		try {
-			$petOwner = PetOwner::create([
-				'name' => $request->name,
-				'phone_number' => $request->phone_number
-			]);
+			$petOwner = PetOwner::create();
 
 			$user = new User ([
+            'phone_number' => $request->phone_number,
+            'name' => $request->name,
 				'email' => $request->email,
 				'password' => Hash::make($request->password)
 			]);

@@ -63,6 +63,11 @@ class Appointment extends Model
       return $this->hasOne(Rating::class);
    }
 
+   public function getAppointmentDate()
+   {
+       return (new Carbon($this->appointment_date))->translatedFormat("l, d F Y");
+   }
+
    public function getAppointmentTime()
    {
       $this->loadMissing('appointmentSchedule');

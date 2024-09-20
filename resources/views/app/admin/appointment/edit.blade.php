@@ -14,7 +14,7 @@
 
    <div class="card bg-base-100 shadow-xl w-full">
       <div class="card-body">
-         <form action="{{ route('admin.appointment.edit', $appointment->id) }}" method="POST" enctype="multipart/form-data">
+         <form action="{{ route('admin.appointment.update', $appointment->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 

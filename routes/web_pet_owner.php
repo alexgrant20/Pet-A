@@ -32,14 +32,12 @@ use Yajra\DataTables\Facades\DataTables;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
-Route::resource('pet', PetController::class);
+Route::resource('pet', PetController::class)->except(['destroy', 'show']);
 Route::get('/switch-pet-profile/{pet}', [PetController::class, 'switchPetProfile'])->name('pet.switch-pet-profile');
 Route::get('/vaccination', [VaccinationController::class, 'index'])->name('vaccination.index');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::put('/profile/{petOwner}', [ProfileController::class, 'update'])->name('profile.update');
-
-// Route::resource('/online-consultation', OnlineConsultationController::class);
 
 Route::name('appointment.')
    ->prefix('/appointment')
@@ -71,5 +69,4 @@ Route::name('pet-vaccination.')
       Route::delete('/pet-vaccination/{petVaccination}', 'destroy')->name('destroy');
    });
 
-// Client view: chat with the admin
 Route::get('/chat/{sessionId}', [ChatController::class, 'clientChat'])->name('chat');

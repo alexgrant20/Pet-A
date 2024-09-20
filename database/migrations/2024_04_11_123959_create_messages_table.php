@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_read')->default(0);
             $table->uuid('user_id');
             $table->string('session_id');
             $table->longText('message');

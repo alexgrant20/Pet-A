@@ -5,18 +5,17 @@
 @section('content')
    <section class="px-5 py-10">
       <div class="flex justify-between mb-5">
-         <h2 class="text-primary text-2xl font-bold">Edit Hewan Peliharaan</h2>
+         <h2 class="text-primary text-2xl font-bold">Edit Pet</h2>
       </div>
 
       <div class="flex items-center gap-10">
          <div class="bs-stepper w-full">
             <div class="bs-stepper-header justify-center !mb-10" role="tablist">
-               <!-- your steps here -->
                <div class="step" data-target="#pet-basic-detail-part">
                   <button type="button" class="step-trigger flex flex-col" role="tab"
                      aria-controls="pet-basic-detail-part" id="pet-basic-detail-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-paw"></i></span>
-                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Informasi Hewan</span>
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Pet Information</span>
                   </button>
                </div>
                <div class="line"></div>
@@ -24,7 +23,7 @@
                   <button type="button" class="step-trigger flex flex-col" role="tab" aria-controls="pet-allergy-part"
                      id="pet-allergy-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i></span>
-                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Informasi Alergi</span>
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Allergy Information</span>
                   </button>
                </div>
                <div class="line"></div>
@@ -32,7 +31,15 @@
                   <button type="button" class="step-trigger flex flex-col" role="tab"
                      aria-controls="pet-vaccination-part" id="pet-vaccination-part-trigger">
                      <span class="bs-stepper-circle"><i class="fa-solid fa-syringe"></i></span>
-                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Informasi Vaksinasi</span>
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Vaccination Information</span>
+                  </button>
+               </div>
+               <div class="line"></div>
+               <div class="step" data-target="#medical-record-part">
+                  <button type="button" class="step-trigger flex flex-col" role="tab"
+                     aria-controls="medical-record-part" id="medical-record-part-trigger">
+                     <span class="bs-stepper-circle"><i class="fa-duotone fa-solid fa-book-medical"></i></span>
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Medical Record Information</span>
                   </button>
                </div>
             </div>
@@ -62,7 +69,7 @@
                      <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-5">
                         <label class="form-control w-full">
                            <div class="label">
-                              <span class="label-text font-semibold">Nama</span>
+                              <span class="label-text font-semibold">Name</span>
                            </div>
                            <input type="text" name="name" value="{{ $selectedPet->name }}"
                               class="input input-bordered w-full form-validation" />
@@ -70,7 +77,7 @@
 
                         <label class="form-control w-full">
                            <div class="label">
-                              <span class="label-text font-semibold">Nomor Chip</span>
+                              <span class="label-text font-semibold">Chip Number</span>
                            </div>
                            <input type="text" name="chip_number" value="{{ $selectedPet->chip_number }}"
                               class="input input-bordered w-full form-validation" />
@@ -78,7 +85,7 @@
 
                         <label class="form-control w-full">
                            <div class="label">
-                              <span class="label-text font-semibold">Tipe</span>
+                              <span class="label-text font-semibold">Pet Type</span>
                            </div>
                            <div>
                               <input value="{{ $selectedPet->breed->petType->name }}"
@@ -88,7 +95,7 @@
 
                         <label class="form-control w-full">
                            <div class="label">
-                              <span class="label-text font-semibold">Jenis</span>
+                              <span class="label-text font-semibold">Breed</span>
                            </div>
                            <select id="breed_id" name="breed_id"
                               class="select select-2 select-bordered w-full form-control flex-row">
@@ -97,15 +104,16 @@
 
                         <label class="form-control w-full">
                            <div class="label">
-                              <span class="label-text font-semibold">Tanggal Lahir</span>
+                              <span class="label-text font-semibold">Date of Birth</span>
                            </div>
-                           <input type="text" name="birth_date" value="{{ $selectedPet->birth_date?->format('d-m-Y') }}"
+                           <input type="text" name="birth_date"
+                              value="{{ $selectedPet->birth_date?->format('d-m-Y') }}"
                               class="input input-bordered w-full date-picker" />
                         </label>
 
                         <label class="form-control w-full">
                            <div class="label">
-                              <span class="label-text font-semibold">Berat</span>
+                              <span class="label-text font-semibold">Weight</span>
                            </div>
                            <label class="input input-bordered flex items-center gap-2">
                               <input type="text" value="{{ $selectedPet->petWeight->first()?->weight }}"
@@ -116,7 +124,7 @@
 
                         <label class="form-control w-full">
                            <div class="label">
-                              <span class="label-text font-semibold">Jenis Kelamin</span>
+                              <span class="label-text font-semibold">Sex</span>
                            </div>
                            <select id="gender" class="select select-bordered w-full form-control flex-row"
                               name="gender">
@@ -133,6 +141,7 @@
                      </div>
                   </form>
                </div>
+
                <div id="pet-allergy-part" class="content" role="tabpanel" aria-labelledby="pet-allergy-part-trigger">
                   <form class="grid gap-3 mb-12">
                      <input type="hidden" class="pet_allergy_id" name="id">
@@ -141,7 +150,7 @@
                      <div class="grid lg:grid-cols-3 gap-2">
                         <label class="form-control">
                            <div class="label">
-                              <span class="label-text font-semibold">Alergi</span>
+                              <span class="label-text font-semibold">Allergy</span>
                            </div>
                            <input type="text" class="input input-bordered w-full allergy_name" name="name" />
                         </label>
@@ -162,7 +171,7 @@
 
                         <label class="form-control">
                            <div class="label">
-                              <span class="label-text font-semibold">Kategori Alergi</span>
+                              <span class="label-text font-semibold">Allergy Category</span>
                            </div>
                            <select class="select-2" data-placeholder="" name="allergy_category_id">
                               <option value="" hidden></option>
@@ -177,15 +186,14 @@
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Deskripsi</span>
+                           <span class="label-text font-semibold">Description</span>
                         </div>
                         <textarea type="text" class="textarea textarea-bordered w-full allergy_description" rows="2"
                            name="note"></textarea>
                      </label>
 
                      <div class="flex justify-end">
-                        <button type="submit"
-                           class="btn btn-padding btn-primary mt-3 pet_allergy_btn">Tambahkan</button>
+                        <button type="submit" class="btn btn-padding btn-primary mt-3 pet_allergy_btn">Add</button>
                      </div>
                   </form>
 
@@ -193,9 +201,9 @@
                      <thead>
                         <tr>
                            <th class="w-1/12">Icon</th>
-                           <th class="w-1/12">Kategori</th>
-                           <th class="w-1/12">Alergi</th>
-                           <th class="w-6/12">Deskripsi</th>
+                           <th class="w-1/12">Category</th>
+                           <th class="w-1/12">Allergy</th>
+                           <th class="w-6/12">Description</th>
                            <th class="w-2/12">Action</th>
                         </tr>
                      </thead>
@@ -203,6 +211,7 @@
                      </tbody>
                   </table>
                </div>
+
                <div id="pet-vaccination-part" class="content" role="tabpanel"
                   aria-labelledby="pet-vaccination-part-trigger">
                   <form action="#" class="grid gap-3 mb-12">
@@ -210,7 +219,7 @@
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Nama Vaksinasi</span>
+                           <span class="label-text font-semibold">Vaccination</span>
                         </div>
 
                         <select class="select select-2 select-bordered w-full form-control flex-row vaccination_select"
@@ -220,32 +229,49 @@
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Nama Dokter</span>
+                           <span class="label-text font-semibold">Veterinarian</span>
                         </div>
                         <input type="text" class="input input-bordered w-full" name="given_by" />
                      </label>
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Diberikan Pada</span>
+                           <span class="label-text font-semibold">Given At</span>
                         </div>
                         <input type="text" class="input input-bordered w-full date-picker" name="given_at"
                            readonly />
                      </label>
 
                      <div class="flex justify-end">
-                        <button type="submit"
-                           class="btn btn-padding btn-primary mt-3 pet_vaccination_btn">Tambahkan</button>
+                        <button type="submit" class="btn btn-padding btn-primary mt-3 pet_vaccination_btn">Add</button>
                      </div>
                   </form>
 
                   <table class="pet_vaccination_list_table w-full row-border text-left">
                      <thead>
                         <tr>
-                           <th class="w-3/12">Nama Vaksin</th>
-                           <th class="w-3/12">Nama Dokter</th>
-                           <th class="w-3/12">Diberikan Pada</th>
+                           <th class="w-3/12">Vaccination</th>
+                           <th class="w-3/12">Veterinarian</th>
+                           <th class="w-3/12">Given At</th>
                            <th class="w-3/12">Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                     </tbody>
+                  </table>
+               </div>
+
+               <div id="medical-record-part" class="content" role="tabpanel"
+                  aria-labelledby="medical-record-part-trigger">
+
+                  <table class="pet_medical_list_table w-full row-border text-left">
+                     <thead>
+                        <tr>
+                           <th class="w-2/12">Disease</th>
+                           <th class="w-2/12">Medicine</th>
+                           <th class="w-5/12">Description</th>
+                           <th class="w-2/12">Diagnosed At</th>
+                           <th class="w-1/12">Appointment Detail</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -276,7 +302,6 @@
          const plainDatatableConfiguration = {
             bLengthChange: false,
             autoWidth: false,
-            // searching: false,
          };
 
          const petAllergyData = pet.pet_allergy.map(function(allergy) {
@@ -296,7 +321,18 @@
                given_by: petVac.given_by,
                given_at: petVac.given_at,
             };
-         })
+         });
+
+
+         const petMedicalData = pet.medical_record.map(function(medicalRecord) {
+            return {
+               disease: medicalRecord.disease_name,
+               medicine: medicalRecord.medicine_name,
+               description: medicalRecord.description,
+               diagnosed_at: new Date(medicalRecord.created_at).toLocaleDateString("en-Us"),
+               appointment_id: medicalRecord.appointment_id,
+            }
+         });
 
          const petAllergyDatatables = new DataTable('.pet_allergy_list_table', {
             ...plainDatatableConfiguration,
@@ -366,6 +402,44 @@
                }
             ],
             data: petVaccinationData,
+            rowId: 'id'
+         });
+
+         console.log(petMedicalData)
+
+         new DataTable('.pet_medical_list_table', {
+            ...plainDatatableConfiguration,
+            columns: [{
+                  data: 'disease',
+                  name: 'disease'
+               },
+               {
+                  data: 'medicine',
+                  name: 'medicine'
+               },
+               {
+                  data: 'description',
+                  name: 'description'
+               },
+               {
+                  data: 'diagnosed_at',
+                  name: 'diagnosed_at'
+               },
+               {
+                  data: 'action',
+                  name: 'action',
+                  orderable: false,
+                  render: function(_, _, row) {
+                     const route = "{{ route('pet-owner.appointment.show', ':id') }}";
+
+                     return `
+                        <a href="${route.replace(':id',row.appointment_id)}" class='btn p-2 rounded-full btn-secondary text-white'><i class='fa-solid fa-eye'></i></button>
+
+                     `
+                  }
+               }
+            ],
+            data: petMedicalData,
             rowId: 'id'
          });
 
@@ -440,8 +514,6 @@
          })
 
          const jumpToStep = "{{ $jumpToStep }}";
-
-         console.log(jumpToStep)
 
          if (jumpToStep) {
             stepper.to(jumpToStep);
@@ -534,12 +606,4 @@
          });
       }
    </script>
-
-   {{-- {!! JsValidator::formRequest(
-       'App\Http\Requests\PetOwner\StorePetRequest',
-       Crypt::encrypt([
-           'selector' => '.pet_basic_detail_form',
-           'ignore' => '',
-       ]),
-   ) !!} --}}
 @endsection

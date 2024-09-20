@@ -1,6 +1,6 @@
 @extends('layouts.public.layout')
 
-@section('title', 'Login')
+@section('title', 'Reset Password')
 
 @section('content')
    <div class="min-h-screen bg-base-200 flex">
@@ -13,43 +13,33 @@
          </a>
          <div class="flex flex-col justify-center flex-grow mx-auto w-full max-w-screen-md">
             <div>
-               <h1 class="text-gray-800 text-4xl font-bold mb-3">Welcome Back!</h1>
+               <h1 class="text-gray-800 text-4xl font-bold mb-3">Reset Your Password</h1>
                <h2 class="text-gray-800 text-xl font-semibold">
-                  Don't have account?
-                  <a href="{{ route('register') }}" class="link link-primary link-hover font-bold">Sign Up</a>
+                  Please enter your new password below.
                </h2>
             </div>
 
             <div class="divider divide-neutral-700 mb-12"></div>
 
-            <form method="POST" action="{{ route('login.attempt') }}" class="gap-5 flex flex-col w-full">
+            <form method="POST" action="{{ route('reset.password.post') }}" class="gap-5 flex flex-col w-full">
                @csrf
-
-               <div class="form-control">
-                  <input type="email" name="email" placeholder="Email" class="input input-bordered form-validation" />
-               </div>
+               <input type="hidden" name="token" value="{{ $token }}">
 
                <div class="form-control">
                   <input type="password" name="password" placeholder="Password"
-                     class="input input-bordered form-validation" />
+                     class="input input-bordered form-validation" required />
                </div>
 
-               <a href="{{ route('forget.password.get') }}" class="link text-gray-500">Forget Your Password?</a>
+               <div class="form-control">
+                  <input type="password" name="password_confirmation" placeholder="Confirm Password"
+                     class="input input-bordered form-validation" required />
+               </div>
 
                <div class="form-control mt-3">
-                  <button class="btn btn-primary py-4 text-lg">Continue</button>
+                  <button class="btn btn-primary py-4 text-lg">Reset Password</button>
                </div>
             </form>
-
-            <div class="divider divide-neutral-700 text-neutral-400 mt-12">OR</div>
-
-            @include('app.auth.components.__socialite')
          </div>
       </div>
    </div>
-
-@endsection
-
-@section('js-footer')
-   {!! JsValidator::formRequest('App\Http\Requests\LoginRequest', 'form') !!}
 @endsection

@@ -166,9 +166,12 @@
             </div>
          </div>
 
-         <div class="text-end">
-            <a href="{{ route('admin.appointment.edit', $appointment->id) }}" class="btn btn-primary btn-padding text-sm">Tulis Hasil Janji Temu</a>
-         </div>
+         @if (is_null($appointment->finished_at))
+            <div class="text-end">
+               <a href="{{ route('admin.appointment.edit', $appointment->id) }}"
+                  class="btn btn-primary btn-padding text-sm">Tulis Hasil Janji Temu</a>
+            </div>
+         @endif
       </div>
    </div>
 @endsection

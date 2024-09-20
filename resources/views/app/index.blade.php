@@ -33,9 +33,6 @@
           <p class="pt-9 text-xl text-gray-500">
             No more concerns about losing track about your medical record!
           </p>
-          <div class="pt-6 flex items-center gap-2">
-            <a href="{{ route('login') }}" class="btn btn-primary rounded-full text-lg btn-padding">Get Started</a>
-          </div>
         </div>
       </div>
     </section>
@@ -79,7 +76,6 @@
     </section>
 
     <div class="bg-primary">
-
        @include('layouts.public.footer')
     </div>
 

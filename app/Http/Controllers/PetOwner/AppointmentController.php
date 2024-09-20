@@ -69,6 +69,7 @@ class AppointmentController extends Controller
    public function store(StoreAppointmentRequest $request)
    {
       $veterinarian = Veterinarian::find($request->veterinarian_id);
+      $appointmentSchedule = AppointmentSchedule::find($request->appointment_schedule_id);
 
       DB::beginTransaction();
 
@@ -77,7 +78,7 @@ class AppointmentController extends Controller
             'user_id' => Auth::id(),
             'pet_id' => $request->pet_id,
             'title' => "Appointment with {$veterinarian->user->name}",
-            'date_start' => $request->appointment_date
+            'date_start' => $request->appointment_date . ' ' . $appointmentSchedule->start_time
          ]);
 
          $petOwnerId = Auth::user()->profile_id;

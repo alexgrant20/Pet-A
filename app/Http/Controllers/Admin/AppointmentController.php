@@ -128,7 +128,7 @@ class AppointmentController extends Controller implements ServiceTypeInterface
             'pet_id' => $appointment->pet_id,
             'appointment_id' => $appointment->id,
             'clinic_name' => $appointment->veterinarian->clinic->name,
-            'veterinarian_name' => $appointment->veterinarian->name,
+            'veterinarian_name' => $appointment->veterinarian->user->name,
             'disease_name' => $request->disease_name,
             'medicine_name' => $request->medicine_name,
             'medicine_dosage' => $request->medicine_dosage,
@@ -137,7 +137,10 @@ class AppointmentController extends Controller implements ServiceTypeInterface
       }
 
       $appointment->update([
-         'appointment_note' => $request->appointment_note
+         'summary' => $request->appointment_note,
+         'finished_at' => now()
       ]);
+
+      return to_route('admin.appoinment.show', $appointment->id);
    }
 }

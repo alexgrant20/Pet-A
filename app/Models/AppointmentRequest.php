@@ -42,19 +42,19 @@ class AppointmentRequest extends Model
         return $this->belongsTo(Pet::class);
     }
 
-    public function getAppointmentDate()
-    {
-        return (new Carbon($this->appointment_date))->translatedFormat("l, d F Y");
-    }
+   //  public function getAppointmentDate()
+   //  {
+   //      return (new Carbon($this->appointment_date))->translatedFormat("l, d F Y");
+   //  }
 
-    public function getAppointmentTime()
-    {
-        $this->loadMissing('appointmentSchedule');
+   //  public function getAppointmentTime()
+   //  {
+   //      $this->loadMissing('appointmentSchedule');
 
-        $appointmentSchedule = $this->appointmentSchedule;
-        $startTime= (new Carbon($appointmentSchedule->start_time))->translatedFormat("H:i");
-        $endTime = (new Carbon($appointmentSchedule->end_time))->translatedFormat("H:i");
+   //      $appointmentSchedule = $this->appointmentSchedule;
+   //      $startTime= (new Carbon($appointmentSchedule->start_time))->translatedFormat("H:i");
+   //      $endTime = (new Carbon($appointmentSchedule->end_time))->translatedFormat("H:i");
 
-        return "$startTime - $endTime";
-    }
+   //      return "$startTime - $endTime";
+   //  }
 }

@@ -79,7 +79,7 @@
                <div class="mb-5 w-full">
                   <span class="font-bold text-2xl">Pet Health Condition</span>
                </div>
-               <div class="grid grid-cols-1 2xl:grid-cols-2 2xl:grid-rows-2 gap-5">
+               <div class="grid grid-cols-1 gap-5">
                   <section>
                      <x-pet-owner.card
                         titleLink="{{ route('pet-owner.pet.edit', ['pet' => $pet->id ?? '#', 'step' => 2]) }}"
@@ -134,7 +134,7 @@
                                        </div>
                                     </div>
                                     <div class="ms-auto text-gray-400">
-                                       {{ $medicalRecord->created_at }}
+                                       {{ $medicalRecord->created_at->format('d F Y') }}
                                     </div>
                                  </div>
                               </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\SocialAccountController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LoginController;
@@ -31,6 +32,11 @@ Route::middleware('guest')
       Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
       Route::get('login/{provider}', [SocialAccountController::class, 'redirectToProvider'])->name('login.social');
       Route::get('login/{provider}/callback', [SocialAccountController::class, 'handleProviderCallback']);
+
+      Route::get('/forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+      Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+      Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+      Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
    });
 
 Route::middleware('auth')->group(function () {

@@ -11,7 +11,6 @@ use App\Http\Controllers\BreedController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\MedicationTypeController;
-use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\PetTypeController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\VaccinationController;
@@ -44,9 +43,6 @@ Route::prefix('/master')
       Route::resource('medication-type', MedicationTypeController::class, ['parameters' => ['medication-type' => 'medicationType']]);
       Route::get('/list/medication-type', [MedicationTypeController::class, 'getList'])->name('list.medication-type');
 
-      Route::resource('payment-type', PaymentTypeController::class, ['parameters' => ['payment-type' => 'paymentType']]);
-      Route::get('/list/payment-type', [PaymentTypeController::class, 'getList'])->name('list.payment-type');
-
       Route::resource('vaccination', VaccinationController::class, ['parameters' => ['vaccination' => 'vaccination']]);
       Route::get('/list/vaccination', [VaccinationController::class, 'getList'])->name('list.vaccination');
    });
@@ -67,7 +63,7 @@ Route::get('/list/service-price', [ServicePriceController::class, 'getList'])->n
 Route::resource('clinic', ClinicController::class);
 Route::get('/list/clinic', [ClinicController::class, 'getList'])->name('clinic.list');
 
-Route::resource('appointment', AppointmentController::class)->only(['index', 'show', 'update']);
+Route::resource('appointment', AppointmentController::class)->only(['index', 'show', 'update', 'edit']);
 Route::get('/list/appointment', [AppointmentController::class, 'getList'])->name('appointment.list');
 
 Route::resource('appointment-schedule', AppointmentScheduleController::class, ['parameters' => ['appointment-schedule' => 'appointmentSchedule']])->except(['edit', 'update', 'show', 'destroy']);
@@ -82,6 +78,5 @@ Route::prefix('/appointment-schedule')
    Route::delete('/{scheduleId}', 'destroy')->name('destroy');
 });
 
-// Client view: chat with the admin
 Route::get('/chat/{sessionId}', [ChatController::class, 'adminChat'])->name('chat.show');
 Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
