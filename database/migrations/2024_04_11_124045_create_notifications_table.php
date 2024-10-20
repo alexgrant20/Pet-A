@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('link')->nullable();
             $table->dateTime('date_start')->nullable();
             $table->dateTime('date_end')->nullable();
-            $table->boolean('is_seen')->default(false);
+            $table->boolean('is_emailed')->default(false);
 
             $table->timestamps();
             $table->string('created_by')->nullable();

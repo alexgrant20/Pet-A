@@ -18,6 +18,7 @@ class HomeController extends Controller
 
    public function index()
    {
+      (new \App\Jobs\NotificationJob)->dispatch();
       return view('app.pet-owner.index');
    }
 }

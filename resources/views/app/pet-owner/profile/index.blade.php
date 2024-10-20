@@ -7,8 +7,8 @@
       $profilePicture = $user->profile->attachment->first();
    @endphp
    <section>
-      <div class="flex bg-base-100 shadow-2xl p-9 gap-12 w-full flex-col xl:flex-row">
-         <form action="{{ route('pet-owner.profile.update', $user->profile->id) }}" method="POST"
+      <div class="bg-base-100 shadow-2xl p-9 gap-12 w-full">
+         <form class="flex flex-col xl:flex-row" action="{{ route('pet-owner.profile.update', $user->profile->id) }}" method="POST"
             enctype="multipart/form-data" class="flex flex-col gap-20 xl:w-1/2">
             @csrf
             @method('PUT')
@@ -20,7 +20,7 @@
                <input name="profile_image" id="profile_image" type="file"
                   class="file-input file-input-primary file-input-bordered file- w-full max-w-xs" />
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 gap-3 flex-grow">
                <label class="form-control w-full">
                   <div class="label">
                      <span class="label-text font-semibold">Name</span>
@@ -66,9 +66,6 @@
                <button class="btn btn-padding col-span-1 btn-primary mt-6 xl:col-span-2" type="submit">Submit</button>
             </div>
          </form>
-         <div class="w-1/2">
-
-         </div>
       </div>
    </section>
 @endsection

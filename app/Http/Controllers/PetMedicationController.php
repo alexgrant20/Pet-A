@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MedicationType;
 use App\Models\Notification;
-use App\Models\PetVaccination;
-use App\Models\Vaccination;
+use App\Models\PetMedication;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 
-class PetVaccinationController extends Controller
+class PetMedicationController extends Controller
 {
    public function store(Request $request)
    {
-      $vaccination = Vaccination::findOrFail($request->vaccination_id);
+      $medicationType = MedicationType::findOrFail($request->medication_type_id);
 
       $date = new Carbon();
 
@@ -22,29 +21,29 @@ class PetVaccinationController extends Controller
          Notification::create([
             'user_id' => Auth::id(),
             'pet_id' => $request->pet_id,
-            'title' => "vaccination $vaccination->name",
+            'title' => "Medication $medicationType->name",
             'date_start' => $request->given_at
          ]);
       }
 
-      $petVaccination = PetVaccination::create([
-         'vaccination_id' => $request->vaccination_id,
+      $petMedication = PetMedication::create([
+         'medication_type_id' => $request->medication_type_id,
+         'medicine_name' => $request->medicine_name,
          'given_at' => $request->given_at,
-         'given_by' => $request->given_by,
          'pet_id' => $request->pet_id
       ]);
 
       return response()->json([
-         'id' => $petVaccination->id,
-         'vaccination' => $vaccination->name,
+         'id' => $petMedication->id,
+         'medication_type_id' => $medicationType->name,
          'given_at' => $request->given_at,
-         'given_by' => $request->given_by
+         'medicine_name' => $request->medicine_name
       ]);
    }
 
-   public function destroy(PetVaccination $petVaccination)
+   public function destroy(PetMedication $petMedication)
    {
-      $petVaccination->delete();
+      $petMedication->delete();
 
       return response()->json();
    }

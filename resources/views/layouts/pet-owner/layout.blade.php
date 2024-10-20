@@ -22,8 +22,14 @@
          <div class="min-h-full ps-6 bg-primary xl:w-128">
             <div class="relative mb-12">
                <div class="flex flex-col gap-3 z-20">
-                  <img alt="pet image" src="{{ asset($pet?->thumbnail_image) }}"
-                     class="w-20 h-20 rounded-full bg-gray-200" />
+                  @if ($pet)
+                     <img alt="pet image" src="{{ asset($pet?->thumbnail_image) }}"
+                        class="w-20 h-20 rounded-full bg-gray-200" />
+                  @else
+                     <div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center">
+                        <i class="fa-thin fa-paw-simple fa-2x"></i>
+                     </div>
+                  @endif
                   <span class="text-white font-medium text-xl max-w-[85%] break-words">
                      Hello {{ $pet?->name }}
                   </span>
@@ -40,15 +46,16 @@
                <h2 class="mb-3 text-xl">Reminder</h2>
                <div
                   class="grid grid-flow-row gap-y-2 {{ auth()->user()->notification->count() > 2 ?: 'grid-rows-2' }} overflow-y-auto h-64 no-scrollbar">
-                  @forelse (auth()->user()->notification ?? [] as $notif)
+                  @forelse (auth()->user()->notification->where('date_start', '>=', now()->format('Y-m-d'))
+                     ?? [] as $notif)
                      <div class="card">
                         <div
-                           class="card-body bg-white bg-opacity-85 shadow rounded-xl flex-row py-4 px-2 gap-5 items-center">
-                           <div>
+                           class="card-body bg-white bg-opacity-85 shadow rounded-xl flex-row py-4 px-2 gap-2 items-center">
+                           <div class="w-20">
                               <img class="w-16 h-16 rounded-full"
                                  src="{{ asset($notif->pet->attachment->first()->path) }}" alt="">
                            </div>
-                           <div class="flex flex-col gap-2">
+                           <div class="flex flex-col gap-2 w-full">
                               <div class="text-gray-900 font-semibold">
                                  {{ $notif->pet->name }}
                               </div>
@@ -58,9 +65,15 @@
                                     {{ $notif->date_start->format('M,d H:i') }}
                                  </span>
                               </div>
-                              <div class="badge-primary badge">
+                              <div class="text-black">
                                  {{ $notif->title }}
                               </div>
+
+                              @if ($notif->link)
+                                 <a href="{{ $notif->link }}" class="btn btn-accent text-white w-fit p-2">
+                                    Check Appointment
+                                 </a>
+                              @endif
                            </div>
                         </div>
                      </div>

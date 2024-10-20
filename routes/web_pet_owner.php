@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PetAllergyController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\PetMedicationController;
 use App\Http\Controllers\PetOwner\AppointmentController;
 use App\Http\Controllers\PetOwner\AppointmentRequestController;
 use App\Http\Controllers\PetOwner\HomeController;
@@ -67,6 +68,13 @@ Route::name('pet-vaccination.')
    ->group(function () {
       Route::post('/pet-vaccination', 'store')->name('store');
       Route::delete('/pet-vaccination/{petVaccination}', 'destroy')->name('destroy');
+   });
+
+Route::name('pet-medication.')
+   ->controller(PetMedicationController::class)
+   ->group(function () {
+      Route::post('/pet-medication', 'store')->name('store');
+      Route::delete('/pet-medication/{petMedication}', 'destroy')->name('destroy');
    });
 
 Route::get('/chat/{sessionId}', [ChatController::class, 'clientChat'])->name('chat');

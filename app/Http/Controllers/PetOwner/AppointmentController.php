@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 
 class AppointmentController extends Controller
@@ -70,20 +71,14 @@ class AppointmentController extends Controller
    {
       $veterinarian = Veterinarian::find($request->veterinarian_id);
       $appointmentSchedule = AppointmentSchedule::find($request->appointment_schedule_id);
+      $serviceType = ServiceType::find($request->service_type_id);
 
       DB::beginTransaction();
 
       try {
-         Notification::create([
-            'user_id' => Auth::id(),
-            'pet_id' => $request->pet_id,
-            'title' => "Appointment with {$veterinarian->user->name}",
-            'date_start' => $request->appointment_date . ' ' . $appointmentSchedule->start_time
-         ]);
-
          $petOwnerId = Auth::user()->profile_id;
 
-         Appointment::create([
+         $appointment = Appointment::create([
             'pet_owner_id' => $petOwnerId,
             'pet_id' => $request->pet_id,
             'clinic_id' => $veterinarian->clinic_id,
@@ -93,6 +88,21 @@ class AppointmentController extends Controller
             'appointment_note' => $request->appointment_note,
             'appointment_date' => $request->appointment_date
          ]);
+
+         $notification = Notification::create([
+            'user_id' => Auth::id(),
+            'pet_id' => $request->pet_id,
+            'title' => "{$serviceType->name} Appointment with {$veterinarian->user->name} at Clinic {$veterinarian->clinic->name}",
+            'date_start' => $request->appointment_date . ' ' . $appointmentSchedule->start_time,
+            'link' => route('pet-owner.appointment.show', $appointment->id)
+         ]);
+
+         Mail::send('email.reminder', [
+            'notification' => $notification
+         ], function ($message) use ($notification) {
+            $message->to($notification->user->email);
+            $message->subject($notification->title);
+         });
       } catch (\Exception $e) {
          DB::rollBack();
 
@@ -133,7 +143,7 @@ class AppointmentController extends Controller
    {
       $appointment = Appointment::with('rating')->findOrFail($request->appointment_id);
 
-      if(isset($appointment->rating)) abort(403);
+      if (isset($appointment->rating)) abort(403);
 
       Rating::create([
          'appointment_id' => $appointment->id,

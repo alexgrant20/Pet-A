@@ -14,8 +14,8 @@ class MedicationTypeSeeder extends Seeder
     public function run(): void
     {
         MedicationType::insert([
-            ['name' => 'Obat Cacing'],
-            ['name' => 'Obat Kutu'],
+            ['name' => 'Anthelmintic'],
+            ['name' => 'flea medicine'],
         ]);
     }
 }

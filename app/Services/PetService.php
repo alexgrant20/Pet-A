@@ -35,7 +35,7 @@ class PetService
 
       $pet->age = $pet->getAge(true) ?? 'N/A';
       $pet->thumbnail_image = $pet->attachment->first()?->path;
-      $pet->weight = $pet->petWeight->first()?->weight . ' Kg';
+      $pet->weight = $pet->petWeight->sortByDesc('created_at')->first()?->weight . ' Kg';
       $pet->future_appointment = $futureAppointment->take(3);
       $pet->history_appointment = $historyAppointment->take(3);
 

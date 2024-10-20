@@ -8,6 +8,7 @@ use App\Models\Breed;
 use App\Models\FieldAttachmentUpload;
 use App\Models\Icon;
 use App\Models\MedicalRecord;
+use App\Models\MedicationType;
 use App\Models\Pet;
 use App\Models\PetAllergy;
 use App\Models\PetType;
@@ -163,7 +164,8 @@ class PetController extends Controller
          },
          'breed',
          'petWeight' => fn($q) => $q->latest(),
-         'medicalRecord'
+         'medicalRecord',
+         'petMedication.medicationType'
       ])->firstOrFail();
 
       $jumpToStep = $request->step;
@@ -172,6 +174,7 @@ class PetController extends Controller
       $breeds = Breed::all();
       $allergyCategories = AllergyCategory::all();
       $icons = Icon::all();
+      $medicationTypes = MedicationType::all();
 
       return view('app.pet-owner.pets.edit', compact(
          'selectedPet',
@@ -179,7 +182,8 @@ class PetController extends Controller
          'breeds',
          'allergyCategories',
          'icons',
-         'jumpToStep'
+         'jumpToStep',
+         'medicationTypes'
       ));
    }
 

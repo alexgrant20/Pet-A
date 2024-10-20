@@ -35,6 +35,14 @@
                   </button>
                </div>
                <div class="line"></div>
+               <div class="step" data-target="#pet-medication-part">
+                  <button type="button" class="step-trigger flex flex-col" role="tab"
+                     aria-controls="pet-medication-part" id="pet-medication-part-trigger">
+                     <span class="bs-stepper-circle"><i class="fa-solid fa-prescription-bottle-pill"></i></span>
+                     <span class="bs-stepper-label max-w-24 text-wrap text-center">Medication Information</span>
+                  </button>
+               </div>
+               <div class="line"></div>
                <div class="step" data-target="#medical-record-part">
                   <button type="button" class="step-trigger flex flex-col" role="tab"
                      aria-controls="medical-record-part" id="medical-record-part-trigger">
@@ -261,6 +269,61 @@
                   </table>
                </div>
 
+               <div id="pet-medication-part" class="content" role="tabpanel"
+               aria-labelledby="pet-medication-part-trigger">
+               <form action="#" class="grid gap-3 mb-12">
+                  <input type="hidden" name="pet_id" value="{{ $pet->id }}">
+
+                  <label class="form-control w-full">
+                     <div class="label">
+                        <span class="label-text font-semibold">Medication Type</span>
+                     </div>
+
+                     <select class="select select-2 select-bordered w-full form-control flex-row"
+                        data-placeholder="" name="medication_type_id">
+                        <option value="" hidden></option>
+                        @foreach ($medicationTypes as $medicationType)
+                           <option class="text-black" value="{{ $medicationType->id }}">
+                              {{ $medicationType->name }}
+                           </option>
+                        @endforeach
+                     </select>
+                  </label>
+
+                  <label class="form-control w-full">
+                     <div class="label">
+                        <span class="label-text font-semibold">Medication Name</span>
+                     </div>
+                     <input type="text" class="input input-bordered w-full" name="medicine_name" />
+                  </label>
+
+                  <label class="form-control w-full">
+                     <div class="label">
+                        <span class="label-text font-semibold">Given At</span>
+                     </div>
+                     <input type="text" class="input input-bordered w-full date-picker" name="given_at"
+                        readonly />
+                  </label>
+
+                  <div class="flex justify-end">
+                     <button type="submit" class="btn btn-padding btn-primary mt-3 pet_medication_btn">Add</button>
+                  </div>
+               </form>
+
+               <table class="pet_medication_list_table w-full row-border text-left">
+                  <thead>
+                     <tr>
+                        <th class="w-3/12">Medication Type</th>
+                        <th class="w-3/12">Medication Name</th>
+                        <th class="w-3/12">Given At</th>
+                        <th class="w-3/12">Action</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+               </table>
+            </div>
+
                <div id="medical-record-part" class="content" role="tabpanel"
                   aria-labelledby="medical-record-part-trigger">
 
@@ -323,6 +386,16 @@
             };
          });
 
+         console.log(pet)
+
+         const petMedicationData = pet.pet_medication.map(function(petMedication) {
+            return {
+               id: petMedication.id,
+               medication_type: petMedication.medication_type.name,
+               medication_name: petMedication.medicine_name,
+               given_at: petMedication.given_at,
+            };
+         });
 
          const petMedicalData = pet.medical_record.map(function(medicalRecord) {
             return {
@@ -405,7 +478,38 @@
             rowId: 'id'
          });
 
-         console.log(petMedicalData)
+
+         const petMedicationDatatables = new DataTable('.pet_medication_list_table', {
+            ...plainDatatableConfiguration,
+            columns: [{
+                  data: 'medication_type',
+                  name: 'medication_type'
+               },
+               {
+                  data: 'medication_name',
+                  name: 'medication_name'
+               },
+               {
+                  data: 'given_at',
+                  name: 'given_at',
+                  type: 'string',
+               },
+               {
+                  data: 'action',
+                  name: 'action',
+                  orderable: false,
+                  render: function() {
+                     return `
+                     <div class='flex gap-1'>
+                        <button class='btn p-2 rounded-full btn-secondary text-white delete_btn'><i class='fa-solid fa-trash'></i></button>
+                     </div>
+                     `
+                  }
+               }
+            ],
+            data: petMedicationData,
+            rowId: 'id'
+         });
 
          new DataTable('.pet_medical_list_table', {
             ...plainDatatableConfiguration,
@@ -542,6 +646,18 @@
          );
 
          bindDatatableAddRecordMethod(
+            '.pet_medication_btn',
+            petMedicationDatatables,
+            "{{ route('pet-owner.pet-medication.store') }}"
+         );
+
+         bindDeleteMethod(
+            '.pet_medication_list_table',
+            petMedicationDatatables,
+            "{{ route('pet-owner.pet-medication.destroy', ':id') }}"
+         );
+
+         bindDatatableAddRecordMethod(
             '.pet_vaccination_btn',
             petVaccinationDatatables,
             "{{ route('pet-owner.pet-vaccination.store') }}"
@@ -591,16 +707,16 @@
                   $.LoadingOverlay("show");
                },
                success: function(response) {
-                  swal('success', 'Data Berhasil Ditambahkan', 'success');
+                  swal('success', 'Data Successfully Added', 'success');
+                  resetForm($formElement);
 
                   datatable.row.add(response).draw();
                },
                error: function() {
-                  swal('error', 'Terjadi Kesalahan', 'error');
+                  swal('error', 'Something went wrong', 'error');
                },
                complete: function() {
                   $.LoadingOverlay("hide");
-                  resetForm($formElement);
                }
             });
          });
