@@ -141,6 +141,6 @@ class AppointmentController extends Controller implements ServiceTypeInterface
          'finished_at' => now()
       ]);
 
-      return to_route('admin.appoinment.show', $appointment->id);
+      return to_route('admin.appointment.show', $appointment->id);
    }
 }

@@ -35,9 +35,9 @@ class PetMedicationController extends Controller
 
       return response()->json([
          'id' => $petMedication->id,
-         'medication_type_id' => $medicationType->name,
+         'medication_type' => $medicationType->name,
          'given_at' => $request->given_at,
-         'medicine_name' => $request->medicine_name
+         'medication_name' => $request->medicine_name
       ]);
    }
 

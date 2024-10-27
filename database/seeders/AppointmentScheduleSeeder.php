@@ -19,7 +19,9 @@ class AppointmentScheduleSeeder extends Seeder
 
       while (count($schedules) < 200) {
          $veterinarian_id = rand(1, 16);
-         $start_time = Carbon::today()->addMinutes(rand(0, 1439))->format('H:i');
+         $hour = rand(8, 20);
+         $minute = rand(0, 1) * 30;
+         $start_time = sprintf('%02d:%02d', $hour, $minute);
          $day = rand(1, 7);
 
          $exists = false;

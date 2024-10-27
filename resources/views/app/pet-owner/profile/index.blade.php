@@ -25,7 +25,7 @@
                   <div class="label">
                      <span class="label-text font-semibold">Name</span>
                   </div>
-                  <input type="text" name="name" value="{{ $user->profile->name }}"
+                  <input type="text" name="name" value="{{ $user->name }}"
                      class="input input-bordered w-full form-validation" />
                </label>
 
@@ -33,14 +33,14 @@
                   <div class="label">
                      <span class="label-text font-semibold">Address</span>
                   </div>
-                  <input type="text" name="address" value="{{ $user->profile->address }}"
+                  <input type="text" name="address" value="{{ $user->address }}"
                      class="input input-bordered w-full form-validation" />
                </label>
                <label class="form-control w-full">
                   <div class="label">
                      <span class="label-text font-semibold">Phone Number</span>
                   </div>
-                  <input type="text" name="phone_number" value="{{ $user->profile->phone_number }}"
+                  <input type="text" name="phone_number" value="{{ $user->phone_number }}"
                      class="input input-bordered w-full form-validation" />
                </label>
                <label class="form-control w-full">
