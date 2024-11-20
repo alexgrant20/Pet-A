@@ -31,10 +31,10 @@ class PermissionSeeder extends Seeder
          ['name' => 'province-create'],
          ['name' => 'province-update'],
          ['name' => 'province-delete'],
-         ['name' => 'appointment-type-view'],
-         ['name' => 'appointment-type-create'],
-         ['name' => 'appointment-type-update'],
-         ['name' => 'appointment-type-delete'],
+         ['name' => 'service-type-view'],
+         ['name' => 'service-type-create'],
+         ['name' => 'service-type-update'],
+         ['name' => 'service-type-delete'],
          ['name' => 'medication-type-view'],
          ['name' => 'medication-type-create'],
          ['name' => 'medication-type-update'],
@@ -58,6 +58,7 @@ class PermissionSeeder extends Seeder
          ['name' => 'user-create'],
          ['name' => 'user-update'],
          ['name' => 'user-delete'],
+         ['name' => 'chat-view'],
       ]);
 
       MenuPermission::insert([
@@ -91,20 +92,24 @@ class PermissionSeeder extends Seeder
          ],
          [
             'menu_id' => 9,
-            'permission_id' => 27
+            'permission_id' => 29
          ],
          [
             'menu_id' => 10,
-            'permission_id' => 31
+            'permission_id' => 33
          ],
          [
             'menu_id' => 11,
-            'permission_id' => 34
+            'permission_id' => 36
          ],
          [
             'menu_id' => 12,
-            'permission_id' => 38
+            'permission_id' => 40
          ],
+         [
+            'menu_id' => 15,
+            'permission_id' => 44
+         ]
       ]);
    }
 }

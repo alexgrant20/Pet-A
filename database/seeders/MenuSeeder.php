@@ -44,10 +44,10 @@ class MenuSeeder extends Seeder
     ]);
 
     Menu::create([
-      'label' => 'Appointment Type',
+      'label' => 'Service Type',
       'order' => 5,
       'parent_id' => $masterMenu->id,
-      'route_name' => 'admin.master.appointment-type.index'
+      'route_name' => 'admin.master.service-type.index'
     ]);
 
     Menu::create([
