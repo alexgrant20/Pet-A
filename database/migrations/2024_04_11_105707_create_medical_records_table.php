@@ -17,9 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('appointment_id');
             $table->string('clinic_name');
             $table->string('veterinarian_name');
-            $table->string('disease_name');
-            $table->string('medicine_name');
-            $table->text('description');
+            $table->string('disease_name')->nullable();
+            $table->string('medicine_name')->nullable();
+            $table->text('description')->nullable();
 
             $table->timestamps();
             $table->string('created_by')->nullable();

@@ -12,7 +12,7 @@ class MenuSeeder extends Seeder
     $masterMenu = Menu::create([
       'icon' => 'fa fa-database',
       'label' => 'Master',
-      'order' => 6,
+      'order' => 7,
     ]);
 
     Menu::create([
@@ -57,7 +57,6 @@ class MenuSeeder extends Seeder
       'route_name' => 'admin.master.medication-type.index'
     ]);
 
-
    //  Menu::create([
    //    'label' => 'Vaccination Type',
    //    'order' => 8,
@@ -67,31 +66,38 @@ class MenuSeeder extends Seeder
 
     Menu::create([
       'label' => 'Veterinarian',
-      'order' => 4,
+      'order' => 5,
       'icon' => 'fa fa-user-doctor',
       'route_name' => 'admin.veterinarian.index'
     ]);
 
     Menu::create([
-      'label' => 'Tempat Praktik',
-      'order' => 3,
+      'label' => 'Clinic',
+      'order' => 4,
       'icon' => 'fa fa-hospital',
       'route_name' => 'admin.clinic.index'
     ]);
 
     Menu::create([
-      'label' => 'Janji Temu',
+      'label' => 'Appointment',
       'order' => 1,
-      'icon' => 'fa fa-alarm-clock',
+      'icon' => 'fa-solid fa-paw',
       'route_name' => 'admin.appointment.index'
     ]);
 
     Menu::create([
-      'label' => 'Jadwal',
+      'label' => 'Schedule',
       'order' => 1,
       'icon' => 'fa fa-calendar-days',
       'route_name' => 'admin.appointment-schedule.index'
     ]);
+
+    Menu::create([
+      'icon' => 'fa-users',
+      'label' => 'User Management',
+      'order' => 6,
+      'route_name' => 'admin.user-management.index'
+   ]);
 
     Menu::create([
       'label' => 'Pets',
@@ -129,13 +135,6 @@ class MenuSeeder extends Seeder
    //    'is_pet_owner' => true,
    //    'route_name' => 'pet-owner.medical-record.index',
    //  ]);
-
-    Menu::create([
-      'icon' => 'fa-users',
-      'label' => 'User Management',
-      'order' => 5,
-      'route_name' => 'admin.user-management.index'
-   ]);
 
     Menu::create([
       'icon' => 'fa-message',

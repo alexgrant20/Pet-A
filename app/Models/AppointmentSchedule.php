@@ -16,7 +16,7 @@ class AppointmentSchedule extends Model
     protected $casts = [
        'created_at' => 'datetime',
        'updated_at' => 'datetime',
-       'start_time' => TimeCast::class,
+       'start_time' => 'datetime',
     ];
 
     public function veterinarian()

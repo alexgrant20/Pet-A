@@ -1,12 +1,12 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Ubah Tempat Praktik')
+@section('title', 'Edit Clinic')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body flex-row items-center justify-between">
          <div class="section-left">
-            <h1 class="font-bold text-2xl">Ubah Tempat Praktik</h1>
+            <h1 class="font-bold text-2xl">Edit Clinic</h1>
             {{ Breadcrumbs::render('clinic-edit') }}
          </div>
       </div>
@@ -37,14 +37,14 @@
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                      <div class="form-control w-full mb-3">
                         <div class="label">
-                           <span class="label-text font-semibold">Nama</span>
+                           <span class="label-text font-semibold">Name</span>
                         </div>
                         <input type="text" name="name" class="input input-bordered w-full form-control" value="{{ old('name', $clinic->name) }}"/>
                      </div>
 
                      <div class="form-control w-full mb-3">
                         <div class="label">
-                           <span class="label-text font-semibold">Nomor Telepon</span>
+                           <span class="label-text font-semibold">Phone Number</span>
                         </div>
                         <input type="text" name="phone_number" class="input input-bordered w-full form-control" value="{{ old('phone_number', $clinic->phone_number) }}"/>
                      </div>
@@ -53,7 +53,7 @@
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                      <div class="form-control w-full mb-3">
                         <div class="label">
-                           <span class="label-text font-semibold">Kota</span>
+                           <span class="label-text font-semibold">City</span>
                         </div>
                         <select name="city_id" id="city"
                            class="select select2 select-bordered w-full form-validation max-w"
@@ -67,7 +67,7 @@
 
                      <div class="form-control w-full mb-3">
                         <div class="label">
-                           <span class="label-text font-semibold">Kode Pos</span>
+                           <span class="label-text font-semibold">Zip Code</span>
                         </div>
                         <input type="input" name="zip_code" class="input input-bordered w-full form-control" value="{{ old('zip_code', $clinic->zip_code) }}"/>
                      </div>
@@ -75,7 +75,7 @@
 
                   <div class="form-control w-full mb-3">
                      <div class="label">
-                        <span class="label-text font-semibold">Alamat</span>
+                        <span class="label-text font-semibold">Address</span>
                      </div>
                      <textarea class="textarea textarea-bordered" name="address" placeholder="">{{ old('address', $clinic->address) }}</textarea>
                   </div>

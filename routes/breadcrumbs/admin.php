@@ -196,3 +196,18 @@ Breadcrumbs::for('appointment-summary', function (BreadcrumbTrail $trail) {
 	$trail->parent('appointment');
 	$trail->push('Appointment Summary');
 });
+
+Breadcrumbs::for('veterinarian', function (BreadcrumbTrail $trail) {
+	$trail->parent('home-admin');
+	$trail->push('Veterinarian', route('admin.veterinarian.index'));
+});
+
+Breadcrumbs::for('veterinarian-create', function (BreadcrumbTrail $trail) {
+	$trail->parent('veterinarian');
+	$trail->push('Add Veterinarian', route('admin.veterinarian.create'));
+});
+
+Breadcrumbs::for('veterinarian-edit', function (BreadcrumbTrail $trail) {
+	$trail->parent('veterinarian');
+	$trail->push('Edit Veterinarian');
+});

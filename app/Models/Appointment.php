@@ -74,8 +74,7 @@ class Appointment extends Model
 
       $appointmentSchedule = $this->appointmentSchedule;
       $startTime = (new Carbon($appointmentSchedule->start_time))->translatedFormat("H:i");
-      $endTime = (new Carbon($appointmentSchedule->end_time))->translatedFormat("H:i");
 
-      return "$startTime - $endTime";
+      return "$startTime";
    }
 }

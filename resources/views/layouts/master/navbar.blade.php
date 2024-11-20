@@ -1,12 +1,15 @@
-<div class="navbar z-10 bg-primary sticky top-0">
+<div class="navbar z-20 bg-primary px-6 absolute">
    <div class="flex-1">
+      <label for="my-drawer" class="btn btn-primary py-3 drawer-button block xl:hidden">
+         <i class="fa-regular fa-bars"></i>
+      </label>
       <a href="{{ route('home') }}" class="w-28">
          <img src="{{ asset('assets/logo-square-white.png') }}" alt="logo">
       </a>
    </div>
    <div class="dropdown dropdown-end">
       <div tabindex="0" role="button" class="btn btn-ghost hover:bg-transparent avatar">
-         <i class="fa-solid fa-bell text-xl text-amber-950"></i>
+         <i class="fa-solid fa-bell text-xl text-base-100"></i>
       </div>
       <ul tabindex="5" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-80">
          <li>
@@ -29,7 +32,7 @@
       <div tabindex="0" role="button" class="btn btn-ghost hover:bg-transparent avatar">
          <div class="w-12 rounded-full tex">
             <img alt="Tailwind CSS Navbar component"
-               src="{{ asset('assets/user.svg') }}" />
+               src="{{ asset(Auth::user()->hasRole(RoleInterface::ROLE_ADMIN) ? 'assets/user.svg' : Auth::user()->profile->attachment->first()->path) }}" />
          </div>
       </div>
       <ul tabindex="5" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">

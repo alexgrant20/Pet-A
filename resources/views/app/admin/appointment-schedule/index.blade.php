@@ -1,17 +1,17 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Jadwal Praktik')
+@section('title', 'Veterinarian Schedule')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body flex-row items-center justify-between">
          <div>
-            <h1 class="font-bold text-2xl">Jadwal Dokter Hewan</h1>
+            <h1 class="font-bold text-2xl">Veterinarian Schedule</h1>
             {{ Breadcrumbs::render('appointment-schedule') }}
          </div>
          <div>
             <a href="{{ route('admin.appointment-schedule.create') }}" class="btn btn-primary btn-padding">
-               Tambah Jadwal
+               Add Schedule
                <i class="fa fa-solid fa-plus"></i>
             </a>
          </div>
@@ -24,8 +24,8 @@
             <thead>
                <tr>
                   <th class="w-1/12">No</th>
-                  <th>Hari</th>
-                  <th>Jadwal</th>
+                  <th>Day</th>
+                  <th>Time</th>
                   <th class="w-2/12"></th>
                </tr>
             </thead>

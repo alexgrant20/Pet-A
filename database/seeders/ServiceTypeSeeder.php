@@ -15,8 +15,7 @@ class ServiceTypeSeeder extends Seeder
     {
         ServiceType::insert([
             ['name' => 'Consultation'],
-            ['name' => 'Vaccination'],
-            ['name' => 'Sterilization']
+            ['name' => 'Vaccination']
         ]);
     }
 }

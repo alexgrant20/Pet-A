@@ -20,9 +20,9 @@ class UpdateVeterinarianRequest extends FormRequest
          'birth_date' => 'required|date',
          'gender' => 'required|in:m,f',
          'length_of_service' => 'required|integer|min:0|max:99',
-         'address' => 'required|string',
+         'address' => 'nullable|string',
          'profile_image' => 'nullable|image|mimes:png,jpg,jpeg',
-         'doctor_pet_type' => 'required|array',
+         'veterinarian_pet_type' => 'required|array',
       ];
    }
 }

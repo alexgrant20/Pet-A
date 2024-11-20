@@ -19,7 +19,7 @@ class StoreVeterinarianRequest extends FormRequest
          'birth_date' => 'required|date',
          'gender' => 'required|in:m,f',
          'length_of_service' => 'required|integer|min:0|max:99',
-         'address' => 'required|string',
+         'address' => 'nullable',
          'profile_image' => 'required|image|mimes:png,jpg,jpeg',
          'doctor_pet_type' => 'required|array',
          'clinic_id' => 'required'

@@ -44,12 +44,16 @@ class UserSeeder extends Seeder
             ->assignRole('clinic-admin');
       }
 
-      PetOwner::create([])
+      PetOwner::create([
+         'city_id' => 3173,
+         'province_id' => 31
+      ])
          ->user()
          ->create([
             'id' => 'e2d8f99f-7f8c-438d-a041-939ccbc35f1a',
             'name' => 'Pet Owner Dummy',
             'phone_number' => '08123122342',
+            'address' => 'Jalan Kebahagiaan No. 6',
             'email' => 'pet_owner@dev.io',
             'password' => Hash::make('password')
          ])

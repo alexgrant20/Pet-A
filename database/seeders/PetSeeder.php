@@ -17,14 +17,14 @@ class PetSeeder extends Seeder
       ]);
 
       PetWeight::insert([
-         ['pet_id' => 1, 'weight' => 2, 'age' => 1, 'created_at' => '2022-05-20'],
-         ['pet_id' => 1, 'weight' => 4, 'age' => 1, 'created_at' => '2022-06-20'],
-         ['pet_id' => 1, 'weight' => 6, 'age' => 2, 'created_at' => '2022-07-20'],
-         ['pet_id' => 1, 'weight' => 8, 'age' => 2, 'created_at' => '2022-08-20'],
-         ['pet_id' => 2, 'weight' => 8, 'age' => 1, 'created_at' => '2022-09-20'],
-         ['pet_id' => 2, 'weight' => 10, 'age' => 2, 'created_at' => '2022-10-20'],
-         ['pet_id' => 3, 'weight' => 11, 'age' => 1, 'created_at' => '2022-11-20'],
-         ['pet_id' => 3, 'weight' => 8, 'age' => 2, 'created_at' => '2022-12-20'],
+         ['pet_id' => 1, 'weight' => 2, 'age' => 1, 'unit' => 'kg', 'created_at' => '2022-05-20'],
+         ['pet_id' => 1, 'weight' => 4, 'age' => 1, 'unit' => 'kg', 'created_at' => '2022-06-20'],
+         ['pet_id' => 1, 'weight' => 6, 'age' => 2, 'unit' => 'kg', 'created_at' => '2022-07-20'],
+         ['pet_id' => 1, 'weight' => 8, 'age' => 2, 'unit' => 'kg', 'created_at' => '2022-08-20'],
+         ['pet_id' => 2, 'weight' => 8, 'age' => 1, 'unit' => 'kg', 'created_at' => '2022-09-20'],
+         ['pet_id' => 2, 'weight' => 10, 'age' => 2, 'unit' => 'kg', 'created_at' => '2022-10-20'],
+         ['pet_id' => 3, 'weight' => 11, 'age' => 1, 'unit' => 'kg', 'created_at' => '2022-11-20'],
+         ['pet_id' => 3, 'weight' => 8, 'age' => 2, 'unit' => 'kg', 'created_at' => '2022-12-20'],
       ]);
    }
 }

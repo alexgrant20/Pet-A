@@ -18,6 +18,11 @@ class PetOwner extends Model
     return $this->belongsTo(City::class);
   }
 
+  public function province()
+  {
+    return $this->belongsTo(Province::class);
+  }
+
   public function pet()
   {
     return $this->hasMany(Pet::class);
@@ -31,16 +36,6 @@ class PetOwner extends Model
   public function appointmentRequest()
   {
     return $this->hasMany(AppointmentRequest::class);
-  }
-
-  public function onlineConsultationRequest()
-  {
-    return $this->hasMany(OnlineConsultationRequest::class);
-  }
-
-  public function onlineConsultation()
-  {
-    return $this->hasMany(OnlineConsultation::class);
   }
 
   public function user()

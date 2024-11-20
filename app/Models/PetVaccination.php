@@ -28,8 +28,8 @@ class PetVaccination extends Model
       return $this->belongsTo(Vaccination::class);
    }
 
-   public function getGivenAtAttribute($value)
+   public function getGivenAtAttribute($value, $format = 'd-m-Y')
    {
-       return Carbon::parse($value)->format('d-m-Y');
+       return Carbon::parse($value)->format($format);
    }
 }

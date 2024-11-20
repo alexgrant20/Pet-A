@@ -27,7 +27,7 @@ class AppointmentScheduleController extends Controller
          ->groupBy('day')
          ->sortKeys();
 
-      $dayMapping = array("1" => "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
+      $dayMapping =  array("1" =>"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
       return DataTables::of($appointmentSchedules)
          ->addIndexColumn()
          ->addColumn('day', function ($data) use ($dayMapping) {
@@ -46,7 +46,7 @@ class AppointmentScheduleController extends Controller
 
    public function create()
    {
-      $dayMapping = array("2" => "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "1" => "Minggu");
+      $dayMapping = array("2" => "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "1" => "Sunday");
       return view('app.admin.appointment-schedule.create', compact('dayMapping'));
    }
 
@@ -74,8 +74,10 @@ class AppointmentScheduleController extends Controller
          ['veterinarian_id', Auth::user()->profile_id],
          ['day', $day]
       ])
-         ->get();
-      $dayMapping = array("2" => "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "1" => "Minggu");
+         ->get()
+         ->sortBy('start_time');
+
+      $dayMapping =  array("2" => "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "1" => "Sunday");
 
       return view('app.admin.appointment-schedule.edit', compact('day', 'dayMapping', 'appointmentSchedules'));
    }

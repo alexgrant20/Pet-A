@@ -21,7 +21,7 @@ class AppointmentSeeder extends Seeder
             'service_type_id' => 1,
             'veterinarian_id' => 1,
             'appointment_note' => 'Anjing saya muntah-muntah',
-            'appointment_date' => '2024-06-27',
+            'appointment_date' => '2024-09-27',
         ]);
 
         Appointment::create([
@@ -29,10 +29,9 @@ class AppointmentSeeder extends Seeder
             'pet_id' => 1,
             'appointment_schedule_id' => 4,
             'clinic_id' => 1,
-            'service_type_id' => 3,
-            'veterinarian_id' => 1,
-            'appointment_note' => 'Kucing saya butuh disterilisasi',
-            'appointment_date' => '2024-09-22',
+            'service_type_id' => 1,
+            'veterinarian_id' => 2,
+            'appointment_date' => '2024-10-22',
         ]);
     }
 }

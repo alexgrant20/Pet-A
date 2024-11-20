@@ -1,12 +1,12 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Tambah Jadwal Dokter Hewan')
+@section('title', 'Edit Veterinarian Schedule')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body flex-row items-center justify-between">
          <div class="section-left">
-            <h1 class="font-bold text-2xl">Tambah Jadwal Dokter Hewan</h1>
+            <h1 class="font-bold text-2xl">Edit Veterinarian Schedule</h1>
             {{ Breadcrumbs::render('appointment-schedule-create') }}
          </div>
       </div>
@@ -20,10 +20,10 @@
 
             <label class="form-control w-full mb-3">
                <div class="label">
-                  <span class="label-text font-semibold">Hari</span>
+                  <span class="label-text font-semibold">Day</span>
                </div>
                <select name="day" id="day" class="input input-bordered w-full form-validation"
-                  data-placeholder="Pilih Hari">
+                  data-placeholder="Choose Day">
                   <option value="" hidden></option>
                   @foreach ($dayMapping as $dayNumber => $dayName)
                      <option value="{{ $dayNumber }}" @selected(old('day', $day) == $dayNumber)>{{ $dayName }}</option>
@@ -33,7 +33,7 @@
 
             <label class="form-control w-full mb-3">
                <div class="label">
-                  <span class="label-text font-semibold">Jadwal</span>
+                  <span class="label-text font-semibold">Time</span>
                </div>
                @foreach ($appointmentSchedules as $appointmentSchedule)
                   <input type="hidden" name="appointment_schedule[id][{{ $loop->index }}]"
@@ -42,13 +42,13 @@
                      <div class="col-span-11">
                         <input type="time" name="appointment_schedule[start_time][{{ $loop->index }}]"
                            class="input input-bordered w-full form-validation mb-3"
-                           value="{{ $appointmentSchedule->start_time }}" />
+                           value="{{ $appointmentSchedule->start_time->format('H:i') }}" />
                      </div>
 
-                     <button class="btn btn-error text-base-100 py-2 btn_delete_schedule" id="btn_delete_schedule"
+                     <a class="btn btn-error text-base-100 py-2 btn_delete_schedule" id="btn_delete_schedule"
                         data-value="{{ Crypt::encrypt($appointmentSchedule->id) }}">
                         <i class="fa fa-trash"></i>
-                     </button>
+                  </a>
                   </div>
                @endforeach
             </label>
@@ -86,7 +86,8 @@
             type: 'POST',
             data: {
                _method: 'DELETE',
-               _token: token
+               _token: token,
+               scheduleId
             },
             success: function() {
                $(this).remove();

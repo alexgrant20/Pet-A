@@ -1,12 +1,12 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Tambah Jadwal Dokter Hewan')
+@section('title', 'Add Veterinarian Schedule')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body flex-row items-center justify-between">
          <div class="section-left">
-            <h1 class="font-bold text-2xl">Tambah Jadwal Dokter Hewan</h1>
+            <h1 class="font-bold text-2xl">Add Veterinarian Schedule</h1>
             {{ Breadcrumbs::render('appointment-schedule-create') }}
          </div>
       </div>
@@ -19,10 +19,10 @@
 
             <label class="form-control w-full mb-3">
                <div class="label">
-                  <span class="label-text font-semibold">Hari</span>
+                  <span class="label-text font-semibold">Day</span>
                </div>
                <select name="day" id="day" class="input input-bordered w-full form-validation"
-                  data-placeholder="Pilih Hari">
+                  data-placeholder="Pilih Day">
                   <option value="" hidden></option>
                   @foreach ($dayMapping as $dayNumber => $dayName)
                      <option value="{{ $dayNumber }}">{{ $dayName }}</option>
@@ -32,7 +32,7 @@
 
             <label class="form-control w-full mb-3">
                <div class="label">
-                  <span class="label-text font-semibold">Jadwal</span>
+                  <span class="label-text font-semibold">Time</span>
                </div>
                <input type="time" name="start_time" class="input input-bordered w-full form-validation" />
             </label>

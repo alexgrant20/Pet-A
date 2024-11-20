@@ -1,16 +1,16 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Tempat Praktik')
+@section('title', 'Clinic')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body flex-row items-center justify-between">
          <div>
-            <h1 class="font-bold text-2xl">Tempat Praktik</h1>
+            <h1 class="font-bold text-2xl">Clinic</h1>
             {{ Breadcrumbs::render('clinic') }}
          </div>
          <div>
-            <a href="{{ route('admin.clinic.create') }}" class="btn btn-primary btn-padding">Tambah Tempat Praktik<i
+            <a href="{{ route('admin.clinic.create') }}" class="btn btn-primary btn-padding">Add Clinic<i
                   class="fa fa-solid fa-plus"></i></a>
          </div>
       </div>
@@ -22,10 +22,10 @@
             <thead>
                <tr>
                   <th class="w-1/12">No</th>
-                  <th class="w-1/12">Gambar Tempat Praktik</th>
-                  <th>Nama</th>
-                  <th>Nomor Telepon</th>
-                  <th>Kota</th>
+                  <th class="w-1/12">Clinic Image</th>
+                  <th>Name</th>
+                  <th>Phone Number</th>
+                  <th>City</th>
                   <th class="w-2/12"></th>
                </tr>
             </thead>

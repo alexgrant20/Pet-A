@@ -40,7 +40,6 @@ class SocialAccountService
           'provider_name' => $provider,
         ]);
       } catch (\Exception $e) {
-        dd($e->getMessage());
         DB::rollBack();
         abort(500);
       }

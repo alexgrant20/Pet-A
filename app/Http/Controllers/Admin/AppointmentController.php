@@ -3,22 +3,44 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UpdateAppointmentRequest;
 use App\Interfaces\AppointmentTypeInterface;
 use App\Interfaces\ServiceTypeInterface;
+use App\Models\AllergyCategory;
 use App\Models\Appointment;
 use App\Models\MedicalRecord;
 use App\Models\PetVaccination;
+use App\Models\PetWeight;
 use App\Models\Vaccination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class AppointmentController extends Controller implements ServiceTypeInterface
 {
-   public function index()
+   public function index($isActive = 1)
    {
-      return view('app.admin.appointment.index');
+      $appointments = Appointment::with([
+         'appointmentSchedule',
+         'serviceType',
+         'pet.breed.petType',
+         'petOwner' => function ($q) {
+            $q->with('user');
+         },
+      ])
+         ->where('veterinarian_id', Auth::user()->profile_id)
+         ->when($isActive == 1, function ($q) {
+            $q->whereNull('finished_at');
+         })
+         ->when($isActive == 0, function ($q) {
+            $q->whereNotNull('finished_at');
+         })
+         ->get();
+
+      return view('app.admin.appointment.index', compact('appointments', 'isActive'));
    }
 
    public function getList()
@@ -68,79 +90,94 @@ class AppointmentController extends Controller implements ServiceTypeInterface
          'serviceType',
          'pet' => function ($q) {
             $q->with([
-               'petAllergy',
+               'petAllergy.icon',
+               'petAllergy.allergyCategory',
                'attachment',
                'breed.petType',
-               'medicalRecord',
+               'medicalRecord.appointment',
                'petVaccination.vaccination'
             ]);
          },
          'petOwner' => function ($q) {
-            $q->with('user', 'attachment');
+            $q->with('user', 'attachment', 'city', 'province');
          },
       ]);
 
-      return view('app.admin.appointment.show', compact('appointment'));
-   }
+      $petOwnerAddress = [
+         $appointment->petOwner->user->address,
+         $appointment->petOwner->city?->name,
+         $appointment->petOwner->province?->name
+      ];
 
-   public function edit(Appointment $appointment)
-   {
-      $appointment->load([
-         'serviceType',
-         'pet' => function ($q) use ($appointment) {
-            $q->with([
-               'petAllergy',
-               'attachment',
-               'breed.petType'
-            ]);
+      $allergyCategories = AllergyCategory::get();
+      $petOwnerAddress = array_filter($petOwnerAddress, fn($value) => !is_null($value) && $value !== '');
 
-            if ($appointment->service_type_id == self::SERVICE_TYPE_VAKSINASI) {
-               $q->with('petVaccination');
-            }
-         },
-      ]);
+      $appointment->petOwner->address = implode(", ", $petOwnerAddress);
+      $lastPetWeight = $appointment->pet->petWeight->sortByDesc('created_at')->first();
+      $appointment->pet->weight = $lastPetWeight?->weight . $lastPetWeight?->unit;
+
+      $appointment->petVaccination = $appointment->pet->petVaccination->groupBy('given_at');
 
       $vaccinations = Vaccination::where('pet_type_id', $appointment->pet->breed->pet_type_id)->get();
 
-      return view('app.admin.appointment.edit', compact('appointment', 'vaccinations'));
+      return view('app.admin.appointment.show', compact('appointment', 'vaccinations'));
    }
 
-   public function update(Appointment $appointment, Request $request)
+   public function update(Appointment $appointment, UpdateAppointmentRequest $request)
    {
-      if ($appointment->service_type_id == self::SERVICE_TYPE_VAKSINASI) {
-         $payload = [];
+      $actionType = 'Appointment Summary';
+      DB::beginTransaction();
+      try {
+         if ($appointment->service_type_id == self::SERVICE_TYPE_VAKSINASI) {
+            $actionType = 'Vaccination';
+            $payload = [];
+   
+            foreach ($request->vaccination as $vaccination) {
+               array_push(
+                  $payload,
+                  [
+                     'pet_id' => $appointment->pet_id,
+                     'vaccination_id' => Crypt::decrypt($vaccination),
+                     'given_at' => now()->format('Y-m-d'),
+                     'given_by' => $appointment->veterinarian->user->name,
+                  ]
+               );
+            }
+   
+            PetVaccination::insert($payload);   
+         } else if ($appointment->service_type_id == self::SERVICE_TYPE_KONSULTASI) {
+            MedicalRecord::create([
+               'pet_id' => $appointment->pet_id,
+               'appointment_id' => $appointment->id,
+               'clinic_name' => $appointment->veterinarian->clinic->name,
+               'veterinarian_name' => $appointment->veterinarian->user->name,
+               'disease_name' => $request->disease_name,
+               'medicine_name' => $request->medicine_name,
+               'medicine_dosage' => $request->medicine_dosage,
+               'description' => $request->note,
 
-         foreach ($request->vaccination as $vaccination) {
-            array_push(
-               $payload,
-               [
-                  'pet_id' => $appointment->pet_id,
-                  'vaccination_id' => $vaccination,
-                  'given_at' => now()->format('Y-m-d'),
-                  'given_by' => $appointment->veterinarian_id,
-               ]
-            );
+               'diagnosed_at' => now()
+            ]);
          }
-
-         PetVaccination::insert($payload);
-      } else if ($appointment->service_type_id == self::SERVICE_TYPE_KONSULTASI) {
-         MedicalRecord::create([
+         
+         PetWeight::create([
             'pet_id' => $appointment->pet_id,
-            'appointment_id' => $appointment->id,
-            'clinic_name' => $appointment->veterinarian->clinic->name,
-            'veterinarian_name' => $appointment->veterinarian->user->name,
-            'disease_name' => $request->disease_name,
-            'medicine_name' => $request->medicine_name,
-            'medicine_dosage' => $request->medicine_dosage,
-            'description' => $request->note
+            'weight' => $request->weight,
+            'age' => isset($appointment->pet->birth_date) ? Carbon::parse($appointment->pet->birth_date)->age : 0,
+            'unit' => $request->weight_unit
          ]);
+
+         $appointment->update([
+            'summary' => $request->summary,
+            'finished_at' => now()
+         ]);
+
+         DB::commit();
+      } catch (\Exception $e) {
+         DB::rollBack();
+         return back()->withInput()->with('error-toast', "Failed to Add $actionType");
       }
 
-      $appointment->update([
-         'summary' => $request->appointment_note,
-         'finished_at' => now()
-      ]);
-
-      return to_route('admin.appointment.show', $appointment->id);
+      return to_route('admin.appointment.index')->with('success-toast', "Successfully Adding $actionType");
    }
 }

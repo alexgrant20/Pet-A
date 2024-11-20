@@ -5,7 +5,7 @@ export default {
       "./resources/**/*.js",
       "./resources/**/*.vue",
       "./src/**/*.{js,ts,jsx,tsx}",
-      './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+      "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
    ],
    safelist: [
       "text-blue-600",

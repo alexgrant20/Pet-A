@@ -72,7 +72,7 @@ class MenuServiceProvider extends ServiceProvider
     $menuPermissions = MenuPermission::all();
     $userRolePermission = @Auth::user()->roles[0]->permissions ?? [];
     $allMenuWithPermission = $this->makeAllMenuWithPermission($menus, $menuPermissions, $userRolePermission);
-    $parentMenu = $this->mapChildMenuWithMenu($menus);
+    $parentMenu = $this->mapChildMenuWithMenu($allMenuWithPermission);
     return $parentMenu->sortBy('order');
   }
 

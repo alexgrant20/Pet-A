@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreVeterinarianRequest;
 use App\Http\Requests\Admin\UpdateVeterinarianRequest;
+use App\Models\City;
 use App\Models\Clinic;
 use App\Models\PetType;
+use App\Models\Province;
 use App\Models\Veterinarian;
 use App\Models\VeterinarianPetType;
 use App\Utilities\FieldAttachmentUploadUtility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
 class VeterinarianController extends Controller
@@ -41,28 +44,21 @@ class VeterinarianController extends Controller
          ->make();
    }
 
-   /**
-    * Display a listing of the resource.
-    */
    public function index()
    {
-      return view('app.admin.veterinarian.index');
+      $veterinarians = Veterinarian::with(['user', 'attachment'])->orderBy('id')->paginate(8);
+
+      return view('app.admin.veterinarian.index', compact('veterinarians'));
    }
 
-   /**
-    * Show the form for creating a new resource.
-    */
    public function create()
    {
-      $petTypes = PetType::all();
-      $clinics = Clinic::all();
+      $petTypes = PetType::get();
+      $clinics = Clinic::get();
 
       return view('app.admin.veterinarian.create', compact('petTypes', 'clinics'));
    }
 
-   /**
-    * Store a newly created resource in storage.
-    */
    public function store(StoreVeterinarianRequest $request)
    {
       $payload = $request->validated();
@@ -70,75 +66,69 @@ class VeterinarianController extends Controller
       try {
          DB::beginTransaction();
 
-         $veterinarian = Veterinarian::create($payload);
-         $doctorPetTypePayload = array_map(fn($data) => ['pet_type_id' => $data, 'veterinarian_id' => $veterinarian->id], $request->doctor_pet_type);
-         VeterinarianPetType::insert($doctorPetTypePayload);
+         $veterinarian = Veterinarian::create([
+            'clinic_id' => $request->clinic_id,
+            'length_of_service' => $request->length_of_service
+         ]);
+
+         $veterinarianPetTypePayload = array_map(fn($data) => ['pet_type_id' => $data, 'veterinarian_id' => $veterinarian->id], $request->veterinarian_pet_type);
+         VeterinarianPetType::insert($veterinarianPetTypePayload);
 
          $veterinarian->user()->create([
             'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make('password'),
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'birth_date' => $request->birth_date,
             'gender' => $request->gender
          ]);
 
-         if ($request->profile_image) {
-            $this->fieldAttachmentUploadUtility
-               ->setRefTable($veterinarian::class)
-               ->setRefId($veterinarian->id)
-               ->setFolder('profile_image')
-               ->setFieldName('profile_image')
-               ->uploadFile($request);
-         }
+         $this->fieldAttachmentUploadUtility
+            ->setRefTable($veterinarian::class)
+            ->setRefId($veterinarian->id)
+            ->setFolder('profile_image')
+            ->setFieldName('profile_image')
+            ->uploadFile($request);
       } catch (\Exception $e) {
          DB::rollBack();
+         return to_route('admin.veterinarian.index')->with('success-toast', 'Failed to create Veterinarian Account');
       }
 
       DB::commit();
       return to_route('admin.veterinarian.index')->with('success-toast', 'Veterianarian Sucessfully Created');
    }
 
-   /**
-    * Display the specified resource.
-    */
-   public function show(string $id)
-   {
-      //
-   }
-
-   /**
-    * Show the form for editing the specified resource.
-    */
    public function edit(Veterinarian $veterinarian)
    {
-      $petTypes = PetType::all();
-      $clinics = Clinic::all();
+      $veterinarian->load('attachment', 'user', 'clinic', 'petType');
 
-      return view('app.admin.veterinarian.edit',  compact('veterinarian', 'petTypes', 'clinics'));
+      $clinics = Clinic::get();
+      $petTypes = PetType::get();
+      return view('app.admin.veterinarian.edit',  compact('veterinarian', 'clinics', 'petTypes'));
    }
 
-   /**
-    * Update the specified resource in storage.
-    */
    public function update(UpdateVeterinarianRequest $request, Veterinarian $veterinarian)
    {
-      $payload = $request->validated();
-
       try {
          DB::beginTransaction();
 
-         $veterinarian->update($payload);
+         $veterinarian->update([
+            'clinic_id' => $request->clinic_id,
+            'length_of_service' => $request->length_of_service
+         ]);
 
-         $doctorPetTypePayload = array_map(fn($data) => ['pet_type_id' => $data, 'veterinarian_id' => $veterinarian->id], $request->doctor_pet_type);
+         $veterinarianPetTypePayload = array_map(fn($data) => ['pet_type_id' => $data, 'veterinarian_id' => $veterinarian->id], $request->veterinarian_pet_type);
 
          VeterinarianPetType::where('veterinarian_id', $veterinarian->id)
-            ->whereNotIn('pet_type_id', $request->doctor_pet_type)
+            ->whereNotIn('pet_type_id', $request->veterinarian_pet_type)
             ->delete();
 
-         VeterinarianPetType::upsert($doctorPetTypePayload, ['pet_type_id', 'veterinarian_id']);
+         VeterinarianPetType::upsert($veterinarianPetTypePayload, ['pet_type_id', 'veterinarian_id']);
 
-         $veterinarian->user()->create([
+         $veterinarian->user->update([
             'name' => $request->name,
+            'email' => $request->email,
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'birth_date' => $request->birth_date,
@@ -154,8 +144,6 @@ class VeterinarianController extends Controller
                ->uploadFile($request);
          }
       } catch (\Exception $e) {
-
-         dd($e->getMessage());
          DB::rollBack();
          return to_route('admin.veterinarian.index')->with('error-toast', 'Failed to Update Veterinarian');
       }
@@ -164,9 +152,6 @@ class VeterinarianController extends Controller
       return to_route('admin.veterinarian.index')->with('success-toast', 'Veterianarian Sucessfully Updated');
    }
 
-   /**
-    * Remove the specified resource from storage.
-    */
    public function destroy(string $id)
    {
       //

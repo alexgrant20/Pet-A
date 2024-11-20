@@ -11,13 +11,14 @@ use App\Http\Controllers\BreedController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\MedicationTypeController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\PetTypeController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\VaccinationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => view('app.admin.index'))->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::resource('veterinarian', VeterinarianController::class);
 Route::get('/list/veterinarian', [VeterinarianController::class, 'getList'])->name('veterinarian.list');
@@ -63,7 +64,9 @@ Route::get('/list/service-price', [ServicePriceController::class, 'getList'])->n
 Route::resource('clinic', ClinicController::class);
 Route::get('/list/clinic', [ClinicController::class, 'getList'])->name('clinic.list');
 
-Route::resource('appointment', AppointmentController::class)->only(['index', 'show', 'update', 'edit']);
+Route::get('appointment/{isActive?}', [AppointmentController::class, 'index'])->name('appointment.index');
+Route::get('appointment/show/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
+Route::resource('appointment', AppointmentController::class)->only(['update']);
 Route::get('/list/appointment', [AppointmentController::class, 'getList'])->name('appointment.list');
 
 Route::resource('appointment-schedule', AppointmentScheduleController::class, ['parameters' => ['appointment-schedule' => 'appointmentSchedule']])->except(['edit', 'update', 'show', 'destroy']);

@@ -79,13 +79,12 @@ class ClinicController extends Controller
             ->setFieldName('clinic_image')
             ->uploadFile($request);
       } catch (\Exception $e) {
-         dd($e->getMessage());
          DB::rollBack();
-         return back()->with('error-toast', 'Gagal Menambahkan Tempat Praktik');
+         return back()->with('error-toast', 'Failed to Add Clinic');
       }
 
       DB::commit();
-      return to_route('admin.clinic.index')->with('success-toast', 'Berhasil Menambahkan Tempat Praktik');
+      return to_route('admin.clinic.index')->with('success-toast', 'Clinic Successfuly Added');
    }
 
    public function edit(Clinic $clinic)
@@ -109,17 +108,17 @@ class ClinicController extends Controller
          ]);
       } catch (\Exception $e) {
          DB::rollBack();
-         return back()->withInput()->with('error-toast', 'Gagal Mengubah Data Tempat Praktik');
+         return back()->withInput()->with('error-toast', 'Failed to Edit Clinic');
       }
 
       DB::commit();
-      return to_route('admin.clinic.index')->with('success-toast', 'Berhasil Mengubah Data Tempat Praktik');
+      return to_route('admin.clinic.index')->with('success-toast', 'Clinic Successfully Edited');
    }
 
    public function destroy(Clinic $clinic)
    {
       $clinic->delete();
 
-      return to_route('admin.clinic.index')->with('success-toast', 'Berhasil Menghapus Tempat Praktik');
+      return to_route('admin.clinic.index')->with('success-toast', 'Clinic Successfully Deleted');
    }
 }
