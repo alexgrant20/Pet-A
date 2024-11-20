@@ -1,6 +1,6 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Veterinarian')
+@section('title', 'Add Veterinarian')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">

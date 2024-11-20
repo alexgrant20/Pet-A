@@ -1,12 +1,12 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Edit Veterinarian')
+@section('title', 'Veterinarian')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body flex-row items-center justify-between">
          <div class="section-left">
-            <h1 class="font-bold text-2xl">Edit Veterinarian</h1>
+            <h1 class="font-bold text-2xl">Add Veterinarian</h1>
             {{ Breadcrumbs::render('veterinarian-edit') }}
          </div>
       </div>
@@ -14,7 +14,7 @@
 
    <div class="card bg-base-100 shadow-xl w-full">
       <div class="card-body">
-         <form action="{{ route('admin.veterinarian.update', $veterinarian->id) }}" method="POST"
+         <form action="{{ route('admin.profile.update', $veterinarian->id) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')

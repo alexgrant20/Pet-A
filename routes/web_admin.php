@@ -12,6 +12,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\MedicationTypeController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\PetTypeController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\VaccinationController;
@@ -19,6 +20,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::resource('profile', ProfileController::class, ['parameters' => ['profile' => 'veterinarian']])->only(['edit','update']);
 
 Route::resource('veterinarian', VeterinarianController::class);
 Route::get('/list/veterinarian', [VeterinarianController::class, 'getList'])->name('veterinarian.list');

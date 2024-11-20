@@ -92,7 +92,7 @@ class VeterinarianController extends Controller
             ->uploadFile($request);
       } catch (\Exception $e) {
          DB::rollBack();
-         return to_route('admin.veterinarian.index')->with('success-toast', 'Failed to create Veterinarian Account');
+         return back()->with('error-toast', 'Failed to create Veterinarian Account');
       }
 
       DB::commit();
@@ -145,7 +145,7 @@ class VeterinarianController extends Controller
          }
       } catch (\Exception $e) {
          DB::rollBack();
-         return to_route('admin.veterinarian.index')->with('error-toast', 'Failed to Update Veterinarian');
+         return back()->with('error-toast', 'Failed to Update Veterinarian');
       }
 
       DB::commit();
