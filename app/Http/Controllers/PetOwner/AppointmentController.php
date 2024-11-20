@@ -57,7 +57,13 @@ class AppointmentController extends Controller
 
    public function create(Veterinarian $veterinarian)
    {
-      $veterinarian->load('user', 'veterinarianServiceType.serviceType', 'appointmentSchedule');
+      $veterinarian->with([
+         'user',
+         'veterinarianServiceType.serviceType',
+         'appointmentSchedule' => function ($query) {
+            $query->where('is_active', 1);
+         },
+      ]);
 
       $serviceTypes = $veterinarian->veterinarianServiceType->pluck('serviceType')->pluck('name', 'id');
 

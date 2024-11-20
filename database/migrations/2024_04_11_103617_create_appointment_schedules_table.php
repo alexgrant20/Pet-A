@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('veterinarian_id');
             $table->time('start_time', precision: 0);
             $table->enum('day', ['1', '2', '3', '4', '5', '6', '7']);
-            $table->tinyInteger('is_active')->default(1);
+            $table->tinyInteger('is_active')->nullable()->default(1);
 
             $table->timestamps();
             $table->string('created_by')->nullable();

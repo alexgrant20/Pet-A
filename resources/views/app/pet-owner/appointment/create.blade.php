@@ -42,7 +42,8 @@
                   @endphp
 
                   <div class="text-gray-400">Rating</div>
-                  <div class="text-gray-800 font-bold">{{ $rating == 0 ? 'N\A' : $rating }} ({{ $veterinarian->ratings()->count() }})</div>
+                  <div class="text-gray-800 font-bold">{{ $rating == 0 ? 'N\A' : $rating }}
+                     ({{ $veterinarian->ratings()->count() }})</div>
                </div>
             </div>
          </div>
@@ -86,7 +87,8 @@
                            class="select select-2 select-bordered w-full form-control flex-row" data-placeholder="">
                            <option value="" hidden></option>
                            @foreach ($pets as $pet)
-                              <option value="{{ $pet->id }}" @selected($pet->id == @session('session_pet')->id)>{{ $pet->name }}</option>
+                              <option value="{{ $pet->id }}" @selected($pet->id == @session('session_pet')->id)>{{ $pet->name }}
+                              </option>
                            @endforeach
                         </select>
                      </div>
@@ -170,9 +172,13 @@
 
          $.get(route, function(data) {
             const map = data.map((itm) => {
+               const date = new Date(itm.start_time);
+
+               const hourUTC = date.getUTCHours();
+               const minuteUTC = date.getUTCMinutes();
                return {
                   id: itm.id,
-                  text: itm.start_time,
+                  text: `${hourUTC.toString().padStart(2, '0')}:${minuteUTC.toString().padStart(2, '0')}`
                }
             });
 

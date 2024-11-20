@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('pet_id');
             $table->unsignedFloat('weight');
             $table->unsignedTinyInteger('age');
-            $table->string('unit');
+            $table->string('unit')->nullable()->default('kg');
 
             $table->timestamps();
             $table->string('created_by')->nullable();
