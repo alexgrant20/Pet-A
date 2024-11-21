@@ -99,7 +99,7 @@ class AppointmentController extends Controller
             'user_id' => Auth::id(),
             'pet_id' => $request->pet_id,
             'title' => "{$serviceType->name} Appointment with {$veterinarian->user->name} at Clinic {$veterinarian->clinic->name}",
-            'date_start' => $request->appointment_date . ' ' . $appointmentSchedule->start_time,
+            'date_start' => $request->appointment_date . ' ' . $appointmentSchedule->start_time->format("H:i"),
             'link' => route('pet-owner.appointment.show', $appointment->id)
          ]);
 
@@ -111,6 +111,8 @@ class AppointmentController extends Controller
          });
       } catch (\Exception $e) {
          DB::rollBack();
+
+         dd($e->getMessage());
 
          return back()->with('error-swal', 'Something went wrong');
       }
