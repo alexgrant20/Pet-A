@@ -6,6 +6,7 @@ use App\Models\Breed;
 use App\Models\City;
 use App\Models\Vaccination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MasterController extends Controller
 {
@@ -22,14 +23,13 @@ class MasterController extends Controller
       $limit = $request->limit ?? 10;
       $page = $request->page ?? 1;
 
-      $breeds = Breed::where([
-         ['pet_type_id', $petTypeId],
-         ['name', 'LIKE', "%$request->q%"]
-      ])
+      $breeds = Breed::where('pet_type_id', $petTypeId)
+         ->where(DB::raw('LOWER(name)'), 'LIKE', '%' . strtolower($request->q) . '%') // Normalize to lowercase
          ->skip($limit * ($page - 1))
          ->limit($limit)
          ->get()
-         ->map(fn ($breed) => ['id' => $breed->id, 'text' => $breed->name]);
+         ->map(fn($breed) => ['id' => $breed->id, 'text' => $breed->name]);
+
 
       return [
          'status' => 200,
@@ -44,7 +44,7 @@ class MasterController extends Controller
 
       return City::where('province_id', $request->province_id)
          ->get()
-         ->map(fn ($city) => ['id' => $city->id, 'text' => $city->name]);
+         ->map(fn($city) => ['id' => $city->id, 'text' => $city->name]);
    }
 
    public function getVaccination(Request $request, int $petTypeId)
@@ -53,6 +53,6 @@ class MasterController extends Controller
 
       return Vaccination::where('pet_type_id', $petTypeId)
          ->get()
-         ->map(fn ($vaccination) => ['id' => $vaccination->id, 'text' => $vaccination->name]);
+         ->map(fn($vaccination) => ['id' => $vaccination->id, 'text' => $vaccination->name]);
    }
 }
