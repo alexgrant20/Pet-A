@@ -1,6 +1,6 @@
 <div class="navbar z-20 bg-primary px-6 absolute">
    <div class="flex-1">
-      <label for="my-drawer" class="btn btn-primary py-3 drawer-button block xl:hidden">
+      <label for="my-drawer-2" class="btn btn-primary py-3 drawer-button block xl:hidden">
          <i class="fa-regular fa-bars"></i>
       </label>
       <a href="{{ route('home') }}" class="w-28">

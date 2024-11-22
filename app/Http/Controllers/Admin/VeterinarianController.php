@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreVeterinarianRequest;
 use App\Http\Requests\Admin\UpdateVeterinarianRequest;
+use App\Interfaces\RoleInterface;
 use App\Models\City;
 use App\Models\Clinic;
 use App\Models\PetType;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
-class VeterinarianController extends Controller
+class VeterinarianController extends Controller implements RoleInterface
 {
    private $fieldAttachmentUploadUtility;
 
@@ -82,7 +83,8 @@ class VeterinarianController extends Controller
             'address' => $request->address,
             'birth_date' => $request->birth_date,
             'gender' => $request->gender
-         ]);
+         ])
+            ->assignRole(self::ROLE_VETERINARIAN);
 
          $this->fieldAttachmentUploadUtility
             ->setRefTable($veterinarian::class)

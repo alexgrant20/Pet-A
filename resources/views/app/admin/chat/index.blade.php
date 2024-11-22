@@ -1,13 +1,13 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Appointment Type')
+@section('title', 'User Support')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body">
          <div>
             <h1 class="font-bold text-2xl">User support</h1>
-            {{ Breadcrumbs::render('appointment-type') }}
+            {{ Breadcrumbs::render('user-support') }}
          </div>
       </div>
    </div>

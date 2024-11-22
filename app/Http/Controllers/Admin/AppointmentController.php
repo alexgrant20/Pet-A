@@ -9,6 +9,7 @@ use App\Interfaces\ServiceTypeInterface;
 use App\Models\AllergyCategory;
 use App\Models\Appointment;
 use App\Models\MedicalRecord;
+use App\Models\Notification;
 use App\Models\PetVaccination;
 use App\Models\PetWeight;
 use App\Models\Vaccination;
@@ -114,7 +115,7 @@ class AppointmentController extends Controller implements ServiceTypeInterface
 
       $appointment->petOwner->address = implode(", ", $petOwnerAddress);
       $lastPetWeight = $appointment->pet->petWeight->sortByDesc('created_at')->first();
-      $appointment->pet->weight = $lastPetWeight?->weight . $lastPetWeight?->unit;
+      $appointment->pet->weight = $lastPetWeight?->weight . ($lastPetWeight?->unit ?? 'kg');
 
       $appointment->petVaccination = $appointment->pet->petVaccination->groupBy('given_at');
 
@@ -125,26 +126,34 @@ class AppointmentController extends Controller implements ServiceTypeInterface
 
    public function update(Appointment $appointment, UpdateAppointmentRequest $request)
    {
-      $actionType = 'Appointment Summary';
       DB::beginTransaction();
       try {
+         $now = now();
          if ($appointment->service_type_id == self::SERVICE_TYPE_VAKSINASI) {
-            $actionType = 'Vaccination';
             $payload = [];
-   
+
             foreach ($request->vaccination as $vaccination) {
                array_push(
                   $payload,
                   [
                      'pet_id' => $appointment->pet_id,
                      'vaccination_id' => Crypt::decrypt($vaccination),
-                     'given_at' => now()->format('Y-m-d'),
+                     'given_at' => $now,
                      'given_by' => $appointment->veterinarian->user->name,
                   ]
                );
             }
-   
-            PetVaccination::insert($payload);   
+
+            $nextVaccination = $request->next_vaccination_unit == "month" ? $now->addMonth($request->next_vaccination) : $now->addYears($request->next_vaccination);
+
+            Notification::create([
+               'user_id' => $appointment->petOwner->user->id,
+               'pet_id' => $appointment->pet_id,
+               'title' => "Next Vaccination Schedule",
+               'date_start' => $nextVaccination
+            ]);
+
+            PetVaccination::insert($payload);
          } else if ($appointment->service_type_id == self::SERVICE_TYPE_KONSULTASI) {
             MedicalRecord::create([
                'pet_id' => $appointment->pet_id,
@@ -155,11 +164,10 @@ class AppointmentController extends Controller implements ServiceTypeInterface
                'medicine_name' => $request->medicine_name,
                'medicine_dosage' => $request->medicine_dosage,
                'description' => $request->note,
-
-               'diagnosed_at' => now()
+               'diagnosed_at' => $now
             ]);
          }
-         
+
          PetWeight::create([
             'pet_id' => $appointment->pet_id,
             'weight' => $request->weight,
@@ -169,15 +177,15 @@ class AppointmentController extends Controller implements ServiceTypeInterface
 
          $appointment->update([
             'summary' => $request->summary,
-            'finished_at' => now()
+            'finished_at' => $now
          ]);
 
          DB::commit();
       } catch (\Exception $e) {
          DB::rollBack();
-         return back()->withInput()->with('error-toast', "Failed to Add $actionType");
+         return back()->withInput()->with('error-toast', "Something went wrong");
       }
 
-      return to_route('admin.appointment.index')->with('success-toast', "Successfully Adding $actionType");
+      return to_route('admin.appointment.index')->with('success-toast', "Successfully Adding Appointment Summary");
    }
 }

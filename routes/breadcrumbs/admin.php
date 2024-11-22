@@ -149,7 +149,7 @@ Breadcrumbs::for('service-price-edit', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('appointment-schedule', function (BreadcrumbTrail $trail) {
 	$trail->parent('home-admin');
-	$trail->push('Jadwal Dokter Hewan', route('admin.appointment-schedule.index'));
+	$trail->push('Veterinarian Schedule', route('admin.appointment-schedule.index'));
 });
 
 Breadcrumbs::for('appointment-schedule-create', function (BreadcrumbTrail $trail) {
@@ -210,4 +210,9 @@ Breadcrumbs::for('veterinarian-create', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('veterinarian-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('veterinarian');
 	$trail->push('Edit Veterinarian');
+});
+
+Breadcrumbs::for('user-support', function (BreadcrumbTrail $trail) {
+	$trail->parent('home-admin');
+	$trail->push('User Support', route('admin.chat.index'));
 });

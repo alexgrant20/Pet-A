@@ -382,7 +382,7 @@
                            </div>
                            <div>
                               <input type="text" name="weight" value="{{ old('pet_weight') }}"
-                                 class="input input-bordered h-9 border-2 border-primary border-2 border-primary w-full form-validation" />
+                                 class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
                            </div>
                         </div>
                         <div class="w-full md:w-1/4">
@@ -405,7 +405,7 @@
                            </div>
                            <div>
                               <input type="text" name="next_vaccination" value="{{ old('next_vaccination') }}"
-                                 class="input input-bordered h-9 border-2 border-primary border-2 border-primary w-full form-validation" />
+                                 class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
                            </div>
                         </div>
                         <div class="md:pt-8 w-full md:w-1/4">
@@ -418,12 +418,6 @@
                         </div>
                      </div>
 
-                     {{-- <div class="form-control w-full mb-3">
-                        <div class="label">
-                           <span class="text-primary text-xs uppercase font-bold">Summary</span>
-                        </div>
-                        <textarea class="textarea textarea-bordered border-2 border-primary" name="summary" placeholder="" rows="2"></textarea>
-                     </div> --}}
                      <div class="text-right mt-12">
                         <button type="submit" class="btn btn-primary btn-padding">Submit</button>
                      </div>

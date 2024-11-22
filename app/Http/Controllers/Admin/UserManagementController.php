@@ -45,47 +45,6 @@ class UserManagementController extends Controller implements RoleInterface
       return $dataTable->make();
    }
 
-   public function create()
-   {
-      $provinces = Province::get();
-      $cities = City::get();
-      return view('app.admin.user-management.create', compact('provinces', 'cities'));
-   }
-
-   public function store(StoreUserRequest $request)
-   {
-      DB::beginTransaction();
-      try {
-         $clinic = Clinic::create([
-            'name' => $request->clinic_name,
-            'city_id' => $request->city_id,
-            'phone_number' => $request->clinic_phone_number,
-            'address' => $request->clinic_address,
-            'zip_code' => $request->zip_code
-         ]);
-         Veterinarian::create([
-            'clinic_id' => $clinic->id,
-            'length_of_service' => $request->length_of_service
-         ])
-            ->user()
-            ->create([
-               'id' => Str::uuid(),
-               'name' => $request->name,
-               'phone_number' => $request->phone_number,
-               'email' => $request->email,
-               'password' => Hash::make($request->password),
-               'is_active' => 1,
-            ])
-            ->assignRole(self::ROLE_VETERINARIAN);
-      } catch (\Exception $e) {
-         DB::rollback();
-         return back()->with('error-toast', 'Dokter Hewan Gagal Ditambahkan');
-      }
-
-      DB::commit();
-      return to_route('admin.user-management.index')->with('success-toast', 'Dokter Hewan Berhasil Ditambahkan');
-   }
-
    public function edit(User $user)
    {
       $user->load('profile');
@@ -119,11 +78,11 @@ class UserManagementController extends Controller implements RoleInterface
          ]);
       } catch (\Exception $e) {
          DB::rollBack();
-         return back()->with('error-toast', 'Gagal Mengubah Data Pengguna');
+         return back()->with('error-toast', 'Something went wrong');
       }
 
       DB::commit();
-      return to_route('admin.user-management.index')->with('success-toast', 'Berhasil Mengubah Data Pengguna');
+      return to_route('admin.user-management.index')->with('success-toast', 'Successfully Edit User Data');
    }
 
    public function resetPassword(User $user)
@@ -137,7 +96,7 @@ class UserManagementController extends Controller implements RoleInterface
          'password' => $request->password
       ]);
 
-      return to_route('admin.user-management.index')->with('success-toast', 'Berhasil Mengubah Kata Sandi Pengguna');
+      return to_route('admin.user-management.index')->with('success-toast', 'Successfully Change User Password');
    }
 
    public function destroy(User $user)
@@ -145,6 +104,6 @@ class UserManagementController extends Controller implements RoleInterface
       if(!$user->hasRole(self::ROLE_ADMIN)) $user->profile->delete();
       $user->delete();
 
-      return to_route('admin.user-management.index')->with('success-toast', 'Berhasil Menghapus Data Pengguna');
+      return to_route('admin.user-management.index')->with('success-toast', 'Successfully Deleted User');
    }
 }

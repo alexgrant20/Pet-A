@@ -44,7 +44,7 @@ class LoginController extends Controller
          $msg = [
             'status' => false,
             'type' => 'error-swal',
-            'msg' => 'Email tidak ditemukan!',
+            'msg' => 'Email not found!',
          ];
          return $msg;
       }
@@ -53,7 +53,7 @@ class LoginController extends Controller
          $msg = [
             'status' => false,
             'type' => 'error-swal',
-            'msg' => 'Percobaan login melebihi batas. Percobaan login Anda dapat digunakan pada ' . @$user->attempt_login_active,
+            'msg' => 'Login attempts have exceeded the maximum limit. You can try again on ' . @$user->attempt_login_active,
          ];
          return $msg;
       }
@@ -79,13 +79,13 @@ class LoginController extends Controller
          $msg = [
             'status' => true,
             'type' => 'success-swal',
-            'msg' => 'Selamat Datang',
+            'msg' => 'Welcome to Pet-A',
          ];
       } else {
          $msg = [
             'status' => false,
             'type' => 'error-swal',
-            'msg' => 'Sistem sedang mengalami gangguan, coba lagi nanti!',
+            'msg' => 'Someting went wrong, try again later',
          ];
       }
 
@@ -97,19 +97,19 @@ class LoginController extends Controller
       $msg = [
          'status' => false,
          'type' => 'error-swal',
-         'msg' => 'Terjadi Kesalahan',
+         'msg' => 'Something went wrong',
       ];
 
       if ($user->attempt_login < 5) {
          $user->attempt_login += 1;
 
-         $msg['msg'] = 'Password yang digunakan salah, Percobaan gagal ' . $user->attempt_login . 'x';
+         $msg['msg'] = 'The password is incorret. Failed attempt ' . $user->attempt_login . 'time(s)';
       } else {
          // get timeouts
          $user->attempt_login_active = Carbon::now()->addMinutes(60);
          $user->attempt_login = 0;
 
-         $msg['msg'] = 'Percobaan login melebihi batas. Percobaan login Anda dapat digunakan pada ' . @$user->attempt_login_active;
+         $msg['msg'] = 'Login attempts have exceeded the maximum limit. You can try again on ' . @$user->attempt_login_active;
       }
 
       $user->save();

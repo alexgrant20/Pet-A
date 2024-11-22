@@ -50,7 +50,7 @@ Route::prefix('/master')
       Route::get('/list/vaccination', [VaccinationController::class, 'getList'])->name('list.vaccination');
    });
 
-Route::resource('user-management', UserManagementController::class, ['parameters' => ['user-management' => 'user']]);
+Route::resource('user-management', UserManagementController::class, ['parameters' => ['user-management' => 'user']])->except(['create', 'store']);
 Route::get('/list/user-management/{roleId}', [UserManagementController::class, 'getList'])->name('user-management.list');
 Route::prefix('/user-management')
    ->controller(UserManagementController::class)
@@ -77,7 +77,7 @@ Route::prefix('/appointment-schedule')
 ->controller(AppointmentScheduleController::class)
 ->name('appointment-schedule.')
 ->group(function() {
-   Route::get('/{day}/edit', 'edit')->name('edit');
+   Route::post('/save-schedule/{day}', 'saveSchedule')->name('save-schedule');
    Route::put('/{day}', 'update')->name('update');
 
    Route::delete('/{scheduleId}', 'destroy')->name('destroy');

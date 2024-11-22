@@ -9,7 +9,7 @@
     @include('layouts.master.navbar')
     <div class="drawer-content flex flex-col flex-1 relative">
       <div class="w-full pb-14 flex flex-1 mt-20">
-         <div class="w-full bg-base-100 mx-6 xl:ms-0 rounded-2xl overflow-x-hidden p-5">
+         <div class="w-full bg-base-200 mx-6 xl:ms-0 rounded-2xl overflow-x-hidden p-5">
             @yield('content')
          </div>
       </div>

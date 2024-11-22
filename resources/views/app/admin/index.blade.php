@@ -44,7 +44,7 @@
             </div>
          </div>
          <div class="card">
-            <div class="card-body p-4 bg-white/35 shadow-xl rounded-xl">
+            <div class="card-body p-4 bg-white/65 shadow-xl rounded-xl">
                <div class="flex justify-between items-center mb-2 w-full">
                   <div class="text-gray-600">
                      <span class="me-1 text-lg font-bold">Appointments Chart</span>
@@ -59,12 +59,12 @@
          </div>
       </div>
    @elseif (auth()->user()->hasRole(RoleInterface::ROLE_VETERINARIAN))
-      <div class="flex gap-5">
+      <div class="mt-3 flex">
+         <h1 class="font-bold text-xl">Hello {{ auth()->user()->name }},</h1>
+         <h2 class="ml-2 align-bottom">You have {{ $totalTodayAppointment }} appointments today</h2>
+      </div>
+      <div class="flex gap-6">
          <div class="w-full">
-            <div class="mt-3 flex">
-               <h1 class="font-bold text-xl">Hello {{ auth()->user()->name }},</h1>
-               <h2 class="ml-2 align-bottom">You have {{ $totalTodayAppointment }} appointments today</h2>
-            </div>
             <div class="flex my-5">
                <div class="card rounded-2xl shadow-xl bg-white opacity-85">
                   <div class="card-body">
@@ -101,7 +101,7 @@
             </div>
 
             <div class="card">
-               <div class="card-body p-4 bg-white/35 shadow-xl rounded-xl">
+               <div class="card-body p-4 bg-white/65 shadow-xl rounded-xl">
                   <div class="flex justify-between items-center mb-2 w-full">
                      <div class="text-gray-600">
                         <span class="me-1 text-lg font-bold">Appointments Chart</span>
@@ -118,7 +118,8 @@
          <div class="w-full">
             <div class="flex justify-between items-center mb-5 w-full">
                <span class="font-bold text-xl">Upcoming Appointment</span>
-               <a href="{{ route('admin.appointment.index') }}" class="text-primary font-bold border-primary hover:border-b">
+               <a href="{{ route('admin.appointment.index') }}"
+                  class="text-primary font-bold border-primary hover:border-b">
                   <span class="me-1 text-sm">See All</span>
                   <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
                </a>
@@ -130,7 +131,8 @@
                         class="card-body bg-white/65 shadow-xl rounded-xl flex-row p-0 gap-5 items-center justify-start border-2 border-transparent hover:border-primary group transition-all duration-300">
                         <div class="py-4 flex flex-col font-bold justify-center h-full">
                            <div class="px-8 border-r-2">
-                              <span class="text-primary text-sm block">{{ $appointment->appointment_date->format('l') }}</span>
+                              <span
+                                 class="text-primary text-sm block">{{ $appointment->appointment_date->format('l') }}</span>
                               <span>{{ $appointment->appointment_date->format('M d, Y') }}</span>
                               <div class="flex items-center gap-2 text-sm mt-2">
                                  <i class="fa-solid fa-clock text-gray-400"></i>

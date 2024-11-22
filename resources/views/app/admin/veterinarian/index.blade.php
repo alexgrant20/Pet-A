@@ -33,11 +33,12 @@
 
                            @php
                               $rating = round($veterinarian->ratings()->avg('rating'), 1);
+                              $ratingCount = $veterinarian->ratings()->count();
                            @endphp
 
                            <div class="badge bg-yellow-500 text-white py-3">
                               <i class="fa-solid fa-star"></i>
-                              <span class="ms-1 font-semibold"> {{ $rating == 0 ? 'N\A' : $rating }}</span>
+                              <span class="ms-1 font-semibold"> {{ $rating == 0 ? 'N\A' : $rating }} ({{ $ratingCount }})</span>
                            </div>
                         </div>
                      </div>

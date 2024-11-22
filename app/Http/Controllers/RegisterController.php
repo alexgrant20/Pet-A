@@ -35,7 +35,7 @@ class RegisterController extends Controller
 			$user->assignRole('pet-owner');
 		} catch (\Exception $e) {
 			DB::rollBack();
-			return back()->with('error-swal', 'Gagal Membuat Akun, Terjadi Kesalahan!');
+			return back()->with('error-swal', 'Something went wrong, try again later');
 		}
 
 		DB::commit();

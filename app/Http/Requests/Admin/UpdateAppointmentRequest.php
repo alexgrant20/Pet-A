@@ -15,16 +15,16 @@ class UpdateAppointmentRequest extends FormRequest implements ServiceTypeInterfa
 	public function rules()
 	{
 		return [
-			'weight' => 'required',
-			'weight_unit' => 'required',
-			'next_appointment' => 'required_if:' . $this->appointment->service_type_id . ',' . self::SERVICE_TYPE_VAKSINASI,
-			'next_appointment_unit' => 'required_if:' . $this->appointment->service_type_id .','. self::SERVICE_TYPE_VAKSINASI,
+			'weight' => 'required|numeric',
+			'weight_unit' => 'required|string|in:g,kg',
+			'next_appointment' => 'int|required_if:' . $this->appointment->service_type_id . ',' . self::SERVICE_TYPE_VAKSINASI,
+			'next_appointment_unit' => 'in:month,year|required_if:' . $this->appointment->service_type_id .','. self::SERVICE_TYPE_VAKSINASI,
 			'vaccination.*' => 'nullable',
-			'disesase_name' => 'nullable',
-			'medicine_name' => 'nullable',
-         'medicine_dosage' => 'nullable',
-         'note' => 'nullable',
-         'appointment_note' => 'nullable',
+			'disesase_name' => 'nullable|string',
+			'medicine_name' => 'nullable|string',
+         'medicine_dosage' => 'nullable|string',
+         'note' => 'nullable|string',
+         'summary' => 'nullable|string',
 		];
 	}
 }

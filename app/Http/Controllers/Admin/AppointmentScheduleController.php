@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAppointmentScheduleRequest;
 use App\Http\Requests\Admin\UpdateAppointmentScheduleRequest;
 use App\Models\AppointmentSchedule;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,22 @@ class AppointmentScheduleController extends Controller
 {
    public function index()
    {
-      return view('app.admin.appointment-schedule.index');
+      $dayMapping =  array("2" => "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "1" => "Sunday");
+
+      $appointmentSchedules = AppointmentSchedule::where('veterinarian_id', Auth::user()->profile_id)
+         ->where('is_active', 1)
+         ->orwhere('is_day_active', 0)
+         ->orderBy('start_time')
+         ->get()
+         ->groupBy('day')
+         ->sortKeys();
+
+      $scheduleDay = AppointmentSchedule::where('veterinarian_id', Auth::user()->profile_id)
+         ->where('is_active', 1)
+         ->pluck('day')
+         ->unique();
+
+      return view('app.admin.appointment-schedule.index', compact('dayMapping', 'appointmentSchedules', 'scheduleDay'));
    }
 
    public function getList()
@@ -27,7 +43,7 @@ class AppointmentScheduleController extends Controller
          ->groupBy('day')
          ->sortKeys();
 
-      $dayMapping =  array("1" =>"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+      $dayMapping =  array("1" => "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
       return DataTables::of($appointmentSchedules)
          ->addIndexColumn()
          ->addColumn('day', function ($data) use ($dayMapping) {
@@ -68,30 +84,29 @@ class AppointmentScheduleController extends Controller
       return to_route('admin.appointment-schedule.index')->with('success-toast', 'Berhasil Menambahkan Jadwal Dokter Hewan');
    }
 
-   public function edit($day)
-   {
-      $appointmentSchedules = AppointmentSchedule::where([
-         ['veterinarian_id', Auth::user()->profile_id],
-         ['day', $day]
-      ])
-         ->get()
-         ->sortBy('start_time');
-
-      $dayMapping =  array("2" => "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "1" => "Sunday");
-
-      return view('app.admin.appointment-schedule.edit', compact('day', 'dayMapping', 'appointmentSchedules'));
-   }
-
-   public function update(UpdateAppointmentScheduleRequest $request)
+   public function saveSchedule($day, Request $request)
    {
       $payload = [];
       $appointmentSchedule = $request->appointment_schedule;
-      for ($i = 0; $i < count($appointmentSchedule['id']); $i++) {
+
+      $lastId = AppointmentSchedule::max('id');
+
+      $appointmentId = array_values($appointmentSchedule['id']);
+
+      $appointmentStartTime = array_values($appointmentSchedule['start_time']);
+
+      for ($i = 0; $i < count($appointmentStartTime); $i++) {
          $payload[] = [
-            'id' => Crypt::decrypt($appointmentSchedule['id'][$i]),
+            'id' => @$appointmentId[$i] ? Crypt::decrypt($appointmentId[$i]) : ++$lastId,
             'veterinarian_id' => Auth::user()->profile_id,
             'day' => $request->day,
-            'start_time' => $appointmentSchedule['start_time'][$i],
+            'start_time' => $appointmentStartTime[$i],
+            'is_active' => 1,
+            'is_day_active' => 1,
+            'created_by' => Auth::user()->id,
+            'updated_by' => Auth::user()->id,
+            'deleted_at' => null,
+            'deleted_by' => null
          ];
       }
 
@@ -100,27 +115,63 @@ class AppointmentScheduleController extends Controller
          AppointmentSchedule::upsert(
             $payload,
             ['id'],
-            ['start_time']
+            ['start_time', 'veterinarian_id', 'day', 'is_active', 'is_day_active', 'created_by', 'updated_by', 'deleted_at', 'deleted_by']
          );
       } catch (\Exception $e) {
          DB::rollBack();
-         return back()->with('error-toast', 'Gagal Mengubah Jadwal Dokter Hewan');
+         return back()->with('error-toast', 'Something went wrong');
       }
 
       DB::commit();
-      return to_route('admin.appointment-schedule.index')->with('success-toast', 'Berhasil Mengubah Jadwal Dokter Hewan');
+      return to_route('admin.appointment-schedule.index')->with('success-toast', 'Successfully Saved Veterinarian Schedule');
+   }
+
+   public function update(Request $request, $day)
+   {
+      // $payload = [];
+      // $appointmentSchedule = $request->appointment_schedule;
+      // for ($i = 0; $i < count($appointmentSchedule['id']); $i++) {
+      //    $payload[] = [
+      //       'id' => Crypt::decrypt($appointmentSchedule['id'][$i]),
+      //       'veterinarian_id' => Auth::user()->profile_id,
+      //       'day' => $request->day,
+      //       'start_time' => $appointmentSchedule['start_time'][$i],
+      //    ];
+      // }
+
+      DB::beginTransaction();
+      try {
+         AppointmentSchedule::where([
+            'veterinarian_id' => Auth::user()->profile_id,
+            'day' => $day
+         ])->get()
+            ->each(function ($schedule) use ($request) {
+               $schedule->update([
+                  'is_active' => $request->isScheduleDayActive,
+                  'is_day_active' => $request->isScheduleDayActive
+               ]);
+            });
+      } catch (\Exception $e) {
+         DB::rollBack();
+         return  response()->json(['message' => 'Something went wrong'], 400);
+      }
+
+      DB::commit();
+      return response()->json(['message' => 'Successfully Updated Veterinarian Schedule'], 200);
    }
 
    public function destroy($scheduleId)
    {
       try {
          $appointmentScheduleId = Crypt::decrypt($scheduleId);
+         AppointmentSchedule::findOrFail($appointmentScheduleId)->update([
+            'is_active' => 0
+         ]);
       } catch (\Exception $e) {
-         return back()->with('error-toast', 'Gagal Menghapus Jadwal Dokter Hewan');
+         return  response()->json(['message' => 'Something went wrong'], 400);
       }
 
-      AppointmentSchedule::where('id', $appointmentScheduleId)->delete();
 
-      return to_route('admin.appointment-schedule.edit', $appointmentScheduleId)->with('success-toast', 'Berhasil Menghapus Jadwal Dokter Hewan');
+      return response()->json(['message' => 'Successfully Deleted Veterinarian Schedule'], 200);
    }
 }
