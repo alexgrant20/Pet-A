@@ -142,8 +142,14 @@
                            </div>
                         </div>
                         <div class="py-4 flex flex-col gap-2">
-                           <div class="text-gray-900 font-semibold">
-                              {{ $appointment->pet->name }}
+                           <div class="flex items-center gap-2">
+                              <img class="mt-4 w-8 h-8 object-cover rounded-full"
+                                 src="{{ asset($appointment->petOwner->attachment->first()?->path) }}" alt="pet owner image">
+                              <span class="text-gray-900">{{ $appointment->petOwner->user->name }}</span>
+                           </div>
+                           <div class="flex items-center gap-2">
+                              <i class="{{ $appointment->pet->breed->petType->icon->name }}"></i>
+                              <span class="text-gray-900">{{ $appointment->pet->name }}</span>
                            </div>
                            <div class="badge badge-primary">
                               {{ $appointment->serviceType->name }}
