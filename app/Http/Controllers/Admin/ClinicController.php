@@ -113,6 +113,15 @@ class ClinicController extends Controller
             'latitude' => $city->latitude,
             'longitude' => $city->longitude
          ]);
+
+         if($request->clinic_image) {
+            $this->fieldAttachmentUploadUtility
+            ->setRefTable($clinic::class)
+            ->setRefId($clinic->id)
+            ->setFolder('clinic_image')
+            ->setFieldName('clinic_image')
+            ->uploadFile($request);
+         }
       } catch (\Exception $e) {
          DB::rollBack();
          return back()->withInput()->with('error-toast', 'Failed to Edit Clinic');
