@@ -60,30 +60,6 @@ class AppointmentScheduleController extends Controller
          ->make();
    }
 
-   public function create()
-   {
-      $dayMapping = array("2" => "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "1" => "Sunday");
-      return view('app.admin.appointment-schedule.create', compact('dayMapping'));
-   }
-
-   public function store(StoreAppointmentScheduleRequest $request)
-   {
-      DB::beginTransaction();
-      try {
-         AppointmentSchedule::create([
-            'veterinarian_id' => Auth::user()->profile_id,
-            'day' => $request->day,
-            'start_time' => $request->start_time
-         ]);
-      } catch (\Exception $e) {
-         DB::rollBack();
-         return back()->with('error-toast', 'Gagal Menambahkan Jadwal Dokter Hewan');
-      }
-
-      DB::commit();
-      return to_route('admin.appointment-schedule.index')->with('success-toast', 'Berhasil Menambahkan Jadwal Dokter Hewan');
-   }
-
    public function saveSchedule($day, Request $request)
    {
       $payload = [];
@@ -128,17 +104,6 @@ class AppointmentScheduleController extends Controller
 
    public function update(Request $request, $day)
    {
-      // $payload = [];
-      // $appointmentSchedule = $request->appointment_schedule;
-      // for ($i = 0; $i < count($appointmentSchedule['id']); $i++) {
-      //    $payload[] = [
-      //       'id' => Crypt::decrypt($appointmentSchedule['id'][$i]),
-      //       'veterinarian_id' => Auth::user()->profile_id,
-      //       'day' => $request->day,
-      //       'start_time' => $appointmentSchedule['start_time'][$i],
-      //    ];
-      // }
-
       DB::beginTransaction();
       try {
          AppointmentSchedule::where([
