@@ -60,8 +60,9 @@ class ClinicController extends Controller
       ])
          ->exists();
 
-      if ($isClinicExists) return back()->with('error-toast', 'Tempat Praktik Sudah Terdaftar');
+      if ($isClinicExists) return back()->with('error-toast', 'Clinic has already registered');
 
+      $city = City::find($request->city_id);
       DB::beginTransaction();
       try {
          $clinic = Clinic::create([
@@ -70,6 +71,8 @@ class ClinicController extends Controller
             'phone_number' => $request->phone_number,
             'zip_code' => $request->zip_code,
             'address' => $request->address,
+            'latitude' => $city->latitude,
+            'longitude' => $city->longitude
          ]);
 
          $this->fieldAttachmentUploadUtility
@@ -97,6 +100,8 @@ class ClinicController extends Controller
 
    public function update(Clinic $clinic, UpdateClinicRequest $request)
    {
+      $city = City::find($request->city_id);
+
       DB::beginTransaction();
       try {
          $clinic->update([
@@ -105,6 +110,8 @@ class ClinicController extends Controller
             'phone_number' => $request->phone_number,
             'zip_code' => $request->zip_code,
             'address' => $request->address,
+            'latitude' => $city->latitude,
+            'longitude' => $city->longitude
          ]);
       } catch (\Exception $e) {
          DB::rollBack();
