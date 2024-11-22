@@ -103,7 +103,7 @@ class LoginController extends Controller
       if ($user->attempt_login < 5) {
          $user->attempt_login += 1;
 
-         $msg['msg'] = 'The password is incorret. Failed attempt ' . $user->attempt_login . 'time(s)';
+         $msg['msg'] = 'The password is incorret. Failed attempt ' . $user->attempt_login . ' time(s)';
       } else {
          // get timeouts
          $user->attempt_login_active = Carbon::now()->addMinutes(60);

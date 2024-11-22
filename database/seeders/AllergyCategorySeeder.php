@@ -13,9 +13,9 @@ class AllergyCategorySeeder extends Seeder
     public function run(): void
     {
         AllergyCategory::insert([
-            ['id' => 1, 'name' => 'Mild', 'color_class' => 'secondary'],
-            ['id' => 2, 'name' => 'Moderate', 'color_class' => 'accent'],
-            ['id' => 3, 'name' => 'Severe', 'color_class' => 'red-400'],
+            ['name' => 'Mild', 'color_class' => 'secondary'],
+            ['name' => 'Moderate', 'color_class' => 'accent'],
+            ['name' => 'Severe', 'color_class' => 'red-400'],
         ]);
     }
 }
