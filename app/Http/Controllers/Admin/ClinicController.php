@@ -114,13 +114,13 @@ class ClinicController extends Controller
             'longitude' => $city->longitude
          ]);
 
-         if($request->clinic_image) {
+         if ($request->clinic_image) {
             $this->fieldAttachmentUploadUtility
-            ->setRefTable($clinic::class)
-            ->setRefId($clinic->id)
-            ->setFolder('clinic_image')
-            ->setFieldName('clinic_image')
-            ->uploadFile($request);
+               ->setRefTable($clinic::class)
+               ->setRefId($clinic->id)
+               ->setFolder('clinic_image')
+               ->setFieldName('clinic_image')
+               ->uploadFile($request);
          }
       } catch (\Exception $e) {
          DB::rollBack();
