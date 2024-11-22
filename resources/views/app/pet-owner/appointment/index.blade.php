@@ -18,9 +18,19 @@
          </form>
 
          <div class="grid grid-cols-3 gap-4 pet_type_select">
+            @php
+               $processedParams = collect(request()->query())
+                   ->map(function ($value, $key) {
+                       return ['key' => $key, 'value' => $value];
+                   })
+                   ->toArray();
+
+               $selectedPetTypeId = @$processedParams['pet_type_id']['value'];
+            @endphp
+
             @foreach ($petTypes as $petType)
                <button onclick="appendQuery('pet_type_id', {{ $petType->id }})"
-                  class="bg-primary text-white bg-opacity-75 border-orange-800 flex flex-col gap-4 items-center justify-center cursor-pointer rounded-xl item py-3">
+                  class="{{ $selectedPetTypeId == $petType->id ? 'bg-accent' : 'bg-primary' }} text-white bg-opacity-75 border-orange-800 flex flex-col gap-4 items-center justify-center cursor-pointer rounded-xl item py-3">
                   <i class="{{ $petType->icon->name }} fa-2x"></i>
                   <span class="text-xl font-bold">{{ ucwords($petType->name) }}</span>
                </button>
@@ -149,7 +159,7 @@
                   data: 'appointment_date',
                   name: 'appointment_date',
                   type: 'string',
-                  render: function (d) {
+                  render: function(d) {
                      const date = d.split('T')[0];
                      return date;
                   }
