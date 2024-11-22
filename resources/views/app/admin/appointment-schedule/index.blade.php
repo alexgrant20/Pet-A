@@ -1,6 +1,9 @@
 @extends('layouts.master.layout')
 
 @section('title', 'Veterinarian Schedule')
+@php
+   $totalAppointmentSchedules = [];
+@endphp
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
@@ -57,6 +60,9 @@
                               </div>
                            @endforeach
                         @else
+                           @php
+                              $totalAppointmentSchedules[$dayNumeric] = 1;
+                           @endphp
                            <div class="flex gap-3 items-center mb-3 schedule-row">
                               <div class="flex-1">
                                  <input type="time" name="appointment_schdule[start_time][{{ $loop->index }}]"
@@ -161,12 +167,12 @@
          let isAllScheduleValid = true;
 
          scheduleRows.each(function() {
-            if(!validateScheduleAndSetError($(this))) {
+            if (!validateScheduleAndSetError($(this))) {
                isAllScheduleValid = false;
             }
          })
 
-         if(isAllScheduleValid) {
+         if (isAllScheduleValid) {
             $(`#schedule_form_${dayId}`).submit();
          }
       })

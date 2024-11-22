@@ -33,11 +33,15 @@ class DatabaseSeeder extends Seeder
          // VeterinarianPetTypeSeeder::class,
          // VeterinarianServiceTypeSeeder::class
       ]);
-
       $file_path = public_path('sql/master.sql');
+
 
       DB::unprepared(
          file_get_contents($file_path)
       );
+
+      $this->call([
+         AppointmentSeeder::class
+      ]);
    }
 }
