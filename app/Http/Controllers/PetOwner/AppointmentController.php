@@ -111,9 +111,6 @@ class AppointmentController extends Controller
          });
       } catch (\Exception $e) {
          DB::rollBack();
-
-         dd($e->getMessage());
-
          return back()->with('error-swal', 'Something went wrong');
       }
 
