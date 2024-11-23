@@ -97,7 +97,7 @@ class MenuServiceProvider extends ServiceProvider
       }
     );
     view()->composer(
-      'layouts.pet-owner.navbar',
+      ['layouts.pet-owner.navbar', 'layouts.pet-owner.layout'],
       function ($view) {
         View::share('menus', $this->petOwnerMenu());
       }
