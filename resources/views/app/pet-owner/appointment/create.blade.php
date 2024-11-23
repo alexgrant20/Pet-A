@@ -131,6 +131,12 @@
       const veterinarian = @json($veterinarian);
       const veterinarianActiveDate = @json($veterinarianActiveDate);
 
+      $('form').on('submit', function(e) {
+         if ($(this).valid()) {
+            $('button').attr('disabled', true);
+         }
+      });
+
       const el = document.querySelector('.appointment_date');
       new AirDatepicker(el, {
          ...airDatePickerDefaultConfiguration,
@@ -172,13 +178,9 @@
 
          $.get(route, function(data) {
             const map = data.map((itm) => {
-               const date = new Date(itm.start_time);
-
-               const hourUTC = date.getUTCHours();
-               const minuteUTC = date.getUTCMinutes();
                return {
                   id: itm.id,
-                  text: `${hourUTC.toString().padStart(2, '0')}:${minuteUTC.toString().padStart(2, '0')}`
+                  text: `${itm.formatted_time}`
                }
             });
 

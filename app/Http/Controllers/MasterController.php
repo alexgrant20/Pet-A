@@ -14,12 +14,6 @@ class MasterController extends Controller
    {
       if (!$request->ajax()) return;
 
-      $result = [
-         'status' => 404,
-         'message' => 'Data tidak ditemukan',
-         'result' => [],
-      ];
-
       $limit = $request->limit ?? 10;
       $page = $request->page ?? 1;
 

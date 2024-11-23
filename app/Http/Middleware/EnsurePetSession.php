@@ -48,7 +48,6 @@ class EnsurePetSession
 
       $pet = $petService->transformData($pet);
       session()->put('session_pet', $pet);
-      session()->save();
 
       return true;
    }

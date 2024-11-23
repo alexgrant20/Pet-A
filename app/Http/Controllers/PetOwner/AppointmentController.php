@@ -129,11 +129,16 @@ class AppointmentController extends Controller
    public function getAppointmentSchedule($veterinarianId, $date)
    {
       $date = Carbon::parse($date);
+      $now = now()->toTimeString();
 
-      $appointmentSchedule =  AppointmentSchedule::where([
-         ['veterinarian_id', $veterinarianId],
-         ['day', $date->dayOfWeek + 1]
-      ])->get();
+
+      $appointmentSchedule = DB::table('appointment_schedules')
+         ->selectRaw("TO_CHAR(start_time, 'HH24:MI') as formatted_time, *")
+         ->where('veterinarian_id', $veterinarianId)
+         ->where('day', $date->dayOfWeek + 1)
+         ->whereRaw("start_time > '{$now}'")
+         ->orderBy('start_time')
+         ->get();
 
       $appointmentDateFilter = Appointment::where('veterinarian_id', $veterinarianId)
          ->whereDate('appointment_date', $date)
