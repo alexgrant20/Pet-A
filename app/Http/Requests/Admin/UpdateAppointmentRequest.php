@@ -18,7 +18,7 @@ class UpdateAppointmentRequest extends FormRequest implements ServiceTypeInterfa
 		$rules = [
 			'weight' => 'required|numeric',
 			'weight_unit' => 'required|string|in:g,kg',
-			'vaccination' => 'nullable|array',
+			'vaccination*' => 'nullable|array',
 			'disesase_name' => 'nullable|string',
 			'medicine_name' => 'nullable|string',
 			'medicine_dosage' => 'nullable|string',
