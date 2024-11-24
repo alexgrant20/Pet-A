@@ -69,10 +69,8 @@ Route::get('/list/clinic', [ClinicController::class, 'getList'])->name('clinic.l
 Route::get('appointment/{isActive?}', [AppointmentController::class, 'index'])->name('appointment.index');
 Route::get('appointment/show/{appointment}', [AppointmentController::class, 'show'])->name('appointment.show');
 Route::resource('appointment', AppointmentController::class)->only(['update']);
-Route::get('/list/appointment', [AppointmentController::class, 'getList'])->name('appointment.list');
 
 Route::resource('appointment-schedule', AppointmentScheduleController::class, ['parameters' => ['appointment-schedule' => 'appointmentSchedule']])->except(['edit', 'update', 'show', 'destroy']);
-Route::get('/list/appointment-schedule', [AppointmentScheduleController::class, 'getList'])->name('appointment-schedule.list');
 Route::prefix('/appointment-schedule')
 ->controller(AppointmentScheduleController::class)
 ->name('appointment-schedule.')

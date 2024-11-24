@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Interfaces\ServiceTypeInterface;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\RequiredIf;
 
 class UpdateAppointmentRequest extends FormRequest implements ServiceTypeInterface
 {
@@ -14,17 +15,22 @@ class UpdateAppointmentRequest extends FormRequest implements ServiceTypeInterfa
 
 	public function rules()
 	{
-		return [
+		$rules = [
 			'weight' => 'required|numeric',
 			'weight_unit' => 'required|string|in:g,kg',
-			'next_appointment' => 'int|required_if:' . $this->appointment->service_type_id . ',' . self::SERVICE_TYPE_VAKSINASI,
-			'next_appointment_unit' => 'in:month,year|required_if:' . $this->appointment->service_type_id .','. self::SERVICE_TYPE_VAKSINASI,
-			'vaccination.*' => 'nullable',
+			'vaccination' => 'nullable|array',
 			'disesase_name' => 'nullable|string',
 			'medicine_name' => 'nullable|string',
-         'medicine_dosage' => 'nullable|string',
-         'note' => 'nullable|string',
-         'summary' => 'nullable|string',
+			'medicine_dosage' => 'nullable|string',
+			'note' => 'nullable|string',
+			'summary' => 'nullable|string',
 		];
+
+		if($this->appointment->service_type_id == self::SERVICE_TYPE_VAKSINASI) {
+			$rules['next_vaccination'] = 'required|int';
+			$rules['next_vaccination_unit'] = 'required|in:month,year';
+		}
+
+		return $rules;
 	}
 }

@@ -217,7 +217,7 @@
                         <div class="timeline-middle">
                            <i class="fa-solid fa-circle text-primary"></i>
                         </div>
-                        <div class="timeline-end timeline-box shadow-md mb-5 w-full p-2">
+                        <div class="timeline-end timeline-box border-2 shadow-lg mb-5 w-full p-2">
                            <div class="flex flex-row gap-3">
                               <div class="py-3">
                                  <div class="w-20 px-3 text-sm font-bold border-r-2 text-primary">
@@ -276,7 +276,7 @@
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body">
          <h3 class="font-bold text-lg mb-4 text-primary">Vaccination History</h3>
-         <div>
+         <div class="px-4">
             @if ($appointment->pet->petVaccination->isEmpty())
                <div class="row-span-3 flex flex-col items-center justify-end gap-2">
                   <img class="max-h-40" src="{{ asset('assets/no-vaccination.svg') }}" alt="healthy">
@@ -292,7 +292,7 @@
                         <div class="timeline-middle">
                            <i class="fa-solid fa-circle text-primary"></i>
                         </div>
-                        <div class="timeline-end timeline-box shadow-md mb-5 w-full">
+                        <div class="timeline-end timeline-box border-2 shadow-lg mb-5 w-full">
                            <div class="p-3 w-full">
                               <div class="flex w-3/5 grid-cols-2 gap-12 xl:gap-32 md:gap-30">
                                  <div class="w-full mb-1 gap-2 mb-3">
@@ -340,161 +340,162 @@
       </div>
    </div>
 
-   <section class="card bg-base-100 shadow-xl w-full" id="appointment_summary_form">
-      <div class="card-body">
-         <h3 class="font-bold text-lg mb-4 text-primary">
-            Add
-            @if ($appointment->service_type_id == ServiceTypeInterface::SERVICE_TYPE_VAKSINASI)
-               Vaccination
-            @else
-               Appointment Summary
-            @endif
-         </h3>
-         <form action="{{ route('admin.appointment.update', $appointment->id) }}" method="POST"
-            id="appointment_form">
-            @csrf
-            @method('PUT')
+   @if (is_null($appointment->finished_at))
+      <section class="card bg-base-100 shadow-xl w-full" id="appointment_summary_form">
+         <div class="card-body">
+            <h3 class="font-bold text-lg mb-4 text-primary">
+               Add
+               @if ($appointment->service_type_id == ServiceTypeInterface::SERVICE_TYPE_VAKSINASI)
+                  Vaccination
+               @else
+                  Appointment Summary
+               @endif
+            </h3>
+            <form action="{{ route('admin.appointment.update', $appointment->id) }}" method="POST"
+               id="appointment_form">
+               @csrf
+               @method('PUT')
 
-            @if ($appointment->service_type_id == ServiceTypeInterface::SERVICE_TYPE_VAKSINASI)
-               <div class="flex gap-5 md:flex-row flex-col">
-                  <div class="form-control w-full md:w-1/4 mb-3">
-                     <div class="label">
-                        <span class="font-bold uppercase text-primary text-xs">Vaccinations</span>
+               @if ($appointment->service_type_id == ServiceTypeInterface::SERVICE_TYPE_VAKSINASI)
+                  <div class="flex gap-5 md:flex-row flex-col">
+                     <div class="form-control w-full md:w-1/4 mb-3">
+                        <div class="label">
+                           <span class="font-bold uppercase text-primary text-xs">Vaccinations</span>
+                        </div>
+                        <div class="p-3 rounded-lg border-2 border-primary">
+                           @foreach ($vaccinations as $vaccination)
+                              <div class="flex gap-1 items-center">
+                                 <input type="checkbox" id="vaccination-checkbox_{{ $loop->index }}"
+                                    name="vaccination[{{ $loop->index }}]"
+                                    value="{{ Crypt::encrypt($vaccination->id) }}">
+                                 <label for="vaccination-checkbox_{{ $loop->index }}"
+                                    class="text-xs font-bold uppercase">{{ $vaccination->name }}</label><br>
+                              </div>
+                           @endforeach
+                        </div>
                      </div>
-                     <div class="p-3 rounded-lg border-2 border-primary">
-                        @foreach ($vaccinations as $vaccination)
-                           <div class="flex gap-1 items-center">
-                              <input type="checkbox" id="vaccination-checkbox_{{ $loop->index }}"
-                                 name="vaccination[{{ $loop->index }}]"
-                                 value="{{ Crypt::encrypt($vaccination->id) }}">
-                              <label for="vaccination-checkbox_{{ $loop->index }}"
-                                 class="text-xs font-bold uppercase">{{ $vaccination->name }}</label><br>
+
+                     <div class="w-full">
+                        <div class="flex gap-3 mb-3 md:flex-row flex-col">
+                           <div class="form-control w-full">
+                              <div class="label">
+                                 <span class="font-bold uppercase text-primary text-xs">Pet Weight</span>
+                              </div>
+                              <div>
+                                 <input type="text" name="weight" value="{{ old('pet_weight') }}"
+                                    class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
+                              </div>
                            </div>
-                        @endforeach
+                           <div class="w-full md:w-1/4">
+                              <div class="label">
+                                 <span class="font-bold uppercase text-primary text-xs">Weight Unit</span>
+                              </div>
+                              <select name="weight_unit" id="weight_unit"
+                                 class="border border-primary h-9 rounded-lg bg-transparent border-2 w-full form-validation">
+                                 <option hidden selected></option>
+                                 <option value="g" @selected(old('weight_unit') == 'g')>Gram</option>
+                                 <option value="kg" @selected(old('weight_unit') == 'kg')>Kilogram</option>
+                              </select>
+                           </div>
+                        </div>
+
+                        <div class="flex gap-3 mb-3 md:flex-row flex-col">
+                           <div class="form-control w-full">
+                              <div class="label">
+                                 <span class="font-bold uppercase text-primary text-xs">Next Vaccination in</span>
+                              </div>
+                              <div>
+                                 <input type="text" name="next_vaccination" value="{{ old('next_vaccination') }}"
+                                    class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
+                              </div>
+                           </div>
+                           <div class="md:pt-8 w-full md:w-1/4">
+                              <select name="next_vaccination_unit" id="next_vaccination_unit"
+                                 class="border border-primary h-9 rounded-lg bg-transparent border-2 w-full form-validation">
+                                 <option hidden selected></option>
+                                 <option value="month" @selected(old('next_vaccination_unit') == 'month')>Month</option>
+                                 <option value="year" @selected(old('next_vaccination_unit') == 'year')>Year</option>
+                              </select>
+                           </div>
+                        </div>
+
+                        <div class="text-right mt-12">
+                           <button type="submit" class="btn btn-primary btn-padding">Submit</button>
+                        </div>
+                     </div>
+                  </div>
+               @elseif($appointment->service_type_id == ServiceTypeInterface::SERVICE_TYPE_KONSULTASI)
+                  <div class="flex gap-3 md:flex-row flex-col mb-3">
+                     <div class="form-control w-full">
+                        <div class="label">
+                           <span class="font-bold uppercase text-primary text-xs">Pet Weight</span>
+                        </div>
+                        <div>
+                           <input type="text" name="weight" value="{{ old('pet_weight') }}"
+                              class="input input-bordered h-9 border-2 border-primary border-2 border-primary w-full form-validation" />
+                        </div>
+                     </div>
+                     <div class="w-full md:w-1/4">
+                        <div class="label">
+                           <span class="font-bold uppercase text-primary text-xs">Weight Unit</span>
+                        </div>
+                        <select name="weight_unit" id="weight_unit"
+                           class="border border-primary h-9 rounded-lg bg-transparent border-2 w-full form-validation">
+                           <option hidden selected></option>
+                           <option value="g" @selected(old('weight_unit') == 'g')>Gram</option>
+                           <option value="kg" @selected(old('weight_unit') == 'kg')>Kilogram</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                     <div class="form-control w-full">
+                        <div class="label">
+                           <span class="font-bold uppercase text-primary text-xs">Disease</span>
+                        </div>
+                        <input type="text" name="disease_name" value="{{ old('disease_name') }}"
+                           class="input input-bordered h-9 border-2 border-primary w-full form-validation"
+                           value="{{ old('disease_name') }}" />
+                     </div>
+
+                     <div class="form-control w-full">
+                        <div class="label">
+                           <span class="text-primary text-xs uppercase font-bold">Medicine</span>
+                        </div>
+                        <input type="text" name="medicine_name" value="{{ old('medicine_name') }}"
+                           class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
+                     </div>
+
+                     <div class="form-control w-full">
+                        <div class="label">
+                           <span class="text-primary text-xs uppercase font-bold">Dosage</span>
+                        </div>
+                        <input type="text" name="medicine_dosage" value="{{ old('medicine_dosage') }}"
+                           class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
                      </div>
                   </div>
 
-                  <div class="w-full">
-                     <div class="flex gap-3 mb-3 md:flex-row flex-col">
-                        <div class="form-control w-full">
-                           <div class="label">
-                              <span class="font-bold uppercase text-primary text-xs">Pet Weight</span>
-                           </div>
-                           <div>
-                              <input type="text" name="weight" value="{{ old('pet_weight') }}"
-                                 class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
-                           </div>
-                        </div>
-                        <div class="w-full md:w-1/4">
-                           <div class="label">
-                              <span class="font-bold uppercase text-primary text-xs">Weight Unit</span>
-                           </div>
-                           <select name="weight_unit" id="weight_unit"
-                              class="border border-primary h-9 rounded-lg bg-transparent border-2 w-full form-validation">
-                              <option hidden selected></option>
-                              <option value="g" @selected(old('weight_unit') == 'g')>Gram</option>
-                              <option value="kg" @selected(old('weight_unit') == 'kg')>Kilogram</option>
-                           </select>
-                        </div>
+                  <div class="form-control w-full mb-3">
+                     <div class="label">
+                        <span class="text-primary text-xs uppercase font-bold">Medicine Notes</span>
                      </div>
+                     <textarea class="textarea textarea-bordered border-2 border-primary" name="note" placeholder="">{{ old('note') }}</textarea>
+                  </div>
 
-                     <div class="flex gap-3 mb-3 md:flex-row flex-col">
-                        <div class="form-control w-full">
-                           <div class="label">
-                              <span class="font-bold uppercase text-primary text-xs">Next Vaccination in</span>
-                           </div>
-                           <div>
-                              <input type="text" name="next_vaccination" value="{{ old('next_vaccination') }}"
-                                 class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
-                           </div>
-                        </div>
-                        <div class="md:pt-8 w-full md:w-1/4">
-                           <select name="next_vaccination_unit" id="next_vaccination_unit"
-                              class="border border-primary h-9 rounded-lg bg-transparent border-2 w-full form-validation">
-                              <option hidden selected></option>
-                              <option value="month" @selected(old('next_vaccination_unit') == 'month')>Month</option>
-                              <option value="year" @selected(old('next_vaccination_unit') == 'year')>Year</option>
-                           </select>
-                        </div>
+                  <div class="form-control w-full mb-3">
+                     <div class="label">
+                        <span class="text-primary text-xs uppercase font-bold">Summary</span>
                      </div>
+                     <textarea class="textarea textarea-bordered border-2 border-primary" name="summary" placeholder="">{{ old('summary') }}</textarea>
+                  </div>
 
-                     <div class="text-right mt-12">
+                     <div class="text-right">
                         <button type="submit" class="btn btn-primary btn-padding">Submit</button>
                      </div>
-                  </div>
-               </div>
-            @elseif($appointment->service_type_id == ServiceTypeInterface::SERVICE_TYPE_KONSULTASI)
-               <div class="flex gap-3 md:flex-row flex-col mb-3">
-                  <div class="form-control w-full">
-                     <div class="label">
-                        <span class="font-bold uppercase text-primary text-xs">Pet Weight</span>
-                     </div>
-                     <div>
-                        <input type="text" name="weight" value="{{ old('pet_weight') }}"
-                           class="input input-bordered h-9 border-2 border-primary border-2 border-primary w-full form-validation" />
-                     </div>
-                  </div>
-                  <div class="w-full md:w-1/4">
-                     <div class="label">
-                        <span class="font-bold uppercase text-primary text-xs">Weight Unit</span>
-                     </div>
-                     <select name="weight_unit" id="weight_unit"
-                        class="border border-primary h-9 rounded-lg bg-transparent border-2 w-full form-validation">
-                        <option hidden selected></option>
-                        <option value="g" @selected(old('weight_unit') == 'g')>Gram</option>
-                        <option value="kg" @selected(old('weight_unit') == 'kg')>Kilogram</option>
-                     </select>
-                  </div>
-               </div>
-               <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-                  <div class="form-control w-full">
-                     <div class="label">
-                        <span class="font-bold uppercase text-primary text-xs">Disease</span>
-                     </div>
-                     <input type="text" name="disease_name" value="{{ old('disease_name') }}"
-                        class="input input-bordered h-9 border-2 border-primary w-full form-validation"
-                        value="{{ old('disease_name') }}" />
-                  </div>
-
-                  <div class="form-control w-full">
-                     <div class="label">
-                        <span class="text-primary text-xs uppercase font-bold">Medicine</span>
-                     </div>
-                     <input type="text" name="medicine_name" value="{{ old('medicine_name') }}"
-                        class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
-                  </div>
-
-                  <div class="form-control w-full">
-                     <div class="label">
-                        <span class="text-primary text-xs uppercase font-bold">Dosage</span>
-                     </div>
-                     <input type="text" name="medicine_dosage" value="{{ old('medicine_dosage') }}"
-                        class="input input-bordered h-9 border-2 border-primary w-full form-validation" />
-                  </div>
-               </div>
-
-               <div class="form-control w-full mb-3">
-                  <div class="label">
-                     <span class="text-primary text-xs uppercase font-bold">Medicine Notes</span>
-                  </div>
-                  <textarea class="textarea textarea-bordered border-2 border-primary" name="note" placeholder="">{{ old('note') }}</textarea>
-               </div>
-
-               <div class="form-control w-full mb-3">
-                  <div class="label">
-                     <span class="text-primary text-xs uppercase font-bold">Summary</span>
-                  </div>
-                  <textarea class="textarea textarea-bordered border-2 border-primary" name="summary" placeholder="">{{ old('summary') }}</textarea>
-               </div>
-
-               <div class="text-right">
-                  <button type="submit" class="btn btn-primary btn-padding">Submit</button>
-               </div>
-            @endif
-
-         </form>
-      </div>
-   </section>
+               @endif
+            </form>
+         </div>
+      </section>
+   @endif
 @endsection
 
 @section('js-footer')
