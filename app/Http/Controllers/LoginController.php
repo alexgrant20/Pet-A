@@ -58,7 +58,12 @@ class LoginController extends Controller
          return $msg;
       }
 
-      if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+      try {
+         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $msg = $this->failedLogin($user);
+            return $msg;
+         }
+      } catch (\Exception) {
          $msg = $this->failedLogin($user);
          return $msg;
       }

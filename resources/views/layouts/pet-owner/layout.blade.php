@@ -9,7 +9,7 @@
       @include('layouts.pet-owner.navbar')
       <div class="drawer-content flex flex-col flex-1 relative">
          <div class="w-full pb-14 flex flex-1 mt-20">
-            <div class="w-full bg-base-200 mx-6 xl:ms-0 rounded-2xl overflow-x-hidden">
+            <div class="w-full bg-base-200 mx-1 sm:mx-6 xl:ms-0 rounded-2xl overflow-x-hidden">
                @yield('content')
             </div>
          </div>
@@ -24,7 +24,7 @@
                <div class="flex flex-col gap-3 z-20">
                   @if ($pet)
                      <img alt="pet image" src="{{ asset($pet?->thumbnail_image) }}"
-                        class="w-20 h-20 rounded-full bg-gray-200" />
+                        class="w-20 h-20 rounded-full bg-gray-200 hidden sm:block" />
                   @else
                      <div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center">
                         <i class="fa-thin fa-paw-simple fa-2x"></i>
@@ -38,7 +38,31 @@
                   </span>
                </div>
                <div class="absolute right-0 top-1">
-                  <img class="w-52" src="{{ asset('assets/person-bring-dog.svg') }}" alt="">
+                  <img class="w-52 hidden sm:block" src="{{ asset('assets/person-bring-dog.svg') }}" alt="">
+               </div>
+            </div>
+
+            <div class="text-white/90 pe-5 mb-5 block sm:hidden">
+               <h2 class="mb-3 text-xl">Menu</h2>
+               <div class="navbar-center flex">
+                  <ul class="menu menu-lg menu-vertical px-1 text-white text-opacity-70">
+                     <li>
+                        <a class="gap-3 text-lg" href="{{ route('home') }}">
+                           <i class="fa fa-solid fa-home"></i>
+                           <span>
+                              Home
+                           </span>
+                        </a>
+                     </li>
+                     @foreach (@$menus as $menu)
+                        <li>
+                           <a class="gap-3" href="{{ route($menu['route_name']) }}">
+                              <i class="fa {{ @$menu['icon'] }}"></i>
+                              <span>{{ @$menu['label'] }}</span>
+                           </a>
+                        </li>
+                     @endforeach
+                  </ul>
                </div>
             </div>
 
@@ -52,7 +76,7 @@
                         <div
                            class="card-body bg-white bg-opacity-85 shadow rounded-xl flex-row py-4 px-2 gap-2 items-center">
                            <div class="w-20">
-                              <img class="w-16 h-16 rounded-full"
+                              <img class="w-16 h-16 rounded-full hidden sm:block"
                                  src="{{ asset($notif->pet->attachment->first()->path) }}" alt="">
                            </div>
                            <div class="flex flex-col gap-2 w-full">

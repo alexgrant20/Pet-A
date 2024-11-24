@@ -8,7 +8,7 @@
       </label>
    </div>
 
-   <div class="navbar-center flex">
+   <div class="navbar-center hidden sm:flex">
       <ul class="menu menu-lg menu-horizontal px-1 text-white text-opacity-70">
          <li>
             <a class="gap-3 text-lg" href="{{ route('home') }}">

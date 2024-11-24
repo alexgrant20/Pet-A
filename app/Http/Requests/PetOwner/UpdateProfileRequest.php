@@ -15,11 +15,11 @@ class UpdateProfileRequest extends FormRequest
 	{
 		return [
 			'name' => 'required|string',
-			'phone_number' => 'nullable',
+			'phone_number' => 'nullable|regex:/^\+?\d{3,}$/',
 			'address' => 'nullable',
 			'province_id' => 'nullable',
 			'city_id' => 'nullable',
-			'profile_image' => 'nullable|file'
+			'profile_image' => 'nullable|file|mimes:png,jpg,jpeg',
 		];
 	}
 }

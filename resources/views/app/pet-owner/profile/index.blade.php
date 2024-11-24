@@ -8,17 +8,17 @@
    @endphp
    <section>
       <div class="bg-base-100 shadow-2xl p-9 gap-12 w-full">
-         <form class="flex flex-col xl:flex-row" action="{{ route('pet-owner.profile.update', $user->profile->id) }}" method="POST"
-            enctype="multipart/form-data" class="flex flex-col gap-20 xl:w-1/2">
+         <form class="flex flex-col xl:flex-row" action="{{ route('pet-owner.profile.update', $user->profile->id) }}"
+            method="POST" enctype="multipart/form-data" class="flex flex-col gap-20 xl:w-1/2">
             @csrf
             @method('PUT')
 
             <div class="flex flex-col gap-5 items-center justify-center mb-3 flex-grow">
                <img id="profile_image_preview" class="w-full max-w-36 max-h-36 rounded-full unselectable"
-                  src="{{ asset($profilePicture ? $profilePicture->path : 'assets/user.svg') }}"
-                  alt="profile image">
+                  src="{{ asset($profilePicture ? $profilePicture->path : 'assets/user.svg') }}" alt="profile image">
                <input name="profile_image" id="profile_image" type="file"
-                  class="file-input file-input-primary file-input-bordered file- w-full max-w-xs" />
+                  class="file-input file-input-primary file-input-bordered file- w-full max-w-xs"
+                  accept=".png, .jpg, .jpeg" />
             </div>
             <div class="grid grid-cols-2 gap-3 flex-grow">
                <label class="form-control w-full">
@@ -106,4 +106,6 @@
          }
       });
    </script>
+
+   {!! JsValidator::formRequest('App\Http\Requests\PetOwner\UpdateProfileRequest', 'form') !!}
 @endsection

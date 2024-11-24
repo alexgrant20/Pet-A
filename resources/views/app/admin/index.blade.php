@@ -6,7 +6,7 @@
    @if (auth()->user()->hasRole(RoleInterface::ROLE_ADMIN))
       <div class="h-screen">
          <div class="flex gap-5 sm:flex-row flex-col my-5">
-            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-56">
+            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full lg:w-56">
                <div class="card-body">
                   <div class="flex flex-row items-center text-wrap">
                      <i class="fa-solid fa-user text-primary"></i>
@@ -15,7 +15,7 @@
                   <div class="font-bold text-4xl">{{ $petOwnerCount }}</div>
                </div>
             </div>
-            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-56">
+            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full lg:w-56">
                <div class="card-body">
                   <div class="flex flex-row items-center text-wrap">
                      <i class="fa-solid fa-hospital text-primary"></i>
@@ -24,7 +24,7 @@
                   <div class="font-bold text-4xl">{{ $clinicCount }}</div>
                </div>
             </div>
-            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-56">
+            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full lg:w-56">
                <div class="card-body">
                   <div class="flex flex-row items-center text-wrap">
                      <i class="fa-solid fa-user-doctor text-primary"></i>
@@ -33,7 +33,7 @@
                   <div class="font-bold text-4xl">{{ $veterinarianCount }}</div>
                </div>
             </div>
-            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-56">
+            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full lg:w-56">
                <div class="card-body">
                   <div class="flex flex-row items-center text-wrap">
                      <i class="fa-solid fa-user-doctor text-primary"></i>
@@ -43,7 +43,7 @@
                </div>
             </div>
          </div>
-         <div class="card">
+         <div class="card mb-100">
             <div class="card-body p-4 bg-white/65 shadow-xl rounded-xl">
                <div class="flex justify-between items-center mb-2 w-full">
                   <div class="text-gray-600">

@@ -7,21 +7,21 @@
       <div class="flex flex-col h-full gap-5 justify-start items-start lg:flex-row">
          <section class="flex justify-stretch bg-white bg-opacity-25 h-fit w-full xl:w-fit lg:h-full">
             <div class="card flex-1">
-               <div class="card-body rounded shadow-2xl pet_detail_container w-full">
+               <div class="card-body rounded shadow-2xl w-full">
                   <div class="container_pet_detail w-full flex flex-col items-center relative">
-                     <div class="absolute right-0">
+                     <div class="hidden sm:absolute right-0">
                         <a href="{{ route('pet-owner.pet.edit', $pet->id) }}" class="cursor-pointer">
                            <i class="fa-solid fa-pen-circle fa-2x text-primary"></i>
                         </a>
                      </div>
-                     <img class="rounded-full w-36 h-36 pet_image border border-gray-400 mb-5"
+                     <img class="rounded-full w-36 h-36 hidden sm:block pet_image border border-gray-400 mb-5"
                         src="{{ asset($pet?->thumbnail_image) }}" alt="">
                      <div>
-                        <h1 class="text-3xl font-bold pet_name text-center">{{ $pet->name }}</h1>
-                        <h2 class="pet_breed text-2xl text-gray-400 text-center">{{ $pet->breed->name }}</h2>
+                        <h1 class="text-lg sm:text-3xl font-bold pet_name text-center">{{ $pet->name }}</h1>
+                        <h2 class="pet_breed  sm:text-2xl text-gray-400 text-center">{{ $pet->breed->name }}</h2>
                      </div>
 
-                     <div class="mt-8 flex flex-row justify-center gap-3 text-lg">
+                     <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3 text-lg">
                         <div class="w-28 h-16 flex flex-col items-center justify-center bg-base-100 rounded shadow">
                            <span class="text-primary font-bold">Age</span>
                            <span class="text-gray-900 font-bold">{{ $pet->age }}</span>
@@ -36,15 +36,14 @@
                         </div>
                      </div>
 
-                     <div class="w-full mt-12">
+                     <div class="w-full mt-12 hidden sm:block">
                         <div class="flex justify-between items-center mb-5 w-full">
                            <span class="font-bold">Appointment History</span>
                         </div>
 
                         <div class="grid grid-rows-{{ $pet?->history_appointment->count() }}">
                            @forelse ($pet?->history_appointment->all() ?? [] as $appointment)
-                              <a
-                                 href="{{ route('pet-owner.appointment.show', $appointment->id) }}"
+                              <a href="{{ route('pet-owner.appointment.show', $appointment->id) }}"
                                  class="border-b-2 flex py-4 px-2 gap-6 items-center justify-evenly hover:border-secondary transition-colors duration-300">
                                  <div>
                                     <i
@@ -62,10 +61,11 @@
                                  </div>
                               </a>
                            @empty
-                           <a href="{{ route('pet-owner.appointment.index') }}" class="border border-gray-400 hover:border-primary hover:text-primary cursor-pointer shadow rounded-full flex py-4 px-2 items-center justify-evenly">
-                              <i class="fa-light fa-shield-dog fa-2x"></i>
-                              <div>Meet Our Professional Veterinarian</div>
-                           </a>
+                              <a href="{{ route('pet-owner.appointment.index') }}"
+                                 class="border border-gray-400 hover:border-primary hover:text-primary cursor-pointer shadow rounded-full flex py-4 px-2 items-center justify-evenly">
+                                 <i class="fa-light fa-shield-dog fa-2x"></i>
+                                 <div>Meet Our Professional Veterinarian</div>
+                              </a>
                            @endforelse
                         </div>
                      </div>
@@ -77,7 +77,7 @@
          <div class="w-full px-5 py-10 xl:ps-0">
             <div>
                <div class="mb-5 w-full">
-                  <span class="font-bold text-2xl">Pet Health Condition</span>
+                  <span class="font-bold sm:text-2xl">Pet Health Condition</span>
                </div>
                <div class="grid grid-cols-1 gap-5">
                   <section>
@@ -129,8 +129,7 @@
                                           {{ $petMedication->medicationType->name }}
                                        </div>
                                        <div class="flex items-center gap-2">
-                                          <span
-                                             class="text-gray-400 uppercase">{{ $petMedication->medicine_name }}</span>
+                                          <span class="text-gray-400 uppercase">{{ $petMedication->medicine_name }}</span>
                                        </div>
                                     </div>
                                     <div class="ms-auto text-gray-400">
@@ -215,7 +214,7 @@
                      </x-pet-owner.card>
                   </section>
 
-                  <section>
+                  <section class="hidden sm:block">
                      <div class="card h-full">
                         <div class="card-body p-4 bg-white/35 shadow-xl rounded-xl">
                            <div class="flex justify-between items-center mb-2 w-full">
@@ -255,7 +254,7 @@
                               <div class="flex items-center gap-2">
                                  <i class="fa-solid fa-clock text-gray-400"></i>
                                  <span
-                                    class="text-gray-900">{{ $appointment->appointmentSchedule->start_time }}</span>
+                                    class="text-gray-900">{{ $appointment->appointmentSchedule->start_time->format('M d H:i') }}</span>
                               </div>
                            </div>
                            <div class="ms-auto pe-4 text-transparent group-hover:text-primary duration-500">
