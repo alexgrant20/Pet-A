@@ -5,8 +5,8 @@
 @section('content')
    @if (auth()->user()->hasRole(RoleInterface::ROLE_ADMIN))
       <div class="h-screen">
-         <div class="flex gap-5 sm:flex-row flex-col my-5">
-            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full lg:w-56">
+         <div class="flex gap-5 sm:flex-row flex-col my-5 flex-1">
+            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full">
                <div class="card-body">
                   <div class="flex flex-row items-center text-wrap">
                      <i class="fa-solid fa-user text-primary"></i>
@@ -15,7 +15,7 @@
                   <div class="font-bold text-4xl">{{ $petOwnerCount }}</div>
                </div>
             </div>
-            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full lg:w-56">
+            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full">
                <div class="card-body">
                   <div class="flex flex-row items-center text-wrap">
                      <i class="fa-solid fa-hospital text-primary"></i>
@@ -24,7 +24,7 @@
                   <div class="font-bold text-4xl">{{ $clinicCount }}</div>
                </div>
             </div>
-            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full lg:w-56">
+            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full">
                <div class="card-body">
                   <div class="flex flex-row items-center text-wrap">
                      <i class="fa-solid fa-user-doctor text-primary"></i>
@@ -33,7 +33,7 @@
                   <div class="font-bold text-4xl">{{ $veterinarianCount }}</div>
                </div>
             </div>
-            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full lg:w-56">
+            <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full">
                <div class="card-body">
                   <div class="flex flex-row items-center text-wrap">
                      <i class="fa-solid fa-user-doctor text-primary"></i>
@@ -43,7 +43,8 @@
                </div>
             </div>
          </div>
-         <div class="card mb-100">
+
+         <div class="card mb-5">
             <div class="card-body p-4 bg-white/65 shadow-xl rounded-xl">
                <div class="flex justify-between items-center mb-2 w-full">
                   <div class="text-gray-600">
@@ -57,6 +58,51 @@
                </div>
             </div>
          </div>
+
+         <div class="flex gap-5 grid-cols-2 xl:grid-cols-3">
+            <div class="card w-full">
+               <div class="card-body py-4 px-8 bg-white/65 shadow-xl rounded-xl">
+                  <div class="flex justify-center items-center mb-2 w-full mb-4">
+                     <div class="text-gray-600">
+                        <span class="me-1 text-lg font-bold">Total Pets</span>
+                     </div>
+                  </div>
+                  <div class="w-full overflow-x-auto h-full">
+                     <div class="w-full h-full">
+                        <canvas class="w-full h-full max-h-52" id="total_pet_chart"></canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card w-full">
+               <div class="card-body py-4 px-8 bg-white/65 shadow-xl rounded-xl">
+                  <div class="flex justify-center items-center mb-2 w-full mb-4">
+                     <div class="text-gray-600">
+                        <span class="me-1 text-lg font-bold">Vaccination Appointment</span>
+                     </div>
+                  </div>
+                  <div class="w-full overflow-x-auto h-full">
+                     <div class="w-full h-full">
+                        <canvas class="w-full h-full max-h-52" id="vaccination_appointment_doughnut"></canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card w-full">
+               <div class="card-body py-4 px-8 bg-white/65 shadow-xl rounded-xl">
+                  <div class="flex justify-center items-center mb-2 w-full mb-4">
+                     <div class="text-gray-600">
+                        <span class="me-1 text-lg font-bold">Consultation Appointment</span>
+                     </div>
+                  </div>
+                  <div class="w-full overflow-x-auto h-full">
+                     <div class="w-full h-full">
+                        <canvas class="w-full h-full max-h-52" id="consultation_appointment_doughnut"></canvas>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    @elseif (auth()->user()->hasRole(RoleInterface::ROLE_VETERINARIAN))
       <div class="mt-3 flex">
@@ -65,37 +111,37 @@
       </div>
       <div class="flex gap-6">
          <div class="w-full">
-            <div class="flex my-5">
-               <div class="card rounded-2xl shadow-xl bg-white opacity-85">
+            <div class="flex my-5 flex-1">
+               <div class="card rounded-2xl shadow-xl bg-white opacity-85 w-full">
                   <div class="card-body">
-                     <div class="flex flex-row text-wrap">
-                        <img src="{{ asset('assets/dog-paw.svg') }}" class="w-4 text-primary">
-                        <div class="text-md font-bold ml-2">Upcoming Appointment</div>
+                     <div class="flex flex-row text-wrap items-center">
+                        <i class="fa-solid fa-calendar-lines-pen text-primary text-lg"></i>
+                        <div class="text-lg font-bold ml-2">Upcoming Appointment</div>
                      </div>
                      <div class="font-bold text-4xl">{{ $activeAppointments->count() }}</div>
-                  </div>
-               </div>
-               <div class="card rounded-2xl shadow-xl bg-white opacity-85 ml-5">
-                  <div class="card-body">
-                     <div class="flex flex-row text-wrap">
-                        <img src="{{ asset('assets/dog-paw.svg') }}" class="w-4 text-primary">
-                        <span class="text-md ml-2 font-bold">Finished Appointment</span>
-                     </div>
-                     <div>
-                        <span class="font-bold text-4xl">{{ $totalFinishedAppointmentThisMonth }}</span>
-                     </div>
-                     @if ($totalFinishedAppointmentDifference != 0)
+                     @if ($totalUpcomingAppointmentDifference != 0)
                         <div>
                            <span>
                               <i
                                  class="fa-solid {{ $differenceTotalAppointmentIcon }} text-{{ $differenceTotalAppointmentClass }}"></i>
                            </span>
                            <span class="text-{{ $differenceTotalAppointmentClass }} font-bold">
-                              {{ number_format($totalFinishedAppointmentDifference, 2, '.', '') }}&percnt;
+                              {{ number_format(abs($totalUpcomingAppointmentDifference), 2, '.', '') }}&percnt;
                            </span>
                            <span>from last month</span>
                         </div>
                      @endif
+                  </div>
+               </div>
+               <div class="card rounded-2xl shadow-xl bg-white opacity-85 ml-5 w-full">
+                  <div class="card-body">
+                     <div class="flex flex-row text-wrap items-center">
+                        <i class="fa-solid fa-calendar-check text-primary text-lg"></i>
+                        <span class="text-lg ml-2 font-bold">Finished Appointment</span>
+                     </div>
+                     <div>
+                        <span class="font-bold text-4xl">{{ $totalFinishedAllAppointment }}</span>
+                     </div>
                   </div>
                </div>
             </div>
@@ -144,7 +190,8 @@
                         <div class="py-4 flex flex-col gap-2">
                            <div class="flex items-center gap-2">
                               <img class="mt-4 w-8 h-8 object-cover rounded-full"
-                                 src="{{ asset($appointment->petOwner->attachment->first()?->path) }}" alt="pet owner image">
+                                 src="{{ asset($appointment->petOwner->attachment->first()?->path) }}"
+                                 alt="pet owner image">
                               <span class="text-gray-900">{{ $appointment->petOwner->user->name }}</span>
                            </div>
                            <div class="flex items-center gap-2">
@@ -182,6 +229,9 @@
          const totalVaccinationAppointment = @json(@$totalVaccinationAppointment);
          const appointmentConsultationTotal = [];
          const appointmentVaccinationTotal = [];
+         const petTotals = @json($totalPets ?? []);
+         const vaccinationAppointment = @json($vaccinationAppointment ?? []);
+         const consultationAppointment = @json($consultationAppointment ?? []);
 
          Object.values(totalConsultationAppointment).forEach(function(data) {
             appointmentConsultationTotal.push(data.totalAppointment);
@@ -191,7 +241,7 @@
             appointmentVaccinationTotal.push(data.totalAppointment);
          });
 
-         const labels = Object.values(totalConsultationAppointment)
+         const lineChartLabels = Object.values(totalConsultationAppointment)
             .map(function(value) {
                const [year, month] = value.month.split('-');
                const dateLabel = new Date(year, month - 1);
@@ -210,7 +260,7 @@
             ctx, {
                type: 'line',
                data: {
-                  labels,
+                  labels: lineChartLabels,
                   datasets: [{
                         data: appointmentConsultationTotal,
                         label: "Consultation Appointment Total",
@@ -234,16 +284,213 @@
                   responsive: true,
                   plugins: {
                      legend: {
-                        position: 'bottom', // Position legend at the bottom
+                        position: 'bottom',
                         labels: {
                            usePointStyle: true,
-
                         }
                      },
                   },
+                  scales: {
+                     y: {
+                        ticks: {
+                           precision: 0,
+                        }
+                     }
+                  }
                }
             }
          );
+
+         const petTypeDoughnutLabels = petTotals.petType;
+         const petTypeDoughnutData = petTotals.totalPet;
+         const totalAllPet = petTotals.totalAllPet;
+
+         new Chart(
+            $('#total_pet_chart'), {
+               type: 'doughnut',
+               data: {
+                  labels: petTypeDoughnutLabels,
+                  datasets: [{
+                     label: 'Total',
+                     data: petTypeDoughnutData,
+                     backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                     ],
+                     hoverOffset: 4
+                  }]
+               },
+               options: {
+                  maintainAspectRatio: false,
+                  responsive: true,
+                  plugins: {
+                     legend: {
+                        position: 'right',
+                        labels: {
+                           usePointStyle: true,
+                        },
+                     },
+                     // beforeInit: function(chart, options) {
+                     //    Chart.Legend.prototype.afterFit = function() {
+                     //       this.width = this.width + 50;
+                     //    };
+                     // },
+                     // beforeDraw: function(chart) {
+                     //    console.log(chart);
+                     //    const width = chart.width;
+                     //    const height = this.height;
+                     //    const ctx = this.ctx;
+                     //    const text = chart.config.centerText ?? '';
+
+                     //    const fontSize = (height / 114).toFixed(2);
+                     //    const textX = Math.round((width - ctx.measureText(text).width) / 2) - text
+                     //       .toString()
+                     //       .length * 6;
+                     //    const textY = (height / 2) - (chart.legend.height / 2);
+
+                     //    const maxChartLabel = Math.max.apply(Math, $.map(chartLabel, function(el) {
+                     //       return el.length
+                     //    }));
+
+                     //    ctx.restore();
+                     //    ctx.font = fontSize + "em sans-serif";
+                     //    ctx.textBaseline = "middle";
+                     //    ctx.fillText(text, textX, textY);
+                     //    ctx.save();
+                     // },
+                  },
+               },
+            }
+         );
+
+
+         const vaccinationDoughnutLabels = vaccinationAppointment.petType;
+         const vaccinationDoughnutData = vaccinationAppointment.totalVaccination;
+
+         new Chart(
+            $('#vaccination_appointment_doughnut'), {
+               type: 'doughnut',
+               data: {
+                  labels: vaccinationDoughnutLabels,
+                  datasets: [{
+                     label: 'Total',
+                     data: vaccinationDoughnutData,
+                     backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                     ],
+                     hoverOffset: 4
+                  }]
+               },
+               options: {
+                  maintainAspectRatio: false,
+                  responsive: true,
+                  plugins: {
+                     legend: {
+                        position: 'right',
+                        labels: {
+                           usePointStyle: true,
+                        },
+                     },
+                     // beforeInit: function(chart, options) {
+                     //    Chart.Legend.prototype.afterFit = function() {
+                     //       this.width = this.width + 50;
+                     //    };
+                     // },
+                     // beforeDraw: function(chart) {
+                     //    console.log(chart);
+                     //    const width = chart.width;
+                     //    const height = this.height;
+                     //    const ctx = this.ctx;
+                     //    const text = chart.config.centerText ?? '';
+
+                     //    const fontSize = (height / 114).toFixed(2);
+                     //    const textX = Math.round((width - ctx.measureText(text).width) / 2) - text
+                     //       .toString()
+                     //       .length * 6;
+                     //    const textY = (height / 2) - (chart.legend.height / 2);
+
+                     //    const maxChartLabel = Math.max.apply(Math, $.map(chartLabel, function(el) {
+                     //       return el.length
+                     //    }));
+
+                     //    ctx.restore();
+                     //    ctx.font = fontSize + "em sans-serif";
+                     //    ctx.textBaseline = "middle";
+                     //    ctx.fillText(text, textX, textY);
+                     //    ctx.save();
+                     // },
+                  },
+               },
+            }
+         );
+
+
+         const consultationDoughnutLabels = consultationAppointment.petType;
+         const consultationDoughnutData = consultationAppointment.totalConsultation;
+
+         console.log(consultationAppointment, vaccinationAppointment);
+         new Chart(
+            $('#consultation_appointment_doughnut'), {
+               type: 'doughnut',
+               data: {
+                  labels: consultationDoughnutLabels,
+                  datasets: [{
+                     label: 'Total',
+                     data: consultationDoughnutData,
+                     backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                     ],
+                     hoverOffset: 4
+                  }]
+               },
+               options: {
+                  maintainAspectRatio: false,
+                  responsive: true,
+                  plugins: {
+                     legend: {
+                        position: 'right',
+                        labels: {
+                           usePointStyle: true,
+                        },
+                     },
+                     // beforeInit: function(chart, options) {
+                     //    Chart.Legend.prototype.afterFit = function() {
+                     //       this.width = this.width + 50;
+                     //    };
+                     // },
+                     // beforeDraw: function(chart) {
+                     //    console.log(chart);
+                     //    const width = chart.width;
+                     //    const height = this.height;
+                     //    const ctx = this.ctx;
+                     //    const text = chart.config.centerText ?? '';
+
+                     //    const fontSize = (height / 114).toFixed(2);
+                     //    const textX = Math.round((width - ctx.measureText(text).width) / 2) - text
+                     //       .toString()
+                     //       .length * 6;
+                     //    const textY = (height / 2) - (chart.legend.height / 2);
+
+                     //    const maxChartLabel = Math.max.apply(Math, $.map(chartLabel, function(el) {
+                     //       return el.length
+                     //    }));
+
+                     //    ctx.restore();
+                     //    ctx.font = fontSize + "em sans-serif";
+                     //    ctx.textBaseline = "middle";
+                     //    ctx.fillText(text, textX, textY);
+                     //    ctx.save();
+                     // },
+                  },
+               },
+            }
+         );
+
       })();
    </script>
 

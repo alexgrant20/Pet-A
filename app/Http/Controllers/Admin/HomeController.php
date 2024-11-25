@@ -3,20 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreClinicRequest;
-use App\Http\Requests\Admin\UpdateClinicRequest;
 use App\Interfaces\RoleInterface;
 use App\Interfaces\ServiceTypeInterface;
 use App\Models\Appointment;
-use App\Models\City;
 use App\Models\Clinic;
+use App\Models\Pet;
 use App\Models\PetOwner;
 use App\Models\Veterinarian;
-use App\Utilities\FieldAttachmentUploadUtility;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
 
 class HomeController extends Controller implements RoleInterface, ServiceTypeInterface
 {
@@ -26,20 +21,21 @@ class HomeController extends Controller implements RoleInterface, ServiceTypeInt
          $q->where('veterinarian_id', Auth::user()->profile_id);
       });
 
-      $totalFinishedAppointmentThisMonth = (clone $appointmentQuery)
-         ->whereNotNull('finished_at')
+      $totalFinishedAllAppointment = (clone $appointmentQuery)->whereNotNull('finished_at')->count();
+
+      $upcomingAppointmentThisMonth = (clone $appointmentQuery)
          ->whereMonth('appointment_date', now()->month)
          ->get()
          ->count();
 
-      $finishedAppointmentLastMonth = (clone $appointmentQuery)
-         ->whereNotNull('finished_at')
+      $upcomingAppointmentLastMonth = (clone $appointmentQuery)
          ->whereMonth('appointment_date', now()->month - 1)
          ->get()
          ->count();
 
-      $totalFinishedAppointmentDifference = ($finishedAppointmentLastMonth == 0 || $totalFinishedAppointmentThisMonth == 0) ? 0 : (($totalFinishedAppointmentThisMonth - $finishedAppointmentLastMonth) / $totalFinishedAppointmentThisMonth) * 100;
+      $totalUpcomingAppointmentDifference = ($upcomingAppointmentLastMonth == 0 || $upcomingAppointmentThisMonth == 0) ? 0 : ((float)(($upcomingAppointmentThisMonth / $upcomingAppointmentLastMonth) - 1)) * 100;
 
+      // dd($upcomingAppointmentLastMonth, $upcomingAppointmentThisMonth, $totalUpcomingAppointmentDifference);
       $totalTodayAppointment = (clone $appointmentQuery)->where('appointment_date', today())->count();
       $activeAppointments = (clone $appointmentQuery)->with([
          'appointmentSchedule',
@@ -51,7 +47,7 @@ class HomeController extends Controller implements RoleInterface, ServiceTypeInt
       ])->whereNull('finished_at')->get();
 
       $differenceTotalAppointmentIcon = '';
-      if ($totalFinishedAppointmentDifference < 0) {
+      if ($totalUpcomingAppointmentDifference < 0) {
          $differenceTotalAppointmentClass = 'error';
          $differenceTotalAppointmentIcon = 'fa-caret-down';
       } else {
@@ -66,16 +62,19 @@ class HomeController extends Controller implements RoleInterface, ServiceTypeInt
       $totalConsultationAppointment = $this->getTotalAppointment((clone $appointmentQuery)->where('service_type_id', self::SERVICE_TYPE_KONSULTASI)->get());
       $totalVaccinationAppointment = $this->getTotalAppointment((clone $appointmentQuery)->where('service_type_id', self::SERVICE_TYPE_VAKSINASI)->get());
 
+      $totalPets = $this->getTotalPet();
+      $vaccinationAppointment = $this->getVaccinationAppointment();
+      $consultationAppointment = $this->getConsultationAppointment();
       $returnedPayload = Auth::user()->hasRole(self::ROLE_VETERINARIAN) ?
          [
             'activeAppointments',
             'totalTodayAppointment',
-            'totalFinishedAppointmentThisMonth',
-            'totalFinishedAppointmentDifference',
+            'totalFinishedAllAppointment',
+            'totalUpcomingAppointmentDifference',
             'differenceTotalAppointmentClass',
             'differenceTotalAppointmentIcon',
+            'totalConsultationAppointment',
             'totalVaccinationAppointment',
-            'totalConsultationAppointment'
          ] :
          [
             'petOwnerCount',
@@ -83,7 +82,10 @@ class HomeController extends Controller implements RoleInterface, ServiceTypeInt
             'veterinarianCount',
             'activeAppointments',
             'totalConsultationAppointment',
-            'totalVaccinationAppointment'
+            'totalVaccinationAppointment',
+            'totalPets',
+            'vaccinationAppointment',
+            'consultationAppointment',
          ];
 
       return view('app.admin.index', compact(...$returnedPayload));
@@ -126,5 +128,63 @@ class HomeController extends Controller implements RoleInterface, ServiceTypeInt
       });
 
       return $appointmentGroupByYearMonth;
+   }
+
+   private function getTotalPet()
+   {
+      $petGroupByPetType = [];
+      Pet::with('breed.petType')
+         ->get()
+         ->each(function ($item) use (&$petGroupByPetType) {
+            $petGroupByPetType[$item->breed->petType->name][] = $item->id;
+         });
+
+      $totalPetGroupByPetType = collect($petGroupByPetType)->mapWithKeys(function ($value, $key) {
+         return [$key => count($value)];
+      })->toArray();
+
+      return [
+         'petType' => array_keys($totalPetGroupByPetType),
+         'totalPet' => array_values($totalPetGroupByPetType),
+         'totalAllPet' => Pet::count(),
+      ];
+   }
+
+   private function getVaccinationAppointment()
+   {
+      $vaccinationGroupByPetType = [];
+      Appointment::with('pet.breed.petType')->where('service_type_id', self::SERVICE_TYPE_VAKSINASI)
+         ->get()
+         ->each(function ($item) use (&$vaccinationGroupByPetType) {
+            $vaccinationGroupByPetType[$item->pet->breed->petType->name][] = $item->id;
+         });
+
+      $totalVaccinationGroupByPetType = collect($vaccinationGroupByPetType)->mapWithKeys(function ($value, $key) {
+         return [$key => count($value)];
+      })->toArray();
+
+      return [
+         'petType' => array_keys($totalVaccinationGroupByPetType),
+         'totalVaccination' => array_values($totalVaccinationGroupByPetType),
+      ];
+   }
+
+   private function getConsultationAppointment()
+   {
+      $consultationGroupByPetType = [];
+      Appointment::with('pet.breed.petType')->where('service_type_id', self::SERVICE_TYPE_VAKSINASI)
+         ->get()
+         ->each(function ($item) use (&$consultationGroupByPetType) {
+            $consultationGroupByPetType[$item->pet->breed->petType->name][] = $item->id;
+         });
+
+      $totalConsultationGroupByPetType = collect($consultationGroupByPetType)->mapWithKeys(function ($value, $key) {
+         return [$key => count($value)];
+      })->toArray();
+
+      return [
+         'petType' => array_keys($totalConsultationGroupByPetType),
+         'totalConsultation' => array_values($totalConsultationGroupByPetType),
+      ];
    }
 }
