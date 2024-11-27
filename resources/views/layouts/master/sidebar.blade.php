@@ -36,6 +36,9 @@
                      <i class="fa {{ @$menu['icon'] }}"></i>
                      <span class="xl:block">
                         {{ @$menu['label'] }}
+                        @if (@$menu['label'] == 'User Support' && $newMessageCount > 0)
+                           <div class="badge badge-secondary">{{ $newMessageCount }}</div>
+                        @endif
                      </span>
                   </a>
                </li>

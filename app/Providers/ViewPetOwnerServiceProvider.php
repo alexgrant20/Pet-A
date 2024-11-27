@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Appointment;
+use App\Models\Message;
+use App\Models\User;
 use App\Services\PetService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +33,7 @@ class ViewPetOwnerServiceProvider extends ServiceProvider
       });
 
       View::composer(['layouts.public.footer'], function ($view) {
-         $count = Appointment::count();
+         $count = Appointment::whereNotNull('finished_at')->count();
 
          $view->with('totalPetSaved', $count);
       });
@@ -40,6 +42,18 @@ class ViewPetOwnerServiceProvider extends ServiceProvider
          $pet = session('session_pet');
 
          $view->with('pet', $pet);
+      });
+
+      View::composer(['layouts.master.sidebar'], function ($view) {
+         $adminId = User::withoutRole('pet-owner')->pluck('id');
+
+         $newMessageCount =  Message::selectRaw('user_id, MIN(is_read::int) as is_read')
+         ->whereNotIn('user_id', $adminId->toArray())
+         ->where('is_read', 0)
+         ->groupBy('user_id')
+         ->count();
+
+         $view->with('newMessageCount', $newMessageCount);
       });
    }
 }

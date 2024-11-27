@@ -31,10 +31,11 @@ class ChatController extends Controller
       $adminId = User::withoutRole('pet-owner')->pluck('id');
 
       $user = Message::with('user')
-         ->groupBy('user_id')
+         ->selectRaw('user_id, MIN(is_read::int) as is_read')
          ->whereNotIn('user_id', $adminId->toArray())
-         ->get(['user_id'])
-         ->pluck('user');
+         ->groupBy('user_id')
+         ->orderBy('is_read', 'asc')
+         ->get();
 
       return view('app.admin.chat.index', compact('user'));
    }

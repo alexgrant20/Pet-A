@@ -57,7 +57,7 @@
             <div class="card-body p-4 rounded-xl bg-white/35 shadow-xl grid lg:grid-cols-2 gap-3">
                <label class="form-control w-full">
                   <div class="label">
-                     <span class="label-text font-semibold">Appointment Date</span>
+                     <span class="label-text font-semibold">Appointment Date <span class="text-red-500 ">*</span></span>
                   </div>
 
                   <input type="text" name="appointment_date" class="input input-bordered w-full appointment_date"
@@ -66,7 +66,7 @@
 
                <div>
                   <div class="label">
-                     <span class="label-text font-semibold">Hour</span>
+                     <span class="label-text font-semibold">Hour <span class="text-red-500 ">*</span></span>
                   </div>
 
                   <select class="select-2" data-placeholder="" id="appointment_schedule_id"
@@ -80,7 +80,7 @@
                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
                   <label class="form-control w-full">
                      <div class="label">
-                        <span class="label-text font-semibold">Pet</span>
+                        <span class="label-text font-semibold">Pet <span class="text-red-500 ">*</span></span>
                      </div>
                      <div>
                         <select id="pet_id" name="pet_id"
@@ -96,7 +96,7 @@
 
                   <label class="form-control w-full">
                      <div class="label">
-                        <span class="label-text font-semibold">Service</span>
+                        <span class="label-text font-semibold">Service <span class="text-red-500 ">*</span></span>
                      </div>
                      <div>
                         <select id="service_type_id" name="service_type_id"
@@ -111,7 +111,7 @@
 
                   <label class="form-control w-full lg:col-span-2">
                      <div class="label">
-                        <span class="label-text font-semibold">Note</span>
+                        <span class="label-text font-semibold">Note <span class="text-red-500 ">*</span></span>
                      </div>
                      <textarea name="appointment_note" class="textarea textarea-bordered w-full form-validation"></textarea>
                   </label>

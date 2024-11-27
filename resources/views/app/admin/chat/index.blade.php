@@ -19,6 +19,7 @@
                <tr>
                   <th>Name</th>
                   <th class="w-2/12"></th>
+                  <th class="w-2/12"></th>
                </tr>
             </thead>
             <tbody>
@@ -38,16 +39,25 @@
          const petAllergyDatatables = new DataTable('#table', {
             bLengthChange: false,
             autoWidth: false,
+            order: [],
             columns: [{
-                  data: 'name',
+                  data: 'user.name',
                   name: 'name'
+               },
+               {
+                  data: 'is_read',
+                  name: '',
+                  render: function(data, col, row) {
+                     return data ? '' : '<span class="badge badge-primary text-white">New Message</span>';
+                  },
+                  orderable: false
                },
                {
                   data: 'action',
                   name: 'action',
                   orderable: false,
                   render: function(data, col, row) {
-                     const url = "{{ route('admin.chat.show', ':id') }}".replace(':id', row.id);
+                     const url = "{{ route('admin.chat.show', ':id') }}".replace(':id', row.user.id);
 
                      return `
                      <div class='flex gap-1'>
