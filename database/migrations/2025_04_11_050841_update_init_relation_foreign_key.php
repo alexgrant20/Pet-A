@@ -42,11 +42,6 @@ return new class extends Migration
          $table->foreign('medication_type_id')->references('id')->on('medication_types')->cascadeOnUpdate()->restrictOnDelete();
       });
 
-      Schema::table('medical_record_treatments', function (Blueprint $table) {
-         $table->foreign('medical_record_id')->references('id')->on('medical_records')->cascadeOnUpdate()->restrictOnDelete();
-         $table->foreign('pet_medication_id')->references('id')->on('pet_medications')->cascadeOnUpdate()->restrictOnDelete();
-      });
-
       Schema::table('medical_records', function (Blueprint $table) {
          $table->foreign('pet_id')->references('id')->on('pets')->cascadeOnUpdate()->restrictOnDelete();
          $table->foreign('appointment_id')->references('id')->on('appointments')->cascadeOnUpdate()->restrictOnDelete();
