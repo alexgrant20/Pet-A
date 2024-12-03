@@ -4,17 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ResetPasswordRequest;
-use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
 use App\Interfaces\RoleInterface;
 use App\Models\City;
-use App\Models\Clinic;
-use App\Models\Province;
-use App\Models\Veterinarian;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class UserManagementController extends Controller implements RoleInterface
@@ -54,7 +49,7 @@ class UserManagementController extends Controller implements RoleInterface
       return view('app.admin.user-management.edit', compact('user', 'cities'));
    }
 
-   public function update(User $user, UpdateUserRequest $request)
+   public function update(UpdateUserRequest $request, User $user)
    {
       DB::beginTransaction();
       try {
@@ -93,7 +88,7 @@ class UserManagementController extends Controller implements RoleInterface
    public function resetPasswordStore(ResetPasswordRequest $request, User $user)
    {
       $user->update([
-         'password' => $request->password
+         'password' => Hash::make($request->password)
       ]);
 
       return to_route('admin.user-management.index')->with('success-toast', 'Successfully Change User Password');

@@ -6,7 +6,7 @@
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body flex-row items-center justify-between">
          <div>
-            <h1 class="font-bold text-2xl">Kelola Pengguna</h1>
+            <h1 class="font-bold text-2xl">User Management</h1>
             {{ Breadcrumbs::render('user-management') }}
          </div>
       </div>

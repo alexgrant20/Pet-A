@@ -10,29 +10,33 @@
    <div class="dropdown dropdown-end">
       <div tabindex="0" role="button" class="btn btn-ghost hover:bg-transparent avatar">
          <i class="fa-solid fa-bell text-xl text-base-100"></i>
+         @if ($newNotificationCount > 0)
+            <div class="notification-badge">
+               <span
+                  class="absolute top-1 left-1/2 transform -translate-x-1/3 -translate-y-1/3 w-3 h-3 bg-red-500 border-2 border-base-100 text-white text-xs font-bold rounded-full flex items-center justify-center"></span>
+            </div>
+         @endif
       </div>
-      <ul tabindex="5" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-80">
-         <li>
-            <a href="#">
-               <div class="flex flex-row gap-3 items-center">
-                  <img alt="Tailwind CSS Navbar component" src="{{ asset('assets/user.svg') }}"
-                     class="w-12 h-12 rounded-full" />
-                  <div class="flex flex-col gap-2">
-                     <span class="font-semibold">Dev</span>
-                     {{-- TO-DO: Kalo textnya kepanjangan perlu di truncate --}}
-                     <span class="line-clamp-2">Hi Bro, Capek ya? Iya. Gua gak tau how we can finish this lol :D. Well
-                        Maybe you can bro</span>
+      <ul tabindex="5"
+         class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-80 max-h-80 overflow-y-auto no-scrollbar">
+         @forelse ($notifications as $notification)
+            <li>
+               <a href="{{ $notification->link }}">
+                  <div class="items-center">
+                     <span class="line-clamp-2 notification @if (!$notification->is_seen) font-bold @endif">{{ $notification->title }}</span>
                   </div>
-               </div>
-            </a>
-         </li>
+               </a>
+            </li>
+         @empty
+            <li class="text-center justify-center text-gray-500 h-8">No Notification</li>
+         @endforelse
       </ul>
    </div>
    <div class="dropdown dropdown-end">
       <div tabindex="0" role="button" class="btn btn-ghost hover:bg-transparent avatar">
          <div class="w-12 rounded-full tex">
             <img alt="Tailwind CSS Navbar component"
-               src="{{ asset(Auth::user()->hasRole(RoleInterface::ROLE_ADMIN) ? 'assets/user.svg' : Auth::user()->profile->attachment->first()->path) }}" />
+               src="{{ asset(Auth::user()->hasRole(RoleInterface::ROLE_ADMIN) ? 'assets/user.svg' : (Auth::user()->profile->attachment->first()->path)) }}" />
          </div>
       </div>
       <ul tabindex="5" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">

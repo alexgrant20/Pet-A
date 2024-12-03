@@ -119,7 +119,7 @@
                         <div class="text-lg font-bold ml-2">Upcoming Appointment</div>
                      </div>
                      <div class="font-bold text-4xl">{{ $activeAppointments->count() }}</div>
-                     @if ($totalUpcomingAppointmentDifference != 0)
+                     {{-- @if ($totalUpcomingAppointmentDifference != 0)
                         <div>
                            <span>
                               <i
@@ -130,7 +130,7 @@
                            </span>
                            <span>from last month</span>
                         </div>
-                     @endif
+                     @endif --}}
                   </div>
                </div>
                <div class="card rounded-2xl shadow-xl bg-white opacity-85 ml-5 w-full">
@@ -190,7 +190,7 @@
                         <div class="py-4 flex flex-col gap-2">
                            <div class="flex items-center gap-2">
                               <img class="mt-4 w-8 h-8 object-cover rounded-full"
-                                 src="{{ asset($appointment->petOwner->attachment->first()?->path) }}"
+                                 src="{{ asset($appointment->petOwner->attachment->first()?->path ?? 'assets/user.svg') }}"
                                  alt="pet owner image">
                               <span class="text-gray-900">{{ $appointment->petOwner->user->name }}</span>
                            </div>
@@ -331,39 +331,18 @@
                            usePointStyle: true,
                         },
                      },
-                     // beforeInit: function(chart, options) {
-                     //    Chart.Legend.prototype.afterFit = function() {
-                     //       this.width = this.width + 50;
-                     //    };
-                     // },
-                     // beforeDraw: function(chart) {
-                     //    console.log(chart);
-                     //    const width = chart.width;
-                     //    const height = this.height;
-                     //    const ctx = this.ctx;
-                     //    const text = chart.config.centerText ?? '';
-
-                     //    const fontSize = (height / 114).toFixed(2);
-                     //    const textX = Math.round((width - ctx.measureText(text).width) / 2) - text
-                     //       .toString()
-                     //       .length * 6;
-                     //    const textY = (height / 2) - (chart.legend.height / 2);
-
-                     //    const maxChartLabel = Math.max.apply(Math, $.map(chartLabel, function(el) {
-                     //       return el.length
-                     //    }));
-
-                     //    ctx.restore();
-                     //    ctx.font = fontSize + "em sans-serif";
-                     //    ctx.textBaseline = "middle";
-                     //    ctx.fillText(text, textX, textY);
-                     //    ctx.save();
-                     // },
+                     datalabels: {
+                        color: '#fff',
+                        font: {
+                           size: 16,
+                           weight: 'bold'
+                        }
+                     }
                   },
                },
+               plugins: [ChartDataLabels]
             }
          );
-
 
          const vaccinationDoughnutLabels = vaccinationAppointment.petType;
          const vaccinationDoughnutData = vaccinationAppointment.totalVaccination;
@@ -394,36 +373,16 @@
                            usePointStyle: true,
                         },
                      },
-                     // beforeInit: function(chart, options) {
-                     //    Chart.Legend.prototype.afterFit = function() {
-                     //       this.width = this.width + 50;
-                     //    };
-                     // },
-                     // beforeDraw: function(chart) {
-                     //    console.log(chart);
-                     //    const width = chart.width;
-                     //    const height = this.height;
-                     //    const ctx = this.ctx;
-                     //    const text = chart.config.centerText ?? '';
-
-                     //    const fontSize = (height / 114).toFixed(2);
-                     //    const textX = Math.round((width - ctx.measureText(text).width) / 2) - text
-                     //       .toString()
-                     //       .length * 6;
-                     //    const textY = (height / 2) - (chart.legend.height / 2);
-
-                     //    const maxChartLabel = Math.max.apply(Math, $.map(chartLabel, function(el) {
-                     //       return el.length
-                     //    }));
-
-                     //    ctx.restore();
-                     //    ctx.font = fontSize + "em sans-serif";
-                     //    ctx.textBaseline = "middle";
-                     //    ctx.fillText(text, textX, textY);
-                     //    ctx.save();
-                     // },
+                     datalabels: {
+                        color: '#fff',
+                        font: {
+                           size: 16,
+                           weight: 'bold'
+                        }
+                     }
                   },
                },
+               plugins: [ChartDataLabels]
             }
          );
 
@@ -431,7 +390,6 @@
          const consultationDoughnutLabels = consultationAppointment.petType;
          const consultationDoughnutData = consultationAppointment.totalConsultation;
 
-         console.log(consultationAppointment, vaccinationAppointment);
          new Chart(
             $('#consultation_appointment_doughnut'), {
                type: 'doughnut',
@@ -458,40 +416,18 @@
                            usePointStyle: true,
                         },
                      },
-                     // beforeInit: function(chart, options) {
-                     //    Chart.Legend.prototype.afterFit = function() {
-                     //       this.width = this.width + 50;
-                     //    };
-                     // },
-                     // beforeDraw: function(chart) {
-                     //    console.log(chart);
-                     //    const width = chart.width;
-                     //    const height = this.height;
-                     //    const ctx = this.ctx;
-                     //    const text = chart.config.centerText ?? '';
-
-                     //    const fontSize = (height / 114).toFixed(2);
-                     //    const textX = Math.round((width - ctx.measureText(text).width) / 2) - text
-                     //       .toString()
-                     //       .length * 6;
-                     //    const textY = (height / 2) - (chart.legend.height / 2);
-
-                     //    const maxChartLabel = Math.max.apply(Math, $.map(chartLabel, function(el) {
-                     //       return el.length
-                     //    }));
-
-                     //    ctx.restore();
-                     //    ctx.font = fontSize + "em sans-serif";
-                     //    ctx.textBaseline = "middle";
-                     //    ctx.fillText(text, textX, textY);
-                     //    ctx.save();
-                     // },
+                     datalabels: {
+                        color: '#fff',
+                        font: {
+                           size: 16,
+                           weight: 'bold'
+                        }
+                     }
                   },
                },
+               plugins: [ChartDataLabels]
             }
          );
-
       })();
    </script>
-
 @endsection

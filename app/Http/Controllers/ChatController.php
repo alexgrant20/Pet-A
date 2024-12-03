@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Interfaces\RoleInterface;
 use App\Models\Message;
+use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class ChatController extends Controller
+class ChatController extends Controller implements RoleInterface
 {
    public function adminChat($sessionId)
    {
@@ -63,6 +65,19 @@ class ChatController extends Controller
       $message->session_id = $request->input('sessionId');
       $message->message = $request->input('message');
       $message->save();
+
+      if (!Auth::user()->hasRole(self::ROLE_ADMIN)) {
+         $adminId = User::role('admin')->pluck('id');
+
+         foreach ($adminId as $id) {
+            Notification::create([
+               'user_id' => $id,
+               'title' => 'You have new message from ' . Auth::user()->name,
+               'link' => route('admin.chat.show', $request->input('sessionId')),
+               'is_emailed' => true
+            ]);
+         }
+      }
 
       return response()->json(['status' => 'Message sent!']);
    }

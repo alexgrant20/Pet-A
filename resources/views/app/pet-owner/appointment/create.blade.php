@@ -200,5 +200,5 @@
       });
    </script>
 
-   {!! JsValidator::formRequest('App\Http\Requests\PetOwner\StoreAppointmentRequest', 'form') !!}
+   {{-- {!! JsValidator::formRequest('App\Http\Requests\PetOwner\StoreAppointmentRequest', 'form') !!} --}}
 @endsection

@@ -38,7 +38,7 @@
                      <div class="py-4 flex flex-col gap-2">
                         <div class="flex items-center gap-2">
                            <img class="mt-4 w-8 h-8 object-cover rounded-full"
-                              src="{{ asset($appointment->petOwner->attachment->first()?->path) }}" alt="pet owner image">
+                              src="{{ asset($appointment->petOwner->attachment->first()?->path ?? 'assets/user.svg') }}" alt="pet owner image">
                            <span class="text-gray-900">{{ $appointment->petOwner->user->name }}</span>
                         </div>
                         <div class="flex items-center gap-2">

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Appointment;
 use App\Models\Message;
+use App\Models\Notification;
 use App\Models\User;
 use App\Services\PetService;
 use Carbon\Carbon;
@@ -54,6 +55,21 @@ class ViewPetOwnerServiceProvider extends ServiceProvider
          ->count();
 
          $view->with('newMessageCount', $newMessageCount);
+      });
+
+      View::composer(['layouts.master.navbar'], function ($view) {
+         $newNotificationCount = Notification::where('user_id', Auth::id())
+         ->where('is_seen', 0)
+         ->count();
+
+         $view->with('newNotificationCount', $newNotificationCount);
+      });
+
+      View::composer(['layouts.master.navbar'], function ($view) {
+         $notifications = Notification::where('user_id', Auth::id())
+         ->get();
+
+         $view->with('notifications', $notifications);
       });
    }
 }

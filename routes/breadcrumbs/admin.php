@@ -117,14 +117,9 @@ Breadcrumbs::for('user-management', function (BreadcrumbTrail $trail) {
 	$trail->push('User Management', route('admin.user-management.index'));
 });
 
-Breadcrumbs::for('user-management-create', function (BreadcrumbTrail $trail) {
-	$trail->parent('user-management');
-	$trail->push('Add Veterinarian', route('admin.user-management.create'));
-});
-
 Breadcrumbs::for('user-management-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('user-management');
-	$trail->push('Edit Veterinarian');
+	$trail->push('Edit User Data');
 });
 
 Breadcrumbs::for('user-management-change-password', function (BreadcrumbTrail $trail) {

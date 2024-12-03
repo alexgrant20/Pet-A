@@ -17,10 +17,4 @@ class ResetPasswordRequest extends FormRequest
 			'password' => 'required|confirmed|string|min:8'
  		];
 	}
-	public function attributes()
-	{
-		return [
-			'password' => 'Kata Sandi'
-		];
-	}
 }

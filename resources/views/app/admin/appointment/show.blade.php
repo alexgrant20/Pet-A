@@ -22,7 +22,8 @@
             <div class="flex items-center justify-center px-5">
                <div class="relative">
                   <img id="pet_owner_image_preview" class="w-36 h-36 rounded-full object-cover unselectable"
-                     src="{{ asset($appointment->petOwner->attachment->first()?->path) }}" alt="pet owner image">
+                     src="{{ asset($appointment->petOwner->attachment->first()?->path ?? 'assets/user.svg') }}"
+                     alt="pet owner image">
                </div>
             </div>
 
@@ -41,12 +42,14 @@
                      {{ $appointment->petOwner->user->email }}</span>
                </div>
 
-               <div class="w-full mb-1 gap-2 mb-3">
-                  <span class="uppercase font-bold text-xs text-primary">Address</span>
-                  <div class="col-span-3">
-                     <span> {{ $appointment->petOwner->address }}</span>
+               @if ($appointment->petOwner->address)
+                  <div class="w-full mb-1 gap-2 mb-3">
+                     <span class="uppercase font-bold text-xs text-primary">Address</span>
+                     <div class="col-span-3">
+                        <span> {{ $appointment->petOwner->address }}</span>
+                     </div>
                   </div>
-               </div>
+               @endif
             </div>
          </div>
          <div class="w-full mb-1 gap-2 mb-3 py-3 px-4 bg-gray-100 rounded-lg">
@@ -488,9 +491,9 @@
                      <textarea class="textarea textarea-bordered border-2 border-primary" name="summary" placeholder="">{{ old('summary') }}</textarea>
                   </div>
 
-                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary btn-padding">Submit</button>
-                     </div>
+                  <div class="text-right">
+                     <button type="submit" class="btn btn-primary btn-padding">Submit</button>
+                  </div>
                @endif
             </form>
          </div>

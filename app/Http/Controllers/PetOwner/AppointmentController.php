@@ -83,6 +83,7 @@ class AppointmentController extends Controller
 
       try {
          $petOwnerId = Auth::user()->profile_id;
+         $veterinarianUserId = Veterinarian::find($request->veterinarian_id)->user->id;
 
          $appointment = Appointment::create([
             'pet_owner_id' => $petOwnerId,
@@ -101,6 +102,13 @@ class AppointmentController extends Controller
             'title' => "{$serviceType->name} Appointment with {$veterinarian->user->name} at Clinic {$veterinarian->clinic->name}",
             'date_start' => $request->appointment_date . ' ' . $appointmentSchedule->start_time->format("H:i"),
             'link' => route('pet-owner.appointment.show', $appointment->id)
+         ]);
+
+         Notification::create([
+            'user_id' => $veterinarianUserId,
+            'title' => "You have new {$serviceType->name} appointment from " . Auth::user()->name . " on " . $appointment->appointment_date->format('F d, Y') . ' at ' . $appointmentSchedule->start_time->format("H:i"),
+            'link' => route('admin.appointment.show', $appointment->id),
+            'is_emailed' => true
          ]);
 
          Mail::send('email.reminder', [

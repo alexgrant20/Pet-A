@@ -70,9 +70,9 @@ class HomeController extends Controller implements RoleInterface, ServiceTypeInt
             'activeAppointments',
             'totalTodayAppointment',
             'totalFinishedAllAppointment',
-            'totalUpcomingAppointmentDifference',
-            'differenceTotalAppointmentClass',
-            'differenceTotalAppointmentIcon',
+            // 'totalUpcomingAppointmentDifference',
+            // 'differenceTotalAppointmentClass',
+            // 'differenceTotalAppointmentIcon',
             'totalConsultationAppointment',
             'totalVaccinationAppointment',
          ] :
