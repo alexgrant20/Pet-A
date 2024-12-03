@@ -49,7 +49,7 @@ Route::name('appointment.')
       Route::post('/', 'store')->name('store');
       Route::get('/list/appointment', 'getList')->name('list.appointment');
       Route::post('/rate', 'giveRating')->name('give.rating');
-      Route::get('/getAppointmentSchedule/{veterinarianId}/{date}', 'getAppointmentSchedule')->name('get-appointment-schedule');
+      Route::get('/getAppointmentSchedule/{veterinarianId}/{date}/{today}', 'getAppointmentSchedule')->name('get-appointment-schedule');
       Route::get('/{appointment}', 'show')->name('show');
    });
 

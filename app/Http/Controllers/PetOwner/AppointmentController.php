@@ -126,17 +126,16 @@ class AppointmentController extends Controller
       return view('app.pet-owner.appointment.show', compact('appointment'));
    }
 
-   public function getAppointmentSchedule($veterinarianId, $date)
+   public function getAppointmentSchedule($veterinarianId, $date, $isToday)
    {
       $date = Carbon::parse($date);
       $now = now()->toTimeString();
-
 
       $appointmentSchedule = DB::table('appointment_schedules')
          ->selectRaw("TO_CHAR(start_time, 'HH24:MI') as formatted_time, *")
          ->where('veterinarian_id', $veterinarianId)
          ->where('day', $date->dayOfWeek + 1)
-         ->whereRaw("start_time > '{$now}'")
+         ->when($isToday == "true", fn($q) => $q->where('start_time', '>', $now))
          ->orderBy('start_time')
          ->get();
 

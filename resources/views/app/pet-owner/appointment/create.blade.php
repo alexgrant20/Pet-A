@@ -131,6 +131,8 @@
       const veterinarian = @json($veterinarian);
       const veterinarianActiveDate = @json($veterinarianActiveDate);
 
+      console.log(veterinarianActiveDate)
+
       $('form').on('submit', function(e) {
          if ($(this).valid()) {
             $('button').attr('disabled', true);
@@ -154,7 +156,8 @@
          onRenderCell: ({
             date
          }) => {
-            if (!(veterinarianActiveDate.includes(date.getDay().toString()))) {
+            console.log(date.getDay().toString())
+            if (!(veterinarianActiveDate.includes((date.getDay() + 1).toString()))) {
                return {
                   disabled: true
                }
@@ -165,10 +168,16 @@
       $('[name="appointment_date"]').on('change', function() {
 
          const dateString = $(this).val();
-         const route = "{{ route('pet-owner.appointment.get-appointment-schedule', [':id', ':date']) }}"
-            .replace(':id', veterinarian.id)
-            .replace(':date', dateString);
 
+         const today = new Date();
+         const todayParsed = ('0' + today.getDate()).slice(-2) + '-' +
+            ('0' + (today.getMonth() + 1)).slice(-2) + '-' +
+            today.getFullYear();
+
+         const route = "{{ route('pet-owner.appointment.get-appointment-schedule', [':id', ':date', ':today']) }}"
+            .replace(':id', veterinarian.id)
+            .replace(':date', dateString)
+            .replace(':today', todayParsed == dateString);
          $('#appointment_schedule_id').html('').select2({
             data: [{
                id: '',
