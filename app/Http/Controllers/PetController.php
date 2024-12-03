@@ -218,14 +218,6 @@ class PetController extends Controller
       return to_route('pet-owner.index')->with('success-toast', 'Hewan Peliharaan Berhasil Diperbarui');
    }
 
-   /**
-    * Remove the specified resource from storage.
-    */
-   public function destroy(string $id)
-   {
-      //
-   }
-
    public function switchPetProfile(Pet $pet)
    {
       $pet = $this->petService->transformData($pet);

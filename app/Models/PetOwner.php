@@ -33,11 +33,6 @@ class PetOwner extends Model
     return $this->hasMany(Appointment::class);
   }
 
-  public function appointmentRequest()
-  {
-    return $this->hasMany(AppointmentRequest::class);
-  }
-
   public function user()
   {
     return $this->morphOne(User::class, 'profile');

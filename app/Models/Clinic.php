@@ -27,11 +27,6 @@ class Clinic extends Model
         return $this->hasMany(Appointment::class);
     }
 
-    public function appointmentRequest()
-    {
-        return $this->hasMany(AppointmentRequest::class);
-    }
-
     public function user()
     {
         return $this->morphMany(User::class, 'profile');

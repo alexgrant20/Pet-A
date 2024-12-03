@@ -43,11 +43,6 @@ class Appointment extends Model
       return $this->belongsTo(Veterinarian::class);
    }
 
-   public function appointmentType()
-   {
-      return $this->belongsTo(AppointmentType::class);
-   }
-
    public function appointmentSchedule()
    {
       return $this->belongsTo(AppointmentSchedule::class);

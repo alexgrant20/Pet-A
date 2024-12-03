@@ -34,11 +34,6 @@ class PetMedication extends Model
       return $this->hasOneThrough(MedicalRecord::class, MedicalRecordTreatment::class);
    }
 
-   public function petMedicationSchedule()
-   {
-      return $this->hasMany(PetMedicationSchedule::class);
-   }
-
    public function getGivenAtAttribute($value)
    {
        return Carbon::parse($value)->format('d-m-Y');
