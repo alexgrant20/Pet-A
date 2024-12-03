@@ -9,7 +9,6 @@ use App\Models\AppointmentSchedule;
 use App\Models\Notification;
 use App\Models\PetType;
 use App\Models\Rating;
-use App\Models\ServicePrice;
 use App\Models\ServiceType;
 use App\Models\Veterinarian;
 use Carbon\Carbon;
@@ -168,6 +167,6 @@ class AppointmentController extends Controller
          'rating' => $request->rating
       ]);
 
-      return back()->with('success-swal', 'Berhasil Membuat Rating');
+      return back()->with('success-swal', 'Successfully give rating');
    }
 }

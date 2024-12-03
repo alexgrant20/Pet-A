@@ -60,7 +60,7 @@ class AppointmentScheduleController extends Controller
          ->make();
    }
 
-   public function saveSchedule($day, Request $request)
+   public function saveSchedule(Request $request)
    {
       $payload = [];
       $appointmentSchedule = $request->appointment_schedule;
