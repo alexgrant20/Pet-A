@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->uuid('user_id');
-            $table->unsignedBigInteger('pet_id');
+            $table->unsignedBigInteger('pet_id')->nullable();
             $table->string('title');
             $table->text('link')->nullable();
             $table->dateTime('date_start')->nullable();
             $table->dateTime('date_end')->nullable();
             $table->boolean('is_emailed')->default(false);
+            $table->boolean('is_seen')->default(false);
 
             $table->timestamps();
             $table->string('created_by')->nullable();
