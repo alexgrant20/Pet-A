@@ -45,6 +45,10 @@ class EnsurePetSession
 
       $pet = $pet ? $pets->where('id', $pet->id)->first() : $pets->first();
 
+      if($pet == null) {
+         $pet = $pets->first();
+      }
+
       $pet = $petService->transformData($pet);
       session()->put('session_pet', $pet);
 

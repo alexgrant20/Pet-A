@@ -148,6 +148,16 @@
                         </button>
                      </div>
                   </form>
+
+                  <h2 class="text-lg text-error font-bold mb-1 mt-10">Danger Zone</h2>
+                  <div class="w-full flex items-center justify-center p-5 border-error border-2 rounded-xl">
+                     <form action="{{ route('pet-owner.pet.destroy', ['pet' => $selectedPet->id]) }}" method="POST" id="deletePetForm">
+                        @csrf
+                        @method('DELETE')
+                        <button id="deletePetButton" class="btn btn-error btn-padding text-white uppercase"
+                           type="button">delete pet</button>
+                     </form>
+                  </div>
                </div>
 
                <div id="pet-allergy-part" class="content" role="tabpanel" aria-labelledby="pet-allergy-part-trigger">
@@ -270,59 +280,59 @@
                </div>
 
                <div id="pet-medication-part" class="content" role="tabpanel"
-               aria-labelledby="pet-medication-part-trigger">
-               <form action="#" class="grid gap-3 mb-12">
-                  <input type="hidden" name="pet_id" value="{{ $pet->id }}">
+                  aria-labelledby="pet-medication-part-trigger">
+                  <form action="#" class="grid gap-3 mb-12">
+                     <input type="hidden" name="pet_id" value="{{ $pet->id }}">
 
-                  <label class="form-control w-full">
-                     <div class="label">
-                        <span class="label-text font-semibold">Medication Type</span>
+                     <label class="form-control w-full">
+                        <div class="label">
+                           <span class="label-text font-semibold">Medication Type</span>
+                        </div>
+
+                        <select class="select select-2 select-bordered w-full form-control flex-row" data-placeholder=""
+                           name="medication_type_id">
+                           <option value="" hidden></option>
+                           @foreach ($medicationTypes as $medicationType)
+                              <option class="text-black" value="{{ $medicationType->id }}">
+                                 {{ $medicationType->name }}
+                              </option>
+                           @endforeach
+                        </select>
+                     </label>
+
+                     <label class="form-control w-full">
+                        <div class="label">
+                           <span class="label-text font-semibold">Medication Name</span>
+                        </div>
+                        <input type="text" class="input input-bordered w-full" name="medicine_name" />
+                     </label>
+
+                     <label class="form-control w-full">
+                        <div class="label">
+                           <span class="label-text font-semibold">Given At</span>
+                        </div>
+                        <input type="text" class="input input-bordered w-full date-picker" name="given_at"
+                           readonly />
+                     </label>
+
+                     <div class="flex justify-end">
+                        <button type="submit" class="btn btn-padding btn-primary mt-3 pet_medication_btn">Add</button>
                      </div>
+                  </form>
 
-                     <select class="select select-2 select-bordered w-full form-control flex-row"
-                        data-placeholder="" name="medication_type_id">
-                        <option value="" hidden></option>
-                        @foreach ($medicationTypes as $medicationType)
-                           <option class="text-black" value="{{ $medicationType->id }}">
-                              {{ $medicationType->name }}
-                           </option>
-                        @endforeach
-                     </select>
-                  </label>
-
-                  <label class="form-control w-full">
-                     <div class="label">
-                        <span class="label-text font-semibold">Medication Name</span>
-                     </div>
-                     <input type="text" class="input input-bordered w-full" name="medicine_name" />
-                  </label>
-
-                  <label class="form-control w-full">
-                     <div class="label">
-                        <span class="label-text font-semibold">Given At</span>
-                     </div>
-                     <input type="text" class="input input-bordered w-full date-picker" name="given_at"
-                        readonly />
-                  </label>
-
-                  <div class="flex justify-end">
-                     <button type="submit" class="btn btn-padding btn-primary mt-3 pet_medication_btn">Add</button>
-                  </div>
-               </form>
-
-               <table class="pet_medication_list_table w-full row-border text-left">
-                  <thead>
-                     <tr>
-                        <th class="w-3/12">Medication Type</th>
-                        <th class="w-3/12">Medication Name</th>
-                        <th class="w-3/12">Given At</th>
-                        <th class="w-3/12">Action</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-               </table>
-            </div>
+                  <table class="pet_medication_list_table w-full row-border text-left">
+                     <thead>
+                        <tr>
+                           <th class="w-3/12">Medication Type</th>
+                           <th class="w-3/12">Medication Name</th>
+                           <th class="w-3/12">Given At</th>
+                           <th class="w-3/12">Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                     </tbody>
+                  </table>
+               </div>
 
                <div id="medical-record-part" class="content" role="tabpanel"
                   aria-labelledby="medical-record-part-trigger">
@@ -668,6 +678,28 @@
             petVaccinationDatatables,
             "{{ route('pet-owner.pet-vaccination.destroy', ':id') }}"
          );
+      });
+
+      document.getElementById('deletePetButton').addEventListener('click', function() {
+         swal({
+            title: "Are you sure?",
+            text: "Type 'DELETE' to confirm.",
+            content: {
+               element: "input",
+               attributes: {
+                  placeholder: "Type DELETE here...",
+                  type: "text",
+               },
+            },
+            buttons: ["Cancel", "Confirm"],
+            dangerMode: true,
+         }).then((value) => {
+            if (value === "DELETE") {
+               document.getElementById('deletePetForm').submit();
+            } else if (value) {
+               swal("Error", "You must type DELETE to confirm.", "error");
+            }
+         });
       });
 
       function resetForm($formElement) {

@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 class Pet extends Model
 {
-   use HasFactory;
+   use HasFactory, SoftDeletes;
 
    protected $guarded = ['id'];
 
@@ -68,9 +69,9 @@ class Pet extends Model
       $ageYear = date_diff($birthDate, now())->format("%y");
       $ageMonth = date_diff($birthDate, now())->format("%m");
 
-      if ($ageYear > 0 && $ageMonth > 0) $age = $shortened ? "$ageYear,$ageMonth tahun" :"$ageYear tahun $ageMonth bulan";
-      else if ($ageYear > 0) $age = $ageYear  . " tahun";
-      else if ($ageMonth > 0) $age = $ageMonth . " bulan";
+      if ($ageYear > 0 && $ageMonth > 0) $age = $shortened ? "$ageYear,$ageMonth year" :"$ageYear year $ageMonth month";
+      else if ($ageYear > 0) $age = $ageYear  . " year";
+      else if ($ageMonth > 0) $age = $ageMonth . " month";
 
       return $age;
    }

@@ -156,6 +156,14 @@
          </div>
       </div>
 
+      @if (!$appointment->finished_at && $appointment->appointment_date > now() && !$appointment->is_cancelled)
+         <form action="{{ route('pet-owner.appointment.cancel') }}" method="POST" id="cancelAppointmentForm">
+            @csrf
+
+            <input type="hidden" name="appointment_id" value="{{ $appointment->id }}">
+            <button id="cancelAppointmentButton" class="btn btn-padding btn-error text-white" type="button">Cancel Appointment</button>
+         </form>
+      @endif
    </section>
 @endsection
 
@@ -188,6 +196,29 @@
                });
             });
          }
+
+         document.getElementById('cancelAppointmentButton').addEventListener('click', function() {
+            swal({
+               title: "Are you sure?",
+               text: "Type 'CANCEL' to confirm.",
+               content: {
+                  element: "input",
+                  attributes: {
+                     placeholder: "Type CANCEL here...",
+                     type: "text",
+                  },
+               },
+               buttons: ["Cancel", "Confirm"],
+               dangerMode: true,
+            }).then((value) => {
+               console.log(value)
+               if (value === "CANCEL") {
+                  document.getElementById('cancelAppointmentForm').submit();
+               } else if (value) {
+                  swal("Error", "You must type CANCEL to confirm.", "error");
+               }
+            });
+         });
 
          function updateStars(rating) {
             stars.forEach((star, index) => {

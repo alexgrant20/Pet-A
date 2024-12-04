@@ -289,8 +289,9 @@
          const lowerBoundValue = pet.breed.minimum_weight;
 
          petWeight.forEach(function(data) {
+            const changeWeight = data.unit == "kg" ? data.weight : data.weight / 1000;
             labels.push(new Date(data.created_at).toLocaleDateString("en-US"));
-            weight.push(data.weight);
+            weight.push(changeWeight);
          });
 
          var ctx = document.getElementById('acquisitions').getContext('2d');

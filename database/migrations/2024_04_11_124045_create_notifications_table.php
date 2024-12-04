@@ -20,13 +20,13 @@ return new class extends Migration
             $table->dateTime('date_start')->nullable();
             $table->dateTime('date_end')->nullable();
             $table->boolean('is_emailed')->default(false);
-            $table->boolean('is_seen')->default(false);
 
             $table->timestamps();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->softDeletesTz('deleted_at', precision: 0);
             $table->string('deleted_by')->nullable();
+            $table->boolean('is_seen')->default(false);
         });
     }
 

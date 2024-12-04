@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PetOwner;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PetOwner\StoreAppointmentRequest;
+use App\Jobs\SendReminderEmail;
 use App\Models\Appointment;
 use App\Models\AppointmentSchedule;
 use App\Models\Notification;
@@ -38,6 +39,8 @@ class AppointmentController extends Controller
       $petTypes = PetType::all();
       $appointment = Appointment::with('pet', 'veterinarian.user', 'appointmentSchedule', 'rating')
          ->where('pet_owner_id', auth()->user()->profile->id)
+         ->orderBy('is_cancelled', 'asc')
+         ->orderBy('appointment_date', 'asc')
          ->get();
 
       return view('app.pet-owner.appointment.index', compact('veterinarians', 'petTypes', 'name', 'appointment'));
@@ -110,13 +113,9 @@ class AppointmentController extends Controller
             'is_emailed' => true
          ]);
 
-         Mail::send('email.reminder', [
-            'notification' => $notification
-         ], function ($message) use ($notification) {
-            $message->to($notification->user->email);
-            $message->subject($notification->title);
-         });
+         SendReminderEmail::dispatch($notification);
       } catch (\Exception $e) {
+         dd($e->getMessage());
          DB::rollBack();
          return back()->with('error-swal', 'Something went wrong');
       }
@@ -149,6 +148,7 @@ class AppointmentController extends Controller
       $appointmentDateFilter = Appointment::where('veterinarian_id', $veterinarianId)
          ->whereDate('appointment_date', $date)
          ->whereIn('appointment_schedule_id', $appointmentSchedule->pluck('id')->toArray())
+         ->where('is_cancelled', false)
          ->pluck('appointment_schedule_id')
          ->toArray();
 
@@ -168,5 +168,24 @@ class AppointmentController extends Controller
       ]);
 
       return back()->with('success-swal', 'Successfully give rating');
+   }
+
+   public function cancel(Request $request)
+   {
+      $appointment = Appointment::where('id', $request->appointment_id)->where('pet_owner_id', auth()->user()->profile->id)->first();
+
+      if(!$appointment)
+      {
+         abort(404);
+      }
+
+      $appointment->update([
+         'is_cancelled' => true,
+         'finished_at' => now()
+      ]);
+
+      Notification::where('link', route('pet-owner.appointment.show', $appointment->id))->delete();
+
+      return to_route('pet-owner.appointment.index')->with('success-swal', 'Successfully cancelled appointment');
    }
 }

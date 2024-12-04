@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
             $table->softDeletesTz('deleted_at', precision: 0);
             $table->string('deleted_by')->nullable();
+
+            $table->boolean('is_cancelled')->default(false);
         });
     }
 

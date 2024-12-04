@@ -4,6 +4,36 @@
 
 @section('content')
    <div class="flex flex-col gap-8 min-h-[inherit] py-10 px-6">
+      <div class="w-full bg-white/30 p-6 rounded shadow-xl">
+         <h2 class="text-2xl font-bold mb-5 text-gray-800">Your Appointment</h2>
+         <table class="w-full table-auto text-left" id="appointment_history">
+            <thead>
+               <tr>
+                  <th class="font-bold">
+                     <p>Pet</p>
+                  </th>
+                  <th class="font-bold">
+                     <p>Doctor</p>
+                  </th>
+                  <th class="font-bold w-36">
+                     <p>Date</p>
+                  </th>
+                  <th class="font-bold w-28">
+                     <p>Status</p>
+                  </th>
+                  <th class="font-bold w-12">
+                     <p>Rating</p>
+                  </th>
+                  <th class="font-bold w-1">
+                     <p class=""></p>
+                  </th>
+               </tr>
+            </thead>
+            <tbody>
+            </tbody>
+         </table>
+      </div>
+
       <div class="shadow bg-white/30 p-4 flex flex-col gap-5">
          <form onsubmit="return searchQuery(event)">
             <label class="input input-bordered flex items-center gap-2">
@@ -92,37 +122,6 @@
          </div>
          {{ $veterinarians->links() }}
       </div>
-
-
-      <div class="w-full bg-white/30 p-6 rounded shadow-xl">
-         <h2 class="text-2xl font-bold mb-5 text-gray-800">Your Appointment</h2>
-         <table class="w-full table-auto text-left" id="appointment_history">
-            <thead>
-               <tr>
-                  <th class="font-bold">
-                     <p>Pet</p>
-                  </th>
-                  <th class="font-bold">
-                     <p>Doctor</p>
-                  </th>
-                  <th class="font-bold w-36">
-                     <p>Date</p>
-                  </th>
-                  <th class="font-bold w-28">
-                     <p>Status</p>
-                  </th>
-                  <th class="font-bold w-12">
-                     <p>Rating</p>
-                  </th>
-                  <th class="font-bold w-1">
-                     <p class=""></p>
-                  </th>
-               </tr>
-            </thead>
-            <tbody>
-            </tbody>
-         </table>
-      </div>
    </div>
 @endsection
 
@@ -146,6 +145,7 @@
 
          $('#appointment_history').DataTable({
             autoWidth: false,
+            order: [],
             data: appointment,
             columns: [{
                   data: 'pet.name',
@@ -168,15 +168,18 @@
                   data: 'status',
                   name: 'status',
                   render: function(data, index, row) {
-                     return row.finished_at ?
-                        ` <div
-                              class="w-fit badge uppercase border border-green-500 bg-green-500/20 text-green-900 text-xs">
-                              <span>Done</span>
+                     return row.is_cancelled ?
+                        `<div class="w-fit badge uppercase font-bold border border-red-500 bg-red-500/20 text-red-900 text-xs">
+                              <span>Cancelled</span>
                            </div>` :
-                        ` <div
-                              class="w-fit badge uppercase font-bold border border-secondary bg-secondary/20 text-blue-900 text-xs">
+                        (row.finished_at ?
+                           `<div class="w-fit badge uppercase border border-green-500 bg-green-500/20 text-green-900 text-xs">
+                           <span>Done</span>
+                           </div>` :
+                           `<div class="w-fit badge uppercase font-bold border border-secondary bg-secondary/20 text-blue-900 text-xs">
                               <span>On-Going</span>
-                           </div>`
+                        </div>`);
+
                   }
                },
                {

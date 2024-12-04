@@ -13,7 +13,8 @@ class PetService
    {
       $pet->load([
          'appointment' => function ($q) {
-            $q->orderBy('created_at');
+            $q->where('is_cancelled', false);
+            $q->orderBy('appointment_date');
             $q->with('appointmentSchedule', 'serviceType');
          },
          'breed.petType',

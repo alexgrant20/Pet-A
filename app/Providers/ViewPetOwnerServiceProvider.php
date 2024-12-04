@@ -48,10 +48,11 @@ class ViewPetOwnerServiceProvider extends ServiceProvider
       View::composer(['layouts.master.sidebar'], function ($view) {
          $adminId = User::withoutRole('pet-owner')->pluck('id');
 
-         $newMessageCount =  Message::selectRaw('user_id, MIN(is_read::int) as is_read')
-         ->whereNotIn('user_id', $adminId->toArray())
+         $newMessageCount =  Message::whereNotIn('user_id', $adminId->toArray())
+         ->select('session_id')
          ->where('is_read', 0)
-         ->groupBy('user_id')
+         ->groupBy('session_id')
+         ->get()
          ->count();
 
          $view->with('newMessageCount', $newMessageCount);
