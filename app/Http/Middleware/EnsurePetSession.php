@@ -37,7 +37,6 @@ class EnsurePetSession
          if(Route::current()->action['as'] == 'pet-owner.index') {
             return false;
          };
-
          return true;
       }
 

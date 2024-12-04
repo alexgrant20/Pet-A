@@ -23,9 +23,4 @@ class AppointmentSchedule extends Model
     {
         return $this->belongsTo(Veterinarian::class);
     }
-
-    public function appointmentRequest()
-    {
-        return $this->hasMany(AppointmentRequest::class);
-    }
 }

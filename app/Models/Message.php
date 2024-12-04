@@ -8,11 +8,6 @@ class Message extends Model
 {
   protected $fillable = ['id', 'user_id', 'text', 'online_consultation_id'];
 
-  public function onlineConsultation()
-  {
-    return $this->belongsTo(OnlineConsultation::class);
-  }
-
   public function user()
   {
     return $this->belongsTo(User::class);

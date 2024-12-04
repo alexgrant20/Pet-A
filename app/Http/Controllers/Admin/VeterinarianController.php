@@ -62,8 +62,6 @@ class VeterinarianController extends Controller implements RoleInterface
 
    public function store(StoreVeterinarianRequest $request)
    {
-      $payload = $request->validated();
-
       try {
          DB::beginTransaction();
 
@@ -152,10 +150,5 @@ class VeterinarianController extends Controller implements RoleInterface
 
       DB::commit();
       return to_route('admin.veterinarian.index')->with('success-toast', 'Veterianarian Sucessfully Updated');
-   }
-
-   public function destroy(string $id)
-   {
-      //
    }
 }
