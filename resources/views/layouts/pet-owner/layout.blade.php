@@ -66,12 +66,14 @@
                </div>
             </div>
 
+            @php
+               $notifications = auth()->user()->notification->where('date_start', '>=', now()->format('Y-m-d'));
+            @endphp
             <div class="text-white/90 pe-5 mb-5">
                <h2 class="mb-3 text-xl">Reminder</h2>
                <div
-                  class="grid grid-flow-row gap-y-2 grid-rows-2 overflow-y-auto h-64 no-scrollbar">
-                  @forelse (auth()->user()->notification->where('date_start', '>=', now()->format('Y-m-d'))
-                     ?? [] as $notif)
+                  class="grid grid-flow-row gap-y-2 {{ $notifications->count() == 1 ? 'grid-rows-2' : '' }} overflow-y-auto h-64 no-scrollbar">
+                  @forelse ($notifications ?? [] as $notif)
                      <div class="card">
                         <div
                            class="card-body bg-white bg-opacity-85 shadow rounded-xl flex-row py-4 px-2 gap-2 items-center">
