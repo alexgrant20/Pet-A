@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PetOwner\StorePetMedicationRequest;
 use App\Models\MedicationType;
 use App\Models\Notification;
 use App\Models\PetMedication;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PetMedicationController extends Controller
 {
-   public function store(Request $request)
+   public function store(StorePetMedicationRequest $request)
    {
       $medicationType = MedicationType::findOrFail($request->medication_type_id);
 

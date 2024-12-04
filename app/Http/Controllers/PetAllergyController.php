@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PetOwner\StorePetAllergyRequest;
 use App\Models\AllergyCategory;
 use App\Models\Icon;
 use App\Models\PetAllergy;
-use Illuminate\Http\Request;
 
 class PetAllergyController extends Controller
 {
-   public function store(Request $request)
+   public function store(StorePetAllergyRequest $request)
    {
       $icon = Icon::findOrFail($request->icon_id);
       $allergyCategory = AllergyCategory::findOrFail($request->allergy_category_id);

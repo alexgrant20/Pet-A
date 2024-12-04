@@ -151,7 +151,8 @@
 
                   <h2 class="text-lg text-error font-bold mb-1 mt-10">Danger Zone</h2>
                   <div class="w-full flex items-center justify-center p-5 border-error border-2 rounded-xl">
-                     <form action="{{ route('pet-owner.pet.destroy', ['pet' => $selectedPet->id]) }}" method="POST" id="deletePetForm">
+                     <form action="{{ route('pet-owner.pet.destroy', ['pet' => $selectedPet->id]) }}" method="POST"
+                        id="deletePetForm">
                         @csrf
                         @method('DELETE')
                         <button id="deletePetButton" class="btn btn-error btn-padding text-white uppercase"
@@ -161,21 +162,22 @@
                </div>
 
                <div id="pet-allergy-part" class="content" role="tabpanel" aria-labelledby="pet-allergy-part-trigger">
-                  <form class="grid gap-3 mb-12">
+                  <form class="grid gap-3 mb-12" id="petAllergyForm">
                      <input type="hidden" class="pet_allergy_id" name="id">
                      <input type="hidden" name="pet_id" value="{{ $selectedPet->id }}">
 
                      <div class="grid lg:grid-cols-3 gap-2">
                         <label class="form-control">
                            <div class="label">
-                              <span class="label-text font-semibold">Allergy</span>
+                              <span class="label-text font-semibold">Allergy <span class="text-red-500 ">*</span></span>
                            </div>
-                           <input type="text" class="input input-bordered w-full allergy_name" name="name" />
+                           <input type="text" class="input input-bordered w-full allergy_name" name="name"
+                              required />
                         </label>
 
                         <label class="form-control">
                            <div class="label">
-                              <span class="label-text font-semibold">Icon</span>
+                              <span class="label-text font-semibold">Icon <span class="text-red-500 ">*</span></span>
                            </div>
                            <select class="select_icon select-2" data-placeholder="" name="icon_id">
                               <option value=""></option>
@@ -189,7 +191,8 @@
 
                         <label class="form-control">
                            <div class="label">
-                              <span class="label-text font-semibold">Allergy Category</span>
+                              <span class="label-text font-semibold">Allergy Category <span
+                                    class="text-red-500 ">*</span></span>
                            </div>
                            <select class="select-2" data-placeholder="" name="allergy_category_id">
                               <option value="" hidden></option>
@@ -232,12 +235,12 @@
 
                <div id="pet-vaccination-part" class="content" role="tabpanel"
                   aria-labelledby="pet-vaccination-part-trigger">
-                  <form action="#" class="grid gap-3 mb-12">
+                  <form action="#" class="grid gap-3 mb-12" id="petVaccinationForm">
                      <input type="hidden" name="pet_id" value="{{ $pet->id }}">
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Vaccination</span>
+                           <span class="label-text font-semibold">Vaccination <span class="text-red-500 ">*</span></span>
                         </div>
 
                         <select class="select select-2 select-bordered w-full form-control flex-row vaccination_select"
@@ -247,14 +250,15 @@
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Veterinarian</span>
+                           <span class="label-text font-semibold">Veterinarian <span
+                                 class="text-red-500 ">*</span></span>
                         </div>
                         <input type="text" class="input input-bordered w-full" name="given_by" />
                      </label>
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Given At</span>
+                           <span class="label-text font-semibold">Given At <span class="text-red-500 ">*</span></span>
                         </div>
                         <input type="text" class="input input-bordered w-full date-picker" name="given_at"
                            readonly />
@@ -281,16 +285,17 @@
 
                <div id="pet-medication-part" class="content" role="tabpanel"
                   aria-labelledby="pet-medication-part-trigger">
-                  <form action="#" class="grid gap-3 mb-12">
+                  <form action="#" class="grid gap-3 mb-12" id="petMedicationForm">
                      <input type="hidden" name="pet_id" value="{{ $pet->id }}">
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Medication Type</span>
+                           <span class="label-text font-semibold">Medication Type <span
+                                 class="text-red-500 ">*</span></span>
                         </div>
 
                         <select class="select select-2 select-bordered w-full form-control flex-row" data-placeholder=""
-                           name="medication_type_id">
+                           name="medication_type_id" required>
                            <option value="" hidden></option>
                            @foreach ($medicationTypes as $medicationType)
                               <option class="text-black" value="{{ $medicationType->id }}">
@@ -302,17 +307,18 @@
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Medication Name</span>
+                           <span class="label-text font-semibold">Medication Name <span
+                                 class="text-red-500 ">*</span></span>
                         </div>
-                        <input type="text" class="input input-bordered w-full" name="medicine_name" />
+                        <input type="text" class="input input-bordered w-full" name="medicine_name" required />
                      </label>
 
                      <label class="form-control w-full">
                         <div class="label">
-                           <span class="label-text font-semibold">Given At</span>
+                           <span class="label-text font-semibold">Given At <span class="text-red-500 ">*</span></span>
                         </div>
-                        <input type="text" class="input input-bordered w-full date-picker" name="given_at"
-                           readonly />
+                        <input type="text" class="input input-bordered w-full date-picker" name="given_at" readonly
+                           required />
                      </label>
 
                      <div class="flex justify-end">
@@ -358,6 +364,9 @@
 @endsection
 
 @section('js-footer')
+   {!! JsValidator::formRequest('App\Http\Requests\PetOwner\StorePetMedicationRequest', '#petMedicationForm') !!}
+   {!! JsValidator::formRequest('App\Http\Requests\PetOwner\StorePetAllergyRequest', '#petAllergyForm') !!}
+   {!! JsValidator::formRequest('App\Http\Requests\PetOwner\StorePetVaccinationRequest', '#petVaccinationForm') !!}
    <script>
       const icons = @json($icons);
       const allergyCategories = @json($allergyCategories);
@@ -731,6 +740,10 @@
 
             const $formElement = $(e.currentTarget).closest('form');
             const formPayload = $formElement.serialize();
+
+            if (!$formElement.valid()) {
+               return;
+            }
 
             $.post({
                url: postUrl,
