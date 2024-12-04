@@ -238,7 +238,8 @@ class PetController extends Controller
 			abort(400, "Illegal Action");
 		}
 
-		$haveAppointment = Appointment::where('pet_id', $pet->id)->whereNull('finished_at')->whereNull('is_cancelled')->count() > 0;
+		$haveAppointment = Appointment::where('pet_id', $pet->id)
+         ->whereNull('finished_at')->where('is_cancelled', false)->get();
 
 		if ($haveAppointment) {
 			return back()->with('error-swal', 'Pet has an Active Appointment');
