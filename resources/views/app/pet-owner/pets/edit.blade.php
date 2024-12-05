@@ -116,7 +116,7 @@
                            </div>
                            <input type="text" name="birth_date"
                               value="{{ $selectedPet->birth_date?->format('d-m-Y') }}"
-                              class="input input-bordered w-full date-picker" />
+                              class="input input-bordered w-full" />
                         </label>
 
                         <label class="form-control w-full">
@@ -370,6 +370,12 @@
    <script>
       const icons = @json($icons);
       const allergyCategories = @json($allergyCategories);
+
+      const el = document.querySelector('[name="birth_date"]');
+      new AirDatepicker(el, {
+         ...airDatePickerDefaultConfiguration,
+         maxDate: new Date(),
+      });
 
       $(function() {
          const pet = @json($selectedPet);

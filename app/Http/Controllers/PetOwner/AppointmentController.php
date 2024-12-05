@@ -61,6 +61,7 @@ class AppointmentController extends Controller
    {
       $veterinarian->with([
          'user',
+         'petType',
          'veterinarianServiceType.serviceType',
          'appointmentSchedule' => function ($query) {
             $query->where('is_active', 1);
@@ -68,10 +69,14 @@ class AppointmentController extends Controller
       ]);
 
       $serviceTypes = $veterinarian->veterinarianServiceType->pluck('serviceType')->pluck('name', 'id');
-
       $veterinarianActiveDate = $veterinarian->appointmentSchedule->pluck('day')->unique()->values();
+      $allowedPetTypeId = $veterinarian->petType->pluck('id')->toArray();
 
       $pets = Auth::user()->profile->pet;
+      $pets = $pets->filter(function ($pet) use ($allowedPetTypeId) {
+         return in_array($pet->breed->pet_type_id, $allowedPetTypeId);
+      });
+
       return view('app.pet-owner.appointment.create', compact('serviceTypes', 'pets', 'veterinarian', 'veterinarianActiveDate'));
    }
 
