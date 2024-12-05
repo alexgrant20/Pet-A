@@ -21,6 +21,16 @@ class AppointmentController extends Controller implements ServiceTypeInterface
 {
    public function index($isActive = 1)
    {
+      Appointment::where([
+         ['appointment_date', '<', now()->format('Y-m-d')],
+         ['is_cancelled', false]
+      ])
+         ->whereNull('finished_at')
+         ->update([
+            'finished_at' => now(),
+            'is_cancelled' => true
+         ]);
+
       $appointments = Appointment::with([
          'appointmentSchedule',
          'serviceType',
@@ -31,12 +41,20 @@ class AppointmentController extends Controller implements ServiceTypeInterface
       ])
          ->where('veterinarian_id', Auth::user()->profile_id)
          ->when($isActive == 1, function ($q) {
-            $q->whereNull('finished_at');
+            $q->whereNull('finished_at')
+               ->where('is_cancelled', false);
          })
          ->when($isActive == 0, function ($q) {
-            $q->whereNotNull('finished_at');
+            $q->whereNotNull('finished_at')
+               ->orWhere('is_cancelled', true);
          })
-         ->get();
+         ->get()
+         ->sortBy(function($item) {
+            return [
+               $item->appointment_date,
+               new Carbon($item->appointmentSchedule->start_time)
+            ];
+         });
 
       return view('app.admin.appointment.index', compact('appointments', 'isActive'));
    }

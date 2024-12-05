@@ -150,7 +150,9 @@
                </div>
             </div>
 
-            @if (is_null($appointment->finished_at))
+            @if (is_null($appointment->finished_at) &&
+                    now()->format('Y-m-d') == $appointment->appointment_date->format('Y-m-d') &&
+                    now()->format('H:i') >= $appointment->appointmentSchedule->start_time->format('H:i'))
                <div class="text-center w-full">
                   <a href="#appointment_summary_form" class="btn btn-primary btn-padding text-sm w-full">
                      <i class="fa-regular fa-pen-to-square"></i>
@@ -343,7 +345,9 @@
       </div>
    </div>
 
-   @if (is_null($appointment->finished_at))
+   @if (is_null($appointment->finished_at) &&
+           now()->format('Y-m-d') == $appointment->appointment_date->format('Y-m-d') &&
+           now()->format('H:i') >= $appointment->appointmentSchedule->start_time->format('H:i'))
       <section class="card bg-base-100 shadow-xl w-full" id="appointment_summary_form">
          <div class="card-body">
             <h3 class="font-bold text-lg mb-4 text-primary">

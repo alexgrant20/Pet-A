@@ -15,8 +15,10 @@
    <div class="card bg-base-100 shadow-xl w-full">
       <div class="card-body">
          <div role="tablist" class="tabs-boxed w-fit bg-gray-200 mb-3">
-            <a href="{{ route('admin.appointment.index', ['isActive' => 1]) }}" role="tab" class="tab @if ($isActive == 1) tab-active @endif">Upcoming</a>
-            <a href="{{ route('admin.appointment.index', ['isActive' => 0]) }}" role="tab" class="tab @if ($isActive == 0) tab-active @endif">History</a>
+            <a href="{{ route('admin.appointment.index', ['isActive' => 1]) }}" role="tab"
+               class="tab @if ($isActive == 1) tab-active @endif">Upcoming</a>
+            <a href="{{ route('admin.appointment.index', ['isActive' => 0]) }}" role="tab"
+               class="tab @if ($isActive == 0) tab-active @endif">History</a>
          </div>
          <div class="grid grid-rows-4 gap-5">
             @forelse ($appointments as $appointment)
@@ -35,10 +37,11 @@
                            </div>
                         </div>
                      </div>
-                     <div class="py-4 flex flex-col gap-2">
+                     <div class="py-4 flex flex-col gap-2 flex-1">
                         <div class="flex items-center gap-2">
                            <img class="mt-4 w-8 h-8 object-cover rounded-full"
-                              src="{{ asset($appointment->petOwner->attachment->first()?->path ?? 'assets/user.svg') }}" alt="pet owner image">
+                              src="{{ asset($appointment->petOwner->attachment->first()?->path ?? 'assets/user.svg') }}"
+                              alt="pet owner image">
                            <span class="text-gray-900">{{ $appointment->petOwner->user->name }}</span>
                         </div>
                         <div class="flex items-center gap-2">
@@ -49,6 +52,13 @@
                            {{ $appointment->serviceType->name }}
                         </div>
                      </div>
+                     @if ($appointment->is_cancelled)
+                        <div class="justify-end">
+                           <div class="border-2 py-1 px-3 border-red-500 rounded-3xl bg-base-100">
+                              <span class="text-red-500">cancelled</span>
+                           </div>
+                        </div>
+                     @endif
                      <div class="ms-auto pe-4 text-transparent group-hover:text-primary duration-500">
                         <i class="fa-solid fa-arrow-right text-lg"></i>
                      </div>

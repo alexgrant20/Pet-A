@@ -17,6 +17,16 @@ class HomeController extends Controller implements RoleInterface, ServiceTypeInt
 {
    public function index()
    {
+      Appointment::where([
+         ['appointment_date', '<', now()->format('Y-m-d')],
+         ['is_cancelled', false]
+      ])
+         ->whereNull('finished_at')
+         ->update([
+            'finished_at' => now(),
+            'is_cancelled' => true
+         ]);
+
       $appointmentQuery = Appointment::when(Auth::user()->hasRole(self::ROLE_VETERINARIAN), function ($q) {
          $q->where('veterinarian_id', Auth::user()->profile_id);
       });
@@ -44,7 +54,16 @@ class HomeController extends Controller implements RoleInterface, ServiceTypeInt
          'petOwner' => function ($q) {
             $q->with('user');
          }
-      ])->whereNull('finished_at')->get();
+      ])
+         ->whereNull('finished_at')
+         ->where('is_cancelled', false)
+         ->get()
+         ->sortBy(function($item) {
+            return [
+               $item->appointment_date,
+               new Carbon($item->appointmentSchedule->start_time)
+            ];
+         });;
 
       $differenceTotalAppointmentIcon = '';
       if ($totalUpcomingAppointmentDifference < 0) {

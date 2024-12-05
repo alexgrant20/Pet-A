@@ -18,12 +18,14 @@
          @endif
       </div>
       <ul tabindex="5"
-         class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-80 max-h-80 overflow-y-auto no-scrollbar">
+         class="mt-3 z-[1] p-2 block shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-80 max-h-80 overflow-y-auto no-scrollbar">
          @forelse ($notifications as $notification)
             <li>
                <a href="{{ $notification->link }}">
-                  <div class="items-center">
-                     <span class="line-clamp-2 notification @if (!$notification->is_seen) font-bold @endif">{{ $notification->title }}</span>
+                  <div class="items-center flex gap-2 p-2">
+                     <i class="text-lg {{ $notification->icon }} text-primary"></i>
+                     <span
+                        class="line-clamp-2 notification @if (!$notification->is_seen) font-bold @endif">{{ $notification->title }}</span>
                   </div>
                </a>
             </li>
@@ -36,7 +38,7 @@
       <div tabindex="0" role="button" class="btn btn-ghost hover:bg-transparent avatar">
          <div class="w-12 rounded-full tex">
             <img alt="Tailwind CSS Navbar component"
-               src="{{ asset(Auth::user()->hasRole(RoleInterface::ROLE_ADMIN) ? 'assets/user.svg' : (Auth::user()->profile->attachment->first()->path)) }}" />
+               src="{{ asset(Auth::user()->hasRole(RoleInterface::ROLE_ADMIN) ? 'assets/user.svg' : Auth::user()->profile->attachment->first()->path) }}" />
          </div>
       </div>
       <ul tabindex="5" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
