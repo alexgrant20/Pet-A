@@ -130,7 +130,7 @@
       </div>
 
       <div class="card mb-5">
-         <div class="card-body bg-base-100 shadow-xl p-4">
+         <div class="card-body p-4 rounded-xl bg-white/35 shadow-xl">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
                <label class="form-control w-full">
                   <span class="label-text font-bold mb-2">Pet</span>
