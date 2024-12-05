@@ -10,10 +10,11 @@
             alt="">
          <h1 class="text-3xl font-bold text-gray-800">{{ $appointment->veterinarian->user->name }}</h1>
 
-         <div class="flex flex-row gap-1 mb-5">
-            <div class="badge badge-primary rounded-full font-bold">Anjing</div>
+         <div class="flex flex-row gap-1">
+            @foreach ($appointment->veterinarian->petType->pluck('name') as $petType)
+               <div class="badge badge-primary rounded-full font-semibold">{{ $petType }}</div>
+            @endforeach
          </div>
-
          <div class="w-full lg:w-1/2 text-center text-gray-500">
             {{ $appointment->veterinarian->clinic->name }}
          </div>
@@ -75,30 +76,32 @@
             <div class="card-body bg-base-100 shadow-xl p-4">
                <h2 class="font-bold text-lg">Result</h2>
                <div class="overflow-x-auto">
-                  <table class="table border-collapse table-zebra mb-5">
-                     <thead>
-                        <tr>
-                           <th class="w-[25%] border border-gray-400">Disease</th>
-                           <th class="w-[25%] border border-gray-400">Medicine</th>
-                           <th class="w-[50%] border border-gray-400">Description</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           @foreach ($appointment->medicalRecord as $medicalRecord)
-                              <td class="border border-gray-400">{{ $medicalRecord->disease_name }}</td>
-                              <td class="border border-gray-400">{{ $medicalRecord->medicine_name }}</td>
-                              <td class="border border-gray-400">{{ $medicalRecord->description }}</td>
-                           @endforeach
-                        </tr>
-                     </tbody>
-                  </table>
+                  @if ($appointment->medicalRecord->isNotEmpty())
+                     <table class="table border-collapse table-zebra mb-5">
+                        <thead>
+                           <tr>
+                              <th class="w-[25%] border border-gray-400">Disease</th>
+                              <th class="w-[25%] border border-gray-400">Medicine</th>
+                              <th class="w-[50%] border border-gray-400">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              @foreach ($appointment->medicalRecord as $medicalRecord)
+                                 <td class="border border-gray-400">{{ $medicalRecord->disease_name }}</td>
+                                 <td class="border border-gray-400">{{ $medicalRecord->medicine_name }}</td>
+                                 <td class="border border-gray-400">{{ $medicalRecord->description }}</td>
+                              @endforeach
+                           </tr>
+                        </tbody>
+                     </table>
+                  @endif
 
                   <label class="w-full">
                      <span class="label-text font-bold mb-2">Note</span>
 
                      <div class="w-full">
-                        {{ $appointment->summary ?? 'Tidak Ada Catatan' }}
+                        {{ $appointment->summary ?? 'No Notes' }}
                      </div>
                   </label>
                </div>
@@ -120,7 +123,7 @@
                <span class="label-text font-bold mb-2">Hour</span>
 
                <div class="w-full">
-                  {{ $appointment->appointmentSchedule->start_time }}
+                  {{ $appointment->appointmentSchedule->start_time->format('H:i') }}
                </div>
             </div>
          </div>
@@ -161,7 +164,8 @@
             @csrf
 
             <input type="hidden" name="appointment_id" value="{{ $appointment->id }}">
-            <button id="cancelAppointmentButton" class="btn btn-padding btn-error text-white" type="button">Cancel Appointment</button>
+            <button id="cancelAppointmentButton" class="btn btn-padding btn-error text-white" type="button">Cancel
+               Appointment</button>
          </form>
       @endif
    </section>
