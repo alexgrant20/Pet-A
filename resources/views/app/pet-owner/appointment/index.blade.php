@@ -142,6 +142,7 @@
 
       $(document).ready(function() {
          const appointment = @json($appointment);
+         console.log(appointment)
 
          $('#appointment_history').DataTable({
             autoWidth: false,
@@ -156,13 +157,9 @@
                   name: 'veterinarian.user.name'
                },
                {
-                  data: 'appointment_date',
-                  name: 'appointment_date',
+                  data: 'appointment_date_formatted',
+                  name: 'appointment_date_formatted',
                   type: 'string',
-                  render: function(d) {
-                     const date = d.split('T')[0];
-                     return date;
-                  }
                },
                {
                   data: 'status',

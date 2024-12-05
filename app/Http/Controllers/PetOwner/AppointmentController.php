@@ -43,6 +43,12 @@ class AppointmentController extends Controller
          ->orderBy('appointment_date', 'asc')
          ->get();
 
+      $appointment->transform(function ($item) {
+         $item->appointment_date_formatted = $item->appointment_date->format('Y-m-d');
+
+         return $item;
+      });
+
       return view('app.pet-owner.appointment.index', compact('veterinarians', 'petTypes', 'name', 'appointment'));
    }
 
@@ -120,7 +126,6 @@ class AppointmentController extends Controller
 
          SendReminderEmail::dispatch($notification);
       } catch (\Exception $e) {
-         dd($e->getMessage());
          DB::rollBack();
          return back()->with('error-swal', 'Something went wrong');
       }
@@ -157,7 +162,10 @@ class AppointmentController extends Controller
          ->pluck('appointment_schedule_id')
          ->toArray();
 
-      return $appointmentSchedule->reject(fn($el) => in_array($el->id, $appointmentDateFilter));
+      return $appointmentSchedule
+         ->filter(fn($el) => !in_array($el->id, $appointmentDateFilter))
+         ->values()
+         ->toArray();
    }
 
    public function giveRating(Request $request)
@@ -179,8 +187,7 @@ class AppointmentController extends Controller
    {
       $appointment = Appointment::where('id', $request->appointment_id)->where('pet_owner_id', auth()->user()->profile->id)->first();
 
-      if(!$appointment)
-      {
+      if (!$appointment) {
          abort(404);
       }
 

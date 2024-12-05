@@ -45,7 +45,6 @@ class HomeController extends Controller implements RoleInterface, ServiceTypeInt
 
       $totalUpcomingAppointmentDifference = ($upcomingAppointmentLastMonth == 0 || $upcomingAppointmentThisMonth == 0) ? 0 : ((float)(($upcomingAppointmentThisMonth / $upcomingAppointmentLastMonth) - 1)) * 100;
 
-      // dd($upcomingAppointmentLastMonth, $upcomingAppointmentThisMonth, $totalUpcomingAppointmentDifference);
       $totalTodayAppointment = (clone $appointmentQuery)->where('appointment_date', today())->count();
       $activeAppointments = (clone $appointmentQuery)->with([
          'appointmentSchedule',

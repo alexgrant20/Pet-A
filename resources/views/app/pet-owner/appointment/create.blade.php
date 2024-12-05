@@ -131,8 +131,6 @@
       const veterinarian = @json($veterinarian);
       const veterinarianActiveDate = @json($veterinarianActiveDate);
 
-      console.log(veterinarianActiveDate)
-
       $('form').on('submit', function(e) {
          if ($(this).valid()) {
             $('button').attr('disabled', true);
@@ -156,7 +154,6 @@
          onRenderCell: ({
             date
          }) => {
-            console.log(date.getDay().toString())
             if (!(veterinarianActiveDate.includes((date.getDay() + 1).toString()))) {
                return {
                   disabled: true
@@ -178,6 +175,7 @@
             .replace(':id', veterinarian.id)
             .replace(':date', dateString)
             .replace(':today', todayParsed == dateString);
+
          $('#appointment_schedule_id').html('').select2({
             data: [{
                id: '',
@@ -186,19 +184,34 @@
          });
 
          $.get(route, function(data) {
-            const map = data.map((itm) => {
-               return {
-                  id: itm.id,
-                  text: `${itm.formatted_time}`
-               }
+            // console.log(data);
+
+            // const map = data.map((itm) => {
+            //    return {
+            //       id: itm.id,
+            //       text: `${itm.formatted_time}`
+            //    }
+            // });
+
+            const select2Payload = [];
+
+            console.log(data);
+
+            data.forEach(time => {
+               select2Payload.push({
+                  id: time.id,
+                  text: `${time.formatted_time}`
+               });
             });
 
+            console.log(select2Payload);
+
+            // console.log(data);
+
             $('#appointment_schedule_id').select2({
-               data: map,
+               data: select2Payload,
             });
          });
       });
    </script>
-
-   {{-- {!! JsValidator::formRequest('App\Http\Requests\PetOwner\StoreAppointmentRequest', 'form') !!} --}}
 @endsection
