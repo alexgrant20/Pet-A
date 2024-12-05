@@ -33,7 +33,7 @@ class ProfileController extends Controller
       DB::beginTransaction();
 
       $petOwner->update($request->validated());
-      $petOwner->user->update(['address' => $request->address, 'phone_number' => $request->phone_number]);
+      $petOwner->user->update(['address' => $request->address, 'phone_number' => $request->phone_number, 'name' => $request->name]);
 
       if ($request->profile_image) {
         $this->fieldAttachmentUploadUtility
