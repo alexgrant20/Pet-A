@@ -34,8 +34,6 @@
       $(document).ready(function() {
          const user = @json($user);
 
-         console.log(user);
-
          const petAllergyDatatables = new DataTable('#table', {
             bLengthChange: false,
             autoWidth: false,

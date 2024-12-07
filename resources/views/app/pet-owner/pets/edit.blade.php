@@ -411,8 +411,6 @@
             };
          });
 
-         console.log(pet)
-
          const petMedicationData = pet.pet_medication.map(function(petMedication) {
             return {
                id: petMedication.id,

@@ -20,7 +20,8 @@
          </li>
          @foreach (@$menus as $menu)
             <li>
-               <a class="gap-3" href="{{ route($menu['route_name']) }}">
+               <a class="gap-3"
+                  href="{{ route($menu['route_name']) }}{{ $menu['route_name'] == 'pet-owner.appointment.index' ? "?pet_type_id={$pet->breed->pet_type_id}" : '' }}">
                   <i class="fa {{ @$menu['icon'] }}"></i>
                   <span class="hidden xl:block">{{ @$menu['label'] }}</span>
                </a>
@@ -55,7 +56,8 @@
                      <img alt="pet image" src="{{ asset($pet?->thumbnail_image) }}"
                         class="w-12 h-12 rounded-full bg-gray-200 hidden md:block" />
                   @else
-                     <div class="w-12 h-12 rounded-full bg-gray-200 hidden md:flex items-center justify-center text-black">
+                     <div
+                        class="w-12 h-12 rounded-full bg-gray-200 hidden md:flex items-center justify-center text-black">
                         <i class="fa-thin fa-paw-simple fa-2x"></i>
                      </div>
                   @endif

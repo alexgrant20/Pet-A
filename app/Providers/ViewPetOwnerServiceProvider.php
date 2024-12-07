@@ -79,8 +79,6 @@ class ViewPetOwnerServiceProvider extends ServiceProvider implements ServiceType
                   $lastSegment = end($segments);
 
                   $appointment = Appointment::where('id', $lastSegment)->first();
-                  if (!$appointment)
-                     dd(substr($notification->link, -1), $appointment, $notification->link);
 
                   $notification->icon = $appointment->service_type_id == self::SERVICE_TYPE_VAKSINASI ? 'fa-solid fa-syringe' : 'fa-solid fa-calendar-clock';
                } else if(Auth::user()->hasRole(self::ROLE_ADMIN)) {

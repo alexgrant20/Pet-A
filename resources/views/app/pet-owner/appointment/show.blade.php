@@ -215,7 +215,6 @@
                buttons: ["Cancel", "Confirm"],
                dangerMode: true,
             }).then((value) => {
-               console.log(value)
                if (value === "CANCEL") {
                   document.getElementById('cancelAppointmentForm').submit();
                } else if (value) {

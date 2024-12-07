@@ -184,18 +184,7 @@
          });
 
          $.get(route, function(data) {
-            // console.log(data);
-
-            // const map = data.map((itm) => {
-            //    return {
-            //       id: itm.id,
-            //       text: `${itm.formatted_time}`
-            //    }
-            // });
-
             const select2Payload = [];
-
-            console.log(data);
 
             data.forEach(time => {
                select2Payload.push({
@@ -203,10 +192,6 @@
                   text: `${time.formatted_time}`
                });
             });
-
-            console.log(select2Payload);
-
-            // console.log(data);
 
             $('#appointment_schedule_id').select2({
                data: select2Payload,
