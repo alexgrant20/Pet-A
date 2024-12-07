@@ -5,7 +5,7 @@
 @section('content')
    <div class="flex flex-col gap-8 min-h-[inherit] py-10 px-6">
       <div role="tablist" class="tabs tabs-boxed w-full">
-         <input type="radio" name="my_tabs_1" role="tab" class="tab bg-orange-300 text-orange-700" aria-label="New Appointment" checked="checked" />
+         <input type="radio" name="my_tabs_1" role="tab" class="tab shadow bg-gray-300 text-gray-400" aria-label="New Appointment" checked="checked" />
          <div role="tabpanel" class="tab-content">
             <div class="shadow bg-white/30 p-4 flex flex-col gap-5">
                <form onsubmit="return searchQuery(event)">
@@ -100,7 +100,7 @@
             </div>
          </div>
 
-         <input type="radio" name="my_tabs_1" role="tab" class="tab bg-orange-300 text-orange-700" aria-label="Appointment History" />
+         <input type="radio" name="my_tabs_1" role="tab" class="tab shadow bg-gray-300 text-gray-400" aria-label="Appointment History" />
          <div role="tabpanel" class="tab-content">
             <div class="w-full bg-white/30 p-6 rounded shadow-xl">
                <table class="w-full table-auto text-left" id="appointment_history">
