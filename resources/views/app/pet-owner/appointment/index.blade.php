@@ -140,6 +140,7 @@
       function appendQuery(key, value) {
          let url = new URL(window.location.href);
          url.searchParams.set(key, value);
+         url.searchParams.set('page', 1);
          window.location.href = url.toString();
       }
 

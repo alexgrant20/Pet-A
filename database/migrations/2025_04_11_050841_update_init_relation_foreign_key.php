@@ -76,11 +76,6 @@ return new class extends Migration
          $table->foreign('pet_type_id')->references('id')->on('pet_types')->cascadeOnUpdate()->restrictOnDelete();
       });
 
-      Schema::table('service_prices', function (Blueprint $table) {
-         $table->foreign('veterinarian_id')->references('id')->on('veterinarians')->cascadeOnUpdate()->restrictOnDelete();
-         $table->foreign('service_type_id')->references('id')->on('service_types')->cascadeOnUpdate()->restrictOnDelete();
-      });
-
       Schema::table('appointment_schedules', function (Blueprint $table) {
          $table->foreign('veterinarian_id')->references('id')->on('veterinarians')->cascadeOnUpdate()->restrictOnDelete();
       });

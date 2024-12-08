@@ -277,9 +277,6 @@ INSERT INTO public.veterinarian_service_types VALUES (DEFAULT, 2, 14, NULL, NULL
 INSERT INTO public.veterinarian_service_types VALUES (DEFAULT, 2, 15, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO public.veterinarian_service_types VALUES (DEFAULT, 2, 16, NULL, NULL, NULL, NULL, NULL, NULL);
 
-INSERT INTO public.service_prices VALUES (DEFAULT, 1, 1, 100000, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO public.service_prices VALUES (DEFAULT, 1, 2, 300000, NULL, NULL, NULL, NULL, NULL, NULL);
-
 INSERT INTO public.appointments VALUES (DEFAULT, 2, 5, 10, 1, 10, 63, 'The dog is coughing every minute', '2024-10-24', NULL, NULL, '2024-10-20 21:44:21', '2024-10-20 21:44:21', NULL, NULL, NULL, NULL);
 INSERT INTO public.appointments VALUES (DEFAULT, 3, 7, 8, 1, 8, 68, 'Dogi saya bersin-bersin terus', '2024-10-22', NULL, NULL, '2024-10-21 07:56:16', '2024-10-21 07:56:16', NULL, NULL, NULL, NULL);
 INSERT INTO public.appointments VALUES (DEFAULT, 3, 8, 11, 1, 11, 81, 'Dogi saya punya bentol merah di dua tangan-nya', '2024-11-05', NULL, NULL, '2024-10-21 08:02:25', '2024-10-21 08:02:25', NULL, NULL, NULL, NULL);
