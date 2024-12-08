@@ -34,7 +34,8 @@ class AppointmentController extends Controller
             $q->whereRaw("LOWER(name) LIKE '%$name%'");
          })
          ->when($petTypeId, fn($q) => $q->whereRelation('petType', 'pet_types.id', $petTypeId))
-         ->paginate(6);
+         ->paginate(6)
+         ->withQueryString();
 
       $petTypes = PetType::all();
       $appointment = Appointment::with('pet', 'veterinarian.user', 'appointmentSchedule', 'rating')
