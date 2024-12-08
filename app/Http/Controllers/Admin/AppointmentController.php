@@ -45,11 +45,15 @@ class AppointmentController extends Controller implements ServiceTypeInterface
                ->where('is_cancelled', false);
          })
          ->when($isActive == 0, function ($q) {
-            $q->whereNotNull('finished_at')
-               ->orWhere('is_cancelled', true);
+            $q->where(
+               function ($q) {
+                  $q->whereNotNull('finished_at')
+                     ->orWhere('is_cancelled', true);
+               }
+            );
          })
          ->get()
-         ->sortBy(function($item) {
+         ->sortBy(function ($item) {
             return [
                $item->appointment_date,
                new Carbon($item->appointmentSchedule->start_time)
