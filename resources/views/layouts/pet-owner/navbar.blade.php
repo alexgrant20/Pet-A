@@ -21,7 +21,7 @@
          @foreach (@$menus as $menu)
             <li>
                <a class="gap-3"
-                  href="{{ route($menu['route_name']) }}{{ $menu['route_name'] == 'pet-owner.appointment.index' ? "?pet_type_id={$pet->breed->pet_type_id}" : '' }}">
+                  href="{{ route($menu['route_name']) }}{{ $menu['route_name'] == 'pet-owner.appointment.index' ? "?pet_type_id={$pet?->breed?->pet_type_id}" : '' }}">
                   <i class="fa {{ @$menu['icon'] }}"></i>
                   <span class="hidden xl:block">{{ @$menu['label'] }}</span>
                </a>
