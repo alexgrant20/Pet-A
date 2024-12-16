@@ -199,6 +199,6 @@ class AppointmentController extends Controller
 
       Notification::where('link', route('pet-owner.appointment.show', $appointment->id))->delete();
 
-      return to_route('pet-owner.appointment.index')->with('success-swal', 'Successfully cancelled appointment');
+      return back()->with('success-swal', 'Successfully cancelled appointment');
    }
 }
