@@ -144,7 +144,7 @@
                      </div>
                      <div class="flex justify-end">
                         <button type="submit" class="btn btn-primary btn-padding">
-                           Simpan <i class="fa fa-paw"></i>
+                           Save <i class="fa fa-paw"></i>
                         </button>
                      </div>
                   </form>
