@@ -19,7 +19,7 @@ Breadcrumbs::for('pet-type-create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('pet-type-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('pet-type');
-	$trail->push('Update');
+	$trail->push('Edit');
 });
 
 Breadcrumbs::for('breed', function (BreadcrumbTrail $trail) {
@@ -34,7 +34,7 @@ Breadcrumbs::for('breed-create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('breed-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('breed');
-	$trail->push('Update');
+	$trail->push('Edit');
 });
 
 Breadcrumbs::for('appointment-type', function (BreadcrumbTrail $trail) {
@@ -49,7 +49,7 @@ Breadcrumbs::for('appointment-type-create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('appointment-type-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('appointment-type');
-	$trail->push('Update');
+	$trail->push('Edit');
 });
 
 Breadcrumbs::for('city', function (BreadcrumbTrail $trail) {
@@ -64,7 +64,7 @@ Breadcrumbs::for('city-create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('city-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('city');
-	$trail->push('Update');
+	$trail->push('Edit');
 });
 
 Breadcrumbs::for('province', function (BreadcrumbTrail $trail) {
@@ -79,7 +79,7 @@ Breadcrumbs::for('province-create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('province-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('province');
-	$trail->push('Update');
+	$trail->push('Edit');
 });
 
 Breadcrumbs::for('medication-type', function (BreadcrumbTrail $trail) {
@@ -94,7 +94,7 @@ Breadcrumbs::for('medication-type-create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('medication-type-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('medication-type');
-	$trail->push('Update');
+	$trail->push('Edit');
 });
 
 Breadcrumbs::for('vaccination', function (BreadcrumbTrail $trail) {
@@ -109,7 +109,7 @@ Breadcrumbs::for('vaccination-create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('vaccination-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('vaccination');
-	$trail->push('Update');
+	$trail->push('Edit');
 });
 
 Breadcrumbs::for('user-management', function (BreadcrumbTrail $trail) {
@@ -214,7 +214,7 @@ Breadcrumbs::for('user-support', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('service-type', function (BreadcrumbTrail $trail) {
 	$trail->parent('home-admin');
-	$trail->push('Pet Type', route('admin.master.service-type.index'));
+	$trail->push('Service Type', route('admin.master.service-type.index'));
 });
 
 Breadcrumbs::for('service-type-create', function (BreadcrumbTrail $trail) {
@@ -224,5 +224,10 @@ Breadcrumbs::for('service-type-create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('service-type-edit', function (BreadcrumbTrail $trail) {
 	$trail->parent('service-type');
-	$trail->push('Update');
+	$trail->push('Edit');
+});
+
+Breadcrumbs::for('profile-edit', function (BreadcrumbTrail $trail) {
+	$trail->parent('home-admin');
+	$trail->push('Edit Profile');
 });

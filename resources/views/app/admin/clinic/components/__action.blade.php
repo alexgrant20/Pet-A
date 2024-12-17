@@ -3,7 +3,7 @@
       href="{{ route('admin.clinic.edit', $data->id) }}">
       <i class="fa fa-pencil"></i>
    </a>
-   <form action="{{ route('admin.appointment-schedule.destroy', $data->id) }}" method="POST">
+   <form action="{{ route('admin.clinic.destroy', $data->id) }}" method="POST">
       @csrf
       @method('DELETE')
 

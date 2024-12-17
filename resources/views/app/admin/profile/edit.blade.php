@@ -1,13 +1,13 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Veterinarian')
+@section('title', 'Edit Profile')
 
 @section('content')
    <div class="card bg-base-100 shadow-xl w-full mb-5">
       <div class="card-body flex-row items-center justify-between">
          <div class="section-left">
-            <h1 class="font-bold text-2xl">Add Veterinarian</h1>
-            {{ Breadcrumbs::render('veterinarian-edit') }}
+            <h1 class="font-bold text-2xl">Edit Profile</h1>
+            {{ Breadcrumbs::render('profile-edit') }}
          </div>
       </div>
    </div>
