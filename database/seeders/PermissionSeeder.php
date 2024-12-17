@@ -67,7 +67,15 @@ class PermissionSeeder extends Seeder
             'permission_id' => 1
          ],
          [
+            'menu_id' => 1,
+            'permission_id' => 1
+         ],
+         [
             'menu_id' => 3,
+            'permission_id' => 5
+         ],
+         [
+            'menu_id' => 1,
             'permission_id' => 5
          ],
          [
@@ -75,7 +83,15 @@ class PermissionSeeder extends Seeder
             'permission_id' => 9
          ],
          [
+            'menu_id' => 1,
+            'permission_id' => 9
+         ],
+         [
             'menu_id' => 5,
+            'permission_id' => 13
+         ],
+         [
+            'menu_id' => 1,
             'permission_id' => 13
          ],
          [
@@ -83,7 +99,15 @@ class PermissionSeeder extends Seeder
             'permission_id' => 17
          ],
          [
+            'menu_id' => 1,
+            'permission_id' => 17
+         ],
+         [
             'menu_id' => 7,
+            'permission_id' => 21
+         ],
+         [
+            'menu_id' => 1,
             'permission_id' => 21
          ],
          [
