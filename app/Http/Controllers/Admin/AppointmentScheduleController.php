@@ -136,7 +136,6 @@ class AppointmentScheduleController extends Controller
          return  response()->json(['message' => 'Something went wrong'], 400);
       }
 
-
       return response()->json(['message' => 'Successfully Deleted Veterinarian Schedule'], 200);
    }
 }

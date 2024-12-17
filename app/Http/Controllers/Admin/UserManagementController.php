@@ -45,7 +45,6 @@ class UserManagementController extends Controller implements RoleInterface
       $user->load('profile');
 
       $cities = City::get();
-      if ($user->hasRole(self::ROLE_VETERINARIAN)) $user->profile->load('clinic');
       return view('app.admin.user-management.edit', compact('user', 'cities'));
    }
 
@@ -53,18 +52,6 @@ class UserManagementController extends Controller implements RoleInterface
    {
       DB::beginTransaction();
       try {
-         if ($user->hasRole(self::ROLE_VETERINARIAN)) {
-            $user->profile->clinic->update([
-               'name' => $request->clinic_name,
-               'city_id' => $request->city_id,
-               'phone_number' => $request->clinic_phone_number,
-               'address' => $request->clinic_address,
-               'zip_code' => $request->zip_code
-            ]);
-
-            $user->profile->update(['length_of_service' => $request->length_of_service]);
-         }
-
          $user->update([
             'name' => $request->name,
             'phone_number' => $request->phone_number,

@@ -211,3 +211,18 @@ Breadcrumbs::for('user-support', function (BreadcrumbTrail $trail) {
 	$trail->parent('home-admin');
 	$trail->push('User Support', route('admin.chat.index'));
 });
+
+Breadcrumbs::for('service-type', function (BreadcrumbTrail $trail) {
+	$trail->parent('home-admin');
+	$trail->push('Pet Type', route('admin.master.service-type.index'));
+});
+
+Breadcrumbs::for('service-type-create', function (BreadcrumbTrail $trail) {
+	$trail->parent('service-type');
+	$trail->push('Create', route('admin.master.service-type.create'));
+});
+
+Breadcrumbs::for('service-type-edit', function (BreadcrumbTrail $trail) {
+	$trail->parent('service-type');
+	$trail->push('Update');
+});

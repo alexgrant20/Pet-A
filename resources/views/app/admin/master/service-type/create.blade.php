@@ -1,25 +1,25 @@
 @extends('layouts.master.layout')
 
-@section('title', 'Add Pet Types')
+@section('title', 'Add Service Types')
 
 @section('content')
   <div class="card bg-base-100 shadow-xl w-full mb-5">
     <div class="card-body flex-row items-center justify-between">
       <div class="section-left">
-        <h1 class="font-bold text-2xl">Add Pet Types</h1>
-        {{ Breadcrumbs::render('pet-type-create') }}
+        <h1 class="font-bold text-2xl">Add Service Types</h1>
+        {{ Breadcrumbs::render('service-type-create') }}
       </div>
     </div>
   </div>
 
   <div class="card bg-base-100 shadow-xl w-full">
     <div class="card-body">
-      <form action="{{ route('admin.master.pet-type.store') }}" method="POST">
+      <form action="{{ route('admin.master.service-type.store') }}" method="POST">
         @csrf
 
         <label class="form-control w-full mb-3">
           <div class="label">
-            <span class="label-text font-semibold">Pet Type</span>
+            <span class="label-text font-semibold">Service Type</span>
           </div>
           <input type="text" name="name" class="input input-bordered w-full form-validation" />
         </label>
@@ -33,5 +33,5 @@
 @endsection
 
 @section('js-footer')
-  {!! JsValidator::formRequest('App\Http\Requests\Admin\StorePetTypeRequest', 'form') !!}
+  {!! JsValidator::formRequest('App\Http\Requests\Admin\StoreServiceTypeRequest', 'form') !!}
 @endsection

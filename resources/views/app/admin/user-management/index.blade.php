@@ -15,14 +15,14 @@
    <div class="card bg-base-100 shadow-xl w-full">
       <div class="card-body">
          <div role="tablist" class="tabs tabs-lifted tabs-md">
-            <input type="radio" name="tab" id="pet_owner_tab" role="tab" class="tab" aria-label="Pemilik Hewan"
+            <input type="radio" name="tab" id="pet_owner_tab" role="tab" class="tab" aria-label="Pet Owner"
                checked />
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
                @include('app.admin.user-management.components.tab.__pet-owner')
             </div>
 
             <input type="radio" name="tab" id="veterinarian_tab" role="tab" class="tab"
-               aria-label="Dokter Hewan" />
+               aria-label="Veterinarian" />
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
                @include('app.admin.user-management.components.tab.__veterinarian')
             </div>
@@ -61,8 +61,8 @@
          const nama = $(this).attr('data-title');
 
          swal({
-            title: "Apakah Anda Yakin?",
-            text: `Anda akan menghapus pengguna ${nama}`,
+            title: "Are You Sure?",
+            text: `You will delete user  ${nama}`,
             icon: "warning",
             buttons: true,
             dangerMode: true,

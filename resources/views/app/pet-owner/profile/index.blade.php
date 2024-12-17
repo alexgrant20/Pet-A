@@ -63,7 +63,7 @@
                   </select>
                </label>
 
-               <button class="btn btn-padding col-span-1 btn-primary mt-6 xl:col-span-2" type="submit">Submit</button>
+               <button class="btn btn-padding col-span-1 btn-primary mt-6 xl:col-span-2" type="submit">Save</button>
             </div>
          </form>
       </div>

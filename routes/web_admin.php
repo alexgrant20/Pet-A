@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\PetTypeController;
 use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\ServiceTypeController;
 use App\Http\Controllers\VaccinationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,8 +40,8 @@ Route::prefix('/master')
       Route::resource('province', ProvinceController::class);
       Route::get('/list/province', [ProvinceController::class, 'getList'])->name('list.province');
 
-      Route::resource('appointment-type', AppointmentTypeController::class, ['parameters' => ['appointment-type' => 'appointmentType']]);
-      Route::get('/list/appointment-type', [AppointmentTypeController::class, 'getList'])->name('list.appointment-type');
+      Route::resource('service-type', ServiceTypeController::class, ['parameters' => ['service-type' => 'serviceType']]);
+      Route::get('/list/service-type', [ServiceTypeController::class, 'getList'])->name('list.service-type');
 
       Route::resource('medication-type', MedicationTypeController::class, ['parameters' => ['medication-type' => 'medicationType']]);
       Route::get('/list/medication-type', [MedicationTypeController::class, 'getList'])->name('list.medication-type');
