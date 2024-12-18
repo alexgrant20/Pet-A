@@ -18,6 +18,6 @@
 
    <a class="join-item btn btn-primary btn-padding"
       href="{{ route('admin.user-management.reset-password', $data->id) }}">
-      <i class="fa fa-gear"></i>
+      <i class="fa-solid fa-key"></i>
    </a>
 </div>
