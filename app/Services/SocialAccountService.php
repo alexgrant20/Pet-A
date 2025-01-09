@@ -12,8 +12,7 @@ class SocialAccountService
 {
 	public function findOrCreate(ProviderUser $providerUser, $provider)
 	{
-		$account = LinkedSocialAccount::where('provider_name', $provider)
-			->where('provider_id', $providerUser->getId())
+		$account = LinkedSocialAccount::where('provider_id', $providerUser->getId())
 			->first();
 
 		if ($account) {
@@ -37,7 +36,6 @@ class SocialAccountService
 
         $user->accounts()->create([
           'provider_id'   => $providerUser->getId(),
-          'provider_name' => $provider,
         ]);
       } catch (\Exception $e) {
         DB::rollBack();

@@ -15,9 +15,6 @@
                <div class="badge badge-primary rounded-full font-semibold">{{ $petType }}</div>
             @endforeach
          </div>
-         <div class="w-full lg:w-1/2 text-center text-gray-500">
-            {{ $appointment->veterinarian->clinic->name }}
-         </div>
       </div>
 
       <div class="card mb-5">
@@ -124,6 +121,30 @@
 
                <div class="w-full">
                   {{ $appointment->appointmentSchedule->start_time->format('H:i') }}
+               </div>
+            </div>
+
+            <div>
+               <span class="label-text font-bold mb-2">Clinic Name</span>
+
+               <div class="w-full">
+                  {{ $appointment->veterinarian->clinic->name}}
+               </div>
+            </div>
+
+            <div>
+               <span class="label-text font-bold mb-2">Clinic Address</span>
+
+               <div class="w-full">
+                  {{ $appointment->veterinarian->clinic->address }}
+               </div>
+            </div>
+
+            <div>
+               <span class="label-text font-bold mb-2">Clinic Phone Number</span>
+
+               <div class="w-full">
+                  {{ $appointment->veterinarian->clinic->phone_number }}
                </div>
             </div>
          </div>

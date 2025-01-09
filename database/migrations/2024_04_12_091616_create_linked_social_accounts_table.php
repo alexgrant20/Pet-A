@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('linked_social_accounts', function (Blueprint $table) {
             $table->id();
             $table->uuid('user_id');
-            $table->string('provider_name')->nullable();
             $table->string('provider_id')->unique()->nullable();
             $table->timestamps();
         });
