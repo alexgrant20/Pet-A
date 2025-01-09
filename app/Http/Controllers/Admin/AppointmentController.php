@@ -85,7 +85,7 @@ class AppointmentController extends Controller implements ServiceTypeInterface
       $petOwnerAddress = [
          $appointment->petOwner->user->address,
          $appointment->petOwner->city?->name,
-         $appointment->petOwner->province?->name
+         $appointment->petOwner->city?->province?->name
       ];
 
       $allergyCategories = AllergyCategory::get();
