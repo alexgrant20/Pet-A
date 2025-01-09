@@ -17,7 +17,6 @@ return new class extends Migration
 
       Schema::table('pet_owners', function (Blueprint $table) {
          $table->foreign('city_id')->references('id')->on('cities')->cascadeOnUpdate()->restrictOnDelete();
-         $table->foreign('province_id')->references('id')->on('provinces')->cascadeOnUpdate()->restrictOnDelete();
       });
 
       Schema::table('clinics', function (Blueprint $table) {
