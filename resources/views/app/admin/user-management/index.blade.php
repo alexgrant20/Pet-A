@@ -62,13 +62,15 @@
 
          swal({
             title: "Are You Sure?",
-            text: `You will delete user  ${nama}`,
+            text: `You will delete user ${nama}`,
             icon: "warning",
             buttons: true,
             dangerMode: true,
-         }).then((reason) => {
-            $(`#delete_form_${id}`).submit();
-            $.LoadingOverlay("show");
+         }).then((ok) => {
+            if (ok) {
+               $(`#delete_form_${id}`).submit();
+               $.LoadingOverlay("show");
+            }
          });
       });
 

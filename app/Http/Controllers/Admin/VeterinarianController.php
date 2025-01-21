@@ -27,24 +27,6 @@ class VeterinarianController extends Controller implements RoleInterface
       $this->fieldAttachmentUploadUtility = $fieldAttachmentUploadUtility;
    }
 
-   public function getList()
-   {
-      $veterinarians = Veterinarian::with('attachment', 'user', 'petType', 'clinic')->get();
-
-      return DataTables::of($veterinarians)
-         ->addIndexColumn()
-         ->addColumn('photo', function ($veterinarian) {
-            return view('app.admin.veterinarian.components.__profile_image', compact('veterinarian'));
-         })
-         ->addColumn('doctor_speciality', function ($veterinarian) {
-            return view('app.admin.veterinarian.components.__doctor_speciality', compact('veterinarian'));
-         })
-         ->addColumn('action', function ($veterinarian) {
-            return view('app.admin.veterinarian.components.__action', compact('veterinarian'));
-         })
-         ->make();
-   }
-
    public function index()
    {
       $veterinarians = Veterinarian::with(['user', 'attachment'])->orderBy('id')->paginate(8);

@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreClinicRequest;
 use App\Http\Requests\Admin\UpdateClinicRequest;
 use App\Models\City;
 use App\Models\Clinic;
+use App\Models\Veterinarian;
 use App\Utilities\FieldAttachmentUploadUtility;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -133,6 +134,9 @@ class ClinicController extends Controller
 
    public function destroy(Clinic $clinic)
    {
+      $hasActiveVet = Veterinarian::where('clinic_id', $clinic->id)->exists();
+
+      if ($hasActiveVet) return back()->with('error-swal', 'Clinic still has Active Veterinarians');
       $clinic->delete();
 
       return to_route('admin.clinic.index')->with('success-toast', 'Clinic Successfully Deleted');

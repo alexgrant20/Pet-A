@@ -56,7 +56,12 @@ class AppointmentController extends Controller
    public function getList()
    {
       $appointments = Appointment::where('pet_owner_id', Auth::user()->profile->id)
-         ->with('veterinarian.user', 'clinic', 'serviceType', 'pet')
+         ->with([
+            'veterinarian.user',
+            'clinic',
+            'serviceType' => fn($q) => $q->withTrashed(),
+            'pet'
+         ])
          ->get();
 
       return DataTables::of($appointments)
@@ -138,7 +143,12 @@ class AppointmentController extends Controller
 
    public function show(Appointment $appointment)
    {
-      $appointment->load('serviceType', 'veterinarian', 'appointmentSchedule', 'pet');
+      $appointment->load([
+         'serviceType' => fn($q) => $q->withTrashed(),
+         'veterinarian',
+         'appointmentSchedule',
+         'pet'
+      ]);
 
       return view('app.pet-owner.appointment.show', compact('appointment'));
    }

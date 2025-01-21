@@ -170,7 +170,7 @@
                   <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
                </a>
             </div>
-            <div class="grid grid-rows-2 gap-5">
+            <div class="grid grid-rows-2 gap-5 max-h-80 overflow-y-auto">
                @forelse ($activeAppointments as $appointment)
                   <a href="{{ route('admin.appointment.show', $appointment->id) }}" class="card">
                      <div
@@ -210,8 +210,7 @@
                @empty
                   <div class="card">
                      <div
-                        class="card-body border-2 border-primary border-dashed shadow rounded-xl gap-5 items-center justify-center p-5">
-                        <i class="fa-solid fa-plus bg-primary bg-opacity-70 p-4 rounded-full text-white"></i>
+                        class="card-body border-2 bg-base-white/65 border-primary border-dashed shadow rounded-xl gap-5 items-center justify-center p-5">
                         <span class="font-bold text-gray-700">There is No Appointment Yet</span>
                      </div>
                   </div>

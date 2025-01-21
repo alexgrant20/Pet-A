@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\StoreBreedRequest;
 use App\Http\Requests\Admin\UpdateBreedRequest;
 use App\Models\Breed;
+use App\Models\Pet;
 use App\Models\PetType;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -67,6 +68,8 @@ class BreedController extends Controller
 
     public function destroy(Breed $breed)
     {
+        $hasActivePet = Pet::where('breed_id', $breed->id)->exists();
+        if($hasActivePet) return(to_route('admin.master.breed.index')->with('error-swal', 'There are still pets with this breed'));
         $breed->delete();
 
         return to_route('admin.master.breed.index')->with('success-toast', 'Breed Successfully Deleted');

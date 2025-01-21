@@ -38,6 +38,25 @@
       initDataTable();
     });
 
+    $(document).on('click', '#btn_delete_pet_type', function(e) {
+         e.preventDefault();
+         const id = $(this).attr('data-id');
+         const nama = $(this).attr('data-title');
+
+         swal({
+            title: "Are You Sure?",
+            text: `You will delete pet type ${nama}`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+         }).then((ok) => {
+            if (ok) {
+               $(`#delete_form_${id}`).submit();
+               $.LoadingOverlay("show");
+            }
+         });
+      });
+
     function initDataTable() {
       $('#table').DataTable({
         processing: true,

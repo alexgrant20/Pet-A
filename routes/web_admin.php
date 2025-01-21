@@ -23,7 +23,6 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::resource('profile', ProfileController::class, ['parameters' => ['profile' => 'veterinarian']])->only(['edit','update']);
 
 Route::resource('veterinarian', VeterinarianController::class);
-Route::get('/list/veterinarian', [VeterinarianController::class, 'getList'])->name('veterinarian.list');
 
 Route::prefix('/master')
    ->name('master.')

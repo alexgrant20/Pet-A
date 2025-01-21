@@ -33,7 +33,7 @@ class AppointmentController extends Controller implements ServiceTypeInterface
 
       $appointments = Appointment::with([
          'appointmentSchedule',
-         'serviceType',
+         'serviceType' => fn ($q) => $q->withTrashed(),
          'pet.breed.petType',
          'petOwner' => function ($q) {
             $q->with('user');

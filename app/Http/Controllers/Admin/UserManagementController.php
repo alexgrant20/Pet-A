@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\ResetPasswordRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
 use App\Interfaces\RoleInterface;
+use App\Models\Appointment;
 use App\Models\City;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -83,7 +84,23 @@ class UserManagementController extends Controller implements RoleInterface
 
    public function destroy(User $user)
    {
-      if(!$user->hasRole(self::ROLE_ADMIN)) $user->profile->delete();
+      $hasActiveAppointment = Appointment::when($user->hasRole(self::ROLE_PET_OWNER), function ($q) use ($user) {
+         $q->where('pet_owner_id', $user->profile->id);
+      })
+         ->when($user->hasRole(self::ROLE_VETERINARIAN), function ($q) use ($user) {
+            $q->where('veterinarian_id', $user->profile->id);
+         })
+         ->where([
+            ['is_cancelled', false],
+            ['finished_at', null]
+         ])
+         ->exists();
+
+      if ($hasActiveAppointment)
+         return to_route('admin.user-management.index')->with('error-swal', 'User has active appointments');
+
+      if (!$user->hasRole(self::ROLE_ADMIN)) $user->profile->delete();
+
       $user->delete();
 
       return to_route('admin.user-management.index')->with('success-toast', 'Successfully Deleted User');

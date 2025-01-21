@@ -56,8 +56,14 @@ class ServiceTypeController extends Controller
 
     public function destroy(ServiceType $serviceType)
     {
-        $hasActiveAppointment = Appointment::where('service_type_id', $serviceType->id)->exists();
-        if($hasActiveAppointment) return(to_route('admin.master.service-type.index')->with('error-toast', 'Service Type has active appointments'));
+        $hasActiveAppointment = Appointment::where('service_type_id', $serviceType->id)
+            ->where([
+                ['is_cancelled', false],
+                ['finished_at', null]
+            ])
+            ->exists();
+
+        if ($hasActiveAppointment) return (to_route('admin.master.service-type.index')->with('error-toast', 'Service Type has active appointments'));
 
         $serviceType->delete();
 

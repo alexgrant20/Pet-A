@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\StoreMedicationTypeRequest;
 use App\Http\Requests\Admin\UpdateMedicationTypeRequest;
 use App\Models\MedicationType;
+use App\Models\PetMedication;
 use Yajra\DataTables\Facades\DataTables;
 
 class MedicationTypeController extends Controller
@@ -57,6 +58,8 @@ class MedicationTypeController extends Controller
 
     public function destroy(MedicationType $medicationType)
     {
+        $hasActiveMedication = PetMedication::where('medication_type_id', $medicationType->id)->exists();
+        if($hasActiveMedication) return(to_route('admin.master.medication-type.index')->with('error-swal', 'There are still medications with this medication type'));
         $medicationType->delete();
 
         return to_route('admin.master.medication-type.index')->with('success-toast', 'Medication Type Successfully Deleted');

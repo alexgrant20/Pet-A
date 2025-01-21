@@ -71,6 +71,17 @@ class AppointmentScheduleController extends Controller
 
       $appointmentStartTime = array_values($appointmentSchedule['start_time']);
 
+      $existingTime = AppointmentSchedule::where('veterinarian_id', Auth::user()->profile_id)
+         ->where('day', $request->day)
+         ->pluck('start_time')
+         ->all();
+
+      $duplicateTime = array_intersect($appointmentStartTime, $existingTime);
+
+      if (count($duplicateTime) > 0) {
+         return back()->with('error-swal', 'There are duplicate time of . Please insert another time.');
+      }
+
       for ($i = 0; $i < count($appointmentStartTime); $i++) {
          $payload[] = [
             'id' => @$appointmentId[$i] ? Crypt::decrypt($appointmentId[$i]) : ++$lastId,
