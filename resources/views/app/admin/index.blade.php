@@ -170,51 +170,53 @@
                   <i class="fa-solid fa-chevron-right text-[0.7rem]"></i>
                </a>
             </div>
-            <div class="grid grid-rows-2 gap-5 max-h-80 overflow-y-auto">
-               @forelse ($activeAppointments as $appointment)
-                  <a href="{{ route('admin.appointment.show', $appointment->id) }}" class="card">
-                     <div
-                        class="card-body bg-white/65 shadow-xl rounded-xl flex-row p-0 gap-5 items-center justify-start border-2 border-transparent hover:border-primary group transition-all duration-300">
-                        <div class="py-4 flex flex-col font-bold justify-center h-full">
-                           <div class="px-8 border-r-2">
-                              <span
-                                 class="text-primary text-sm block">{{ $appointment->appointment_date->format('l') }}</span>
-                              <span>{{ $appointment->appointment_date->format('M d, Y') }}</span>
-                              <div class="flex items-center gap-2 text-sm mt-2">
-                                 <i class="fa-solid fa-clock text-gray-400"></i>
+            <div class="w-full max-h-96 overflow-y-auto no-scrollbar">
+               <div class="grid grid-rows-2 gap-5">
+                  @forelse ($activeAppointments as $appointment)
+                     <a href="{{ route('admin.appointment.show', $appointment->id) }}" class="card">
+                        <div
+                           class="card-body bg-white/65 shadow-xl rounded-xl flex-row p-0 gap-5 items-center justify-start border-2 border-transparent hover:border-primary group transition-all duration-300">
+                           <div class="py-4 flex flex-col font-bold justify-center h-full">
+                              <div class="px-8 border-r-2">
                                  <span
-                                    class="text-gray-700">{{ $appointment->appointmentSchedule->start_time->format('H:i') }}</span>
+                                    class="text-primary text-sm block">{{ $appointment->appointment_date->format('l') }}</span>
+                                 <span>{{ $appointment->appointment_date->format('M d, Y') }}</span>
+                                 <div class="flex items-center gap-2 text-sm mt-2">
+                                    <i class="fa-solid fa-clock text-gray-400"></i>
+                                    <span
+                                       class="text-gray-700">{{ $appointment->appointmentSchedule->start_time->format('H:i') }}</span>
+                                 </div>
                               </div>
                            </div>
+                           <div class="py-4 flex flex-col gap-2">
+                              <div class="flex items-center gap-2">
+                                 <img class="mt-4 w-8 h-8 object-cover rounded-full"
+                                    src="{{ asset($appointment->petOwner->attachment->first()?->path ?? 'assets/user.svg') }}"
+                                    alt="pet owner image">
+                                 <span class="text-gray-900">{{ $appointment->petOwner->user->name }}</span>
+                              </div>
+                              <div class="flex items-center gap-2">
+                                 <i class="{{ $appointment->pet->breed->petType->icon->name }}"></i>
+                                 <span class="text-gray-900">{{ $appointment->pet->name }}</span>
+                              </div>
+                              <div class="badge badge-primary">
+                                 {{ $appointment->serviceType->name }}
+                              </div>
+                           </div>
+                           <div class="ms-auto pe-4 text-transparent group-hover:text-primary duration-500">
+                              <i class="fa-solid fa-arrow-right text-lg"></i>
+                           </div>
                         </div>
-                        <div class="py-4 flex flex-col gap-2">
-                           <div class="flex items-center gap-2">
-                              <img class="mt-4 w-8 h-8 object-cover rounded-full"
-                                 src="{{ asset($appointment->petOwner->attachment->first()?->path ?? 'assets/user.svg') }}"
-                                 alt="pet owner image">
-                              <span class="text-gray-900">{{ $appointment->petOwner->user->name }}</span>
-                           </div>
-                           <div class="flex items-center gap-2">
-                              <i class="{{ $appointment->pet->breed->petType->icon->name }}"></i>
-                              <span class="text-gray-900">{{ $appointment->pet->name }}</span>
-                           </div>
-                           <div class="badge badge-primary">
-                              {{ $appointment->serviceType->name }}
-                           </div>
-                        </div>
-                        <div class="ms-auto pe-4 text-transparent group-hover:text-primary duration-500">
-                           <i class="fa-solid fa-arrow-right text-lg"></i>
+                     </a>
+                  @empty
+                     <div class="card">
+                        <div
+                           class="card-body border-2 bg-base-white/65 border-primary border-dashed shadow rounded-xl gap-5 items-center justify-center p-5">
+                           <span class="font-bold text-gray-700">There is No Appointment Yet</span>
                         </div>
                      </div>
-                  </a>
-               @empty
-                  <div class="card">
-                     <div
-                        class="card-body border-2 bg-base-white/65 border-primary border-dashed shadow rounded-xl gap-5 items-center justify-center p-5">
-                        <span class="font-bold text-gray-700">There is No Appointment Yet</span>
-                     </div>
-                  </div>
-               @endforelse
+                  @endforelse
+               </div>
             </div>
          </div>
       </div>
