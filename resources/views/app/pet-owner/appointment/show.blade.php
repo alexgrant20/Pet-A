@@ -83,13 +83,13 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <tr>
-                              @foreach ($appointment->medicalRecord as $medicalRecord)
+                           @foreach ($appointment->medicalRecord as $medicalRecord)
+                              <tr>
                                  <td class="border border-gray-400">{{ $medicalRecord->disease_name }}</td>
                                  <td class="border border-gray-400">{{ $medicalRecord->medicine_name }}</td>
                                  <td class="border border-gray-400">{{ $medicalRecord->description }}</td>
-                              @endforeach
-                           </tr>
+                              </tr>
+                           @endforeach
                         </tbody>
                      </table>
                   @endif
