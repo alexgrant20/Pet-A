@@ -148,6 +148,7 @@
 
 @section('js-footer')
    <script>
+      const clinics = @json($clinics);
       const el = document.querySelector('[name="birth_date"]');
       new AirDatepicker(el, {
          ...airDatePickerDefaultConfiguration,
@@ -161,6 +162,13 @@
                '#profile_image_preview',
                "{{ asset('assets/user.svg') }}")
          });
+      })
+
+      $('#clinic').change((e) => {
+         const clinic = clinics.find(clinic => clinic.id == e.target.value);
+         if (clinic) {
+            $('[name="address"]').val(clinic.address);
+         }
       })
    </script>
 
